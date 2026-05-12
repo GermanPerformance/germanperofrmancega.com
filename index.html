@@ -1559,11 +1559,15 @@
 /* ── RESPONSIVE ── */
 @media (max-width: 900px) {
   .hero-layout { grid-template-columns: 1fr; gap: 40px; }
-  .hero-right { display: none; }
+  .hero-right { display: flex; flex-direction: column; gap: 16px; }
+  .service-ticker { display: none; }
+  .hero-reviews-panel { width: 100%; }
 }
 @media (max-width: 600px) {
   .hero-layout { grid-template-columns: 1fr; }
-  .hero-right { display: none; }
+  .hero-right { display: flex; flex-direction: column; gap: 16px; }
+  .service-ticker { display: none; }
+  .hero-reviews-panel { width: 100%; }
 }
 </style>
 
