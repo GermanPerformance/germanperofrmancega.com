@@ -350,3 +350,13 @@ a:focus-visible, button:focus-visible {
 /* Consistency: gold carries verified fact, red carries action. Ratings,
    counts and spec figures are facts, so they take gold wherever they appear. */
 .stat-number, .tv, .rp-score { color: var(--gold); }
+
+/* Brand-index headings double as the entry point to each marque hub. */
+.svc-group-name a { color: var(--white); text-decoration: none; display: flex;
+  align-items: baseline; justify-content: space-between; gap: 8px; }
+.svc-group-name a:hover { color: var(--gold); }
+.svc-hub-go { color: var(--red-b); font-family: var(--font-mono); font-size: 0.8rem; }
+
+/* Multi-paragraph body copy needs rhythm between paragraphs. */
+.section-desc p + p, .sd p + p, p + p { margin-top: 1em; }
+.section-desc, .sd { display: block; }
