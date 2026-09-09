@@ -1,0 +1,106 @@
+#!/usr/bin/env python3
+"""Verify FAQ structured data matches the visible page content.
+
+Google requires FAQPage markup to match what the user actually sees. This
+catches the bug class where a page's schema was copied from another page:
+every Question.name in the JSON-LD must appear verbatim in the rendered HTML
+of the same page, and the page's own topic must not be contradicted.
+
+Run from the repo root:  python3 tools/check_faq.py
+Exit code 0 = consistent, 1 = mismatch found.
+"""
+
+import html
+import json
+import os
+import re
+import sys
+
+REPO_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+
+JSONLD_RE = re.compile(
+    r'<script type="application/ld\+json">(.*?)</script>', re.S)
+QUESTION_BTN_RE = re.compile(r'<button class="fq"[^>]*>(.*?)</button>', re.S)
+
+# Marques, so we can flag a page describing a brand it does not serve.
+BRANDS = {"bmw": "BMW", "mercedes": "Mercedes", "audi": "Audi",
+          "porsche": "Porsche", "volkswagen": "VW"}
+BRAND_PATTERNS = {"BMW": r"\bBMW\b", "Mercedes": r"Mercedes", "Audi": r"\bAudi\b",
+                  "Porsche": r"Porsche", "VW": r"\bVW\b|Volkswagen"}
+
+
+def visible_questions(content):
+    """Question text as rendered, with the +/- icon span stripped."""
+    out = []
+    for raw in QUESTION_BTN_RE.findall(content):
+        text = re.sub(r'<span class="ficon">.*?</span>', "", raw, flags=re.S)
+        out.append(html.unescape(re.sub(r"<[^>]+>", "", text)).strip())
+    return out
+
+
+def schema_questions(content):
+    """Question names declared in every FAQPage block on the page."""
+    out = []
+    for block in JSONLD_RE.findall(content):
+        try:
+            data = json.loads(block)
+        except json.JSONDecodeError as exc:
+            raise ValueError(f"invalid JSON-LD: {exc}") from exc
+        for entity in data.get("mainEntity", []):
+            if entity.get("@type") == "Question":
+                out.append(entity["name"].strip())
+    return out
+
+
+def own_brand(filename):
+    return next((v for k, v in BRANDS.items() if filename.startswith(k)), None)
+
+
+def check_page(page, content):
+    """Yield problem strings for one page."""
+    try:
+        schema = schema_questions(content)
+    except ValueError as exc:
+        yield str(exc)
+        return
+
+    visible = visible_questions(content)
+
+    for question in schema:
+        if question not in visible:
+            yield f'schema question not visible on page: "{question}"'
+
+    # A page whose FAQ names a marque it is not about is copy-paste damage.
+    brand = own_brand(page)
+    if brand and schema:
+        faq_text = " ".join(schema)
+        for other, pattern in BRAND_PATTERNS.items():
+            if other != brand and re.search(pattern, faq_text):
+                yield f"FAQ on a {brand} page mentions {other}"
+
+
+def main():
+    pages = sorted(f for f in os.listdir(REPO_ROOT) if f.endswith(".html"))
+    problems = []
+
+    for page in pages:
+        with open(os.path.join(REPO_ROOT, page), encoding="utf-8") as fh:
+            content = fh.read()
+        for problem in check_page(page, content):
+            problems.append((page, problem))
+
+    if problems:
+        print(f"FAQ INCONSISTENCIES: {len(problems)}\n")
+        for page, problem in problems:
+            print(f"  {page}\n    {problem}")
+        return 1
+
+    checked = sum(1 for p in pages
+                  if schema_questions(open(os.path.join(REPO_ROOT, p),
+                                           encoding="utf-8").read()))
+    print(f"OK: FAQ schema matches visible content on all {checked} pages with FAQs.")
+    return 0
+
+
+if __name__ == "__main__":
+    sys.exit(main())
