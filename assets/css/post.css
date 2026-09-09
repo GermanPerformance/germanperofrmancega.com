@@ -181,3 +181,18 @@
 .logo-pic img{display:block;max-width:100%}
 .gallery-pic{display:block;width:100%;height:100%}
 .gallery-pic img{display:block;width:100%;height:100%;object-fit:cover}
+
+/* Comparison table */
+.spec-table{width:100%;border-collapse:collapse;margin:28px 0 8px;font-size:.95rem}
+.spec-table th,.spec-table td{padding:14px 16px;text-align:left;border-bottom:1px solid rgba(255,255,255,.08);vertical-align:top}
+.spec-table thead th{font-family:'Space Mono',monospace;font-size:.68rem;letter-spacing:.14em;
+  text-transform:uppercase;color:var(--silver);border-bottom:1px solid rgba(255,255,255,.18)}
+.spec-table tbody th{font-weight:400;color:var(--white);width:26%}
+.spec-table td{color:var(--light)}
+.spec-table .yes{color:var(--gold)}
+.spec-table .no{color:var(--muted)}
+.table-scroll{overflow-x:auto;-webkit-overflow-scrolling:touch}
+.callout{border-left:2px solid var(--red);padding:4px 0 4px 20px;margin:28px 0;color:var(--light)}
+.checklist{list-style:none;padding:0;margin:20px 0}
+.checklist li{padding:9px 0 9px 28px;position:relative;color:var(--light);line-height:1.6}
+.checklist li::before{content:'\2713';position:absolute;left:0;color:var(--gold);font-weight:700}

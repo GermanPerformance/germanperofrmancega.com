@@ -74,3 +74,13 @@ footer{background:var(--carbon);border-top:1px solid rgba(255,255,255,.07);paddi
 .logo-pic img{display:block;max-width:100%}
 .gallery-pic{display:block;width:100%;height:100%}
 .gallery-pic img{display:block;width:100%;height:100%;object-fit:cover}
+
+/* Related services: in-content links between sibling service pages */
+.rel-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:14px;margin-top:40px}
+.rel-card{display:flex;align-items:center;justify-content:space-between;gap:16px;
+  padding:20px 22px;background:var(--steel);border:1px solid rgba(255,255,255,.07);
+  text-decoration:none;transition:border-color .2s,background .2s}
+.rel-card:hover{border-color:var(--red);background:#232326}
+.rel-name{font-family:'DM Sans',sans-serif;font-size:.95rem;color:var(--white);line-height:1.35}
+.rel-go{font-family:'Space Mono',monospace;font-size:.9rem;color:var(--red-b);flex-shrink:0}
+@media(max-width:600px){.rel-grid{grid-template-columns:1fr}}
