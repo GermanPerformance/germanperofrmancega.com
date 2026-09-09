@@ -5,7 +5,7 @@
   body {
     background: var(--black);
     color: var(--white);
-    font-family: 'DM Sans', sans-serif;
+    font-family: var(--font-body);
     font-weight: 300;
     overflow-x: hidden;
   }
@@ -33,7 +33,7 @@
   .nav-links a {
     color: var(--silver);
     text-decoration: none;
-    font-family: 'Space Mono', monospace;
+    font-family: var(--font-mono);
     font-size: 0.72rem;
     letter-spacing: 0.12em;
     text-transform: uppercase;
@@ -46,7 +46,7 @@
     color: var(--white) !important;
     padding: 10px 24px;
     border: none;
-    font-family: 'Space Mono', monospace !important;
+    font-family: var(--font-mono) !important;
     font-size: 0.72rem !important;
     letter-spacing: 0.1em;
     text-transform: uppercase;
@@ -83,7 +83,7 @@
   }
 
   .hero-eyebrow {
-    font-family: 'Bebas Neue', sans-serif;
+    font-family: var(--font-display);
     font-size: 1.1rem;
     letter-spacing: 0.25em;
     text-transform: uppercase;
@@ -107,7 +107,7 @@
   }
 
   .hero-title {
-    font-family: 'Bebas Neue', sans-serif;
+    font-family: var(--font-display);
     font-size: clamp(5rem, 13vw, 13rem);
     line-height: 0.88;
     letter-spacing: -0.01em;
@@ -139,7 +139,7 @@
     background: var(--red);
     color: var(--white);
     padding: 16px 40px;
-    font-family: 'Space Mono', monospace;
+    font-family: var(--font-mono);
     font-size: 0.75rem;
     letter-spacing: 0.12em;
     text-transform: uppercase;
@@ -159,7 +159,7 @@
 
   .btn-ghost {
     color: var(--silver);
-    font-family: 'Space Mono', monospace;
+    font-family: var(--font-mono);
     font-size: 0.75rem;
     letter-spacing: 0.12em;
     text-transform: uppercase;
@@ -177,7 +177,7 @@
     opacity: 0.4;
   }
   .hero-scroll span {
-    font-family: 'Space Mono', monospace;
+    font-family: var(--font-mono);
     font-size: 0.6rem;
     letter-spacing: 0.2em;
     text-transform: uppercase;
@@ -203,7 +203,7 @@
     animation: rotateBadge 20s linear infinite;
   }
   .hero-badge-inner {
-    font-family: 'Space Mono', monospace;
+    font-family: var(--font-mono);
     font-size: 0.58rem;
     letter-spacing: 0.25em;
     text-transform: uppercase;
@@ -228,7 +228,7 @@
     white-space: nowrap;
   }
   .marquee-track span {
-    font-family: 'Bebas Neue', sans-serif;
+    font-family: var(--font-display);
     font-size: 1.6rem;
     letter-spacing: 0.35em;
     color: var(--white);
@@ -243,7 +243,7 @@
   section { padding: 120px 60px; }
 
   .section-label {
-    font-family: 'Space Mono', monospace;
+    font-family: var(--font-mono);
     font-size: 0.68rem;
     letter-spacing: 0.3em;
     text-transform: uppercase;
@@ -258,7 +258,7 @@
   }
 
   .section-title {
-    font-family: 'Bebas Neue', sans-serif;
+    font-family: var(--font-display);
     font-size: clamp(2.8rem, 6vw, 5.5rem);
     line-height: 0.92;
     letter-spacing: 0.01em;
@@ -301,13 +301,13 @@
   }
   .brand-item:hover { background: var(--steel); }
   .brand-icon {
-    font-family: 'Bebas Neue', sans-serif;
+    font-family: var(--font-display);
     font-size: 1.8rem;
     letter-spacing: 0.1em;
     color: var(--white);
   }
   .brand-sub {
-    font-family: 'Space Mono', monospace;
+    font-family: var(--font-mono);
     font-size: 0.6rem;
     letter-spacing: 0.2em;
     color: var(--silver);
@@ -325,13 +325,13 @@
     padding: 40px 36px;
   }
   .stat-number {
-    font-family: 'Bebas Neue', sans-serif;
+    font-family: var(--font-display);
     font-size: 3.5rem;
     color: var(--red);
     line-height: 1;
   }
   .stat-label {
-    font-family: 'Space Mono', monospace;
+    font-family: var(--font-mono);
     font-size: 0.65rem;
     letter-spacing: 0.15em;
     text-transform: uppercase;
@@ -379,7 +379,7 @@
   }
 
   .service-name {
-    font-family: 'Bebas Neue', sans-serif;
+    font-family: var(--font-display);
     font-size: 1.5rem;
     letter-spacing: 0.05em;
     color: var(--white);
@@ -398,7 +398,7 @@
     display: flex; flex-direction: column; gap: 6px;
   }
   .service-list li {
-    font-family: 'Space Mono', monospace;
+    font-family: var(--font-mono);
     font-size: 0.68rem;
     letter-spacing: 0.05em;
     color: var(--muted);
@@ -422,7 +422,7 @@
 
   .perf-bg-text {
     position: absolute;
-    font-family: 'Bebas Neue', sans-serif;
+    font-family: var(--font-display);
     font-size: 28vw;
     color: rgba(255,255,255,0.02);
     top: 50%; right: -5%;
@@ -465,7 +465,7 @@
   }
 
   .perf-card-tag {
-    font-family: 'Space Mono', monospace;
+    font-family: var(--font-mono);
     font-size: 0.62rem;
     letter-spacing: 0.2em;
     text-transform: uppercase;
@@ -474,7 +474,7 @@
   }
 
   .perf-card-name {
-    font-family: 'Bebas Neue', sans-serif;
+    font-family: var(--font-display);
     font-size: 2rem;
     letter-spacing: 0.04em;
     color: var(--white);
@@ -499,14 +499,14 @@
     border-bottom: 1px solid rgba(255,255,255,0.06);
   }
   .perf-spec-label {
-    font-family: 'Space Mono', monospace;
+    font-family: var(--font-mono);
     font-size: 0.65rem;
     letter-spacing: 0.1em;
     text-transform: uppercase;
     color: var(--silver);
   }
   .perf-spec-val {
-    font-family: 'Bebas Neue', sans-serif;
+    font-family: var(--font-display);
     font-size: 1.1rem;
     color: var(--red);
     letter-spacing: 0.05em;
@@ -539,7 +539,7 @@
   .process-step:hover { background: var(--steel); }
 
   .step-title {
-    font-family: 'Bebas Neue', sans-serif;
+    font-family: var(--font-display);
     font-size: 1.4rem;
     letter-spacing: 0.04em;
     color: var(--white);
@@ -605,7 +605,7 @@
   .gallery-icon { font-size: 2.5rem; }
 
   .gallery-upload-label {
-    font-family: 'Space Mono', monospace;
+    font-family: var(--font-mono);
     font-size: 0.65rem;
     letter-spacing: 0.2em;
     text-transform: uppercase;
@@ -623,7 +623,7 @@
   .gallery-card:hover .gallery-caption { transform: translateY(0); }
 
   .gallery-tag {
-    font-family: 'Space Mono', monospace;
+    font-family: var(--font-mono);
     font-size: 0.65rem;
     letter-spacing: 0.12em;
     text-transform: uppercase;
@@ -678,12 +678,12 @@
     background: var(--mid);
     border: 1px solid rgba(255,255,255,0.1);
     display: flex; align-items: center; justify-content: center;
-    font-family: 'Bebas Neue', sans-serif;
+    font-family: var(--font-display);
     font-size: 1.1rem;
     color: var(--red);
   }
   .author-info .name {
-    font-family: 'Space Mono', monospace;
+    font-family: var(--font-mono);
     font-size: 0.72rem;
     letter-spacing: 0.08em;
     color: var(--white);
@@ -735,7 +735,7 @@
   }
   .contact-item { text-align: center; }
   .contact-label {
-    font-family: 'Space Mono', monospace;
+    font-family: var(--font-mono);
     font-size: 0.62rem;
     letter-spacing: 0.2em;
     text-transform: uppercase;
@@ -743,7 +743,7 @@
     margin-bottom: 8px;
   }
   .contact-val {
-    font-family: 'Bebas Neue', sans-serif;
+    font-family: var(--font-display);
     font-size: 1.4rem;
     letter-spacing: 0.05em;
     color: var(--white);
@@ -773,7 +773,7 @@
     align-items: center;
   }
   .footer-copy {
-    font-family: 'Space Mono', monospace;
+    font-family: var(--font-mono);
     font-size: 0.62rem;
     letter-spacing: 0.1em;
     color: var(--muted);
@@ -782,7 +782,7 @@
     display: flex; flex-wrap: wrap; gap: 10px 20px; justify-content: center; max-width: 1100px; margin: 0 auto;
   }
   .footer-links a {
-    font-family: 'Space Mono', monospace;
+    font-family: var(--font-mono);
     font-size: 0.58rem;
     letter-spacing: 0.08em;
     text-transform: uppercase;
@@ -1017,14 +1017,14 @@
 }
 
 .trust-card-title {
-  font-family: 'Bebas Neue', sans-serif;
+  font-family: var(--font-display);
   font-size: 0.95rem;
   letter-spacing: 0.1em;
   color: var(--gold-light);
 }
 
 .trust-card-sub {
-  font-family: 'Space Mono', monospace;
+  font-family: var(--font-mono);
   font-size: 0.55rem;
   letter-spacing: 0.08em;
   color: var(--silver);
@@ -1041,7 +1041,7 @@
 }
 
 .trust-item {
-  font-family: 'Space Mono', monospace;
+  font-family: var(--font-mono);
   font-size: 0.58rem;
   letter-spacing: 0.04em;
   color: var(--light);
@@ -1059,7 +1059,7 @@
 }
 
 .trust-footer {
-  font-family: 'Space Mono', monospace;
+  font-family: var(--font-mono);
   font-size: 0.55rem;
   letter-spacing: 0.06em;
   color: var(--muted);
@@ -1080,11 +1080,11 @@
   color: var(--light);
   font-style: italic;
   margin-bottom: 10px;
-  font-family: 'DM Sans', sans-serif;
+  font-family: var(--font-body);
   font-weight: 300;
 }
 .trust-card .rp-author {
-  font-family: 'Space Mono', monospace;
+  font-family: var(--font-mono);
   font-size: 0.55rem;
   letter-spacing: 0.06em;
   color: var(--gold-light);
@@ -1140,7 +1140,7 @@
   backdrop-filter: blur(10px);
 }
 .ticker-label {
-  font-family: 'Space Mono', monospace;
+  font-family: var(--font-mono);
   font-size: 0.62rem;
   letter-spacing: 0.3em;
   text-transform: uppercase;
@@ -1162,7 +1162,7 @@
   gap: 0;
 }
 .ticker-item {
-  font-family: 'Bebas Neue', sans-serif;
+  font-family: var(--font-display);
   font-size: 1.15rem;
   letter-spacing: 0.06em;
   color: var(--muted);
@@ -1208,11 +1208,11 @@
   color: var(--light);
   font-style: italic;
   margin-bottom: 10px;
-  font-family: 'DM Sans', sans-serif;
+  font-family: var(--font-body);
   font-weight: 300;
 }
 .hero-reviews-panel .rp-author {
-  font-family: 'Space Mono', monospace;
+  font-family: var(--font-mono);
   font-size: 0.58rem;
   letter-spacing: 0.06em;
   color: var(--gold-light);
@@ -1229,7 +1229,7 @@
   margin-bottom: 12px;
 }
 .mini-ticker-item {
-  font-family: 'Space Mono', monospace;
+  font-family: var(--font-mono);
   font-size: 0.6rem;
   letter-spacing: 0.04em;
   color: var(--muted);
@@ -1295,7 +1295,7 @@
   background: none;
   border: none;
   color: var(--white);
-  font-family: 'Space Mono', monospace;
+  font-family: var(--font-mono);
   font-size: 0.85rem;
   letter-spacing: 0.04em;
   text-align: left;
@@ -1376,7 +1376,7 @@
   }
   #mobile-menu.open { display: flex; }
   #mobile-menu a {
-    font-family: 'Bebas Neue', sans-serif;
+    font-family: var(--font-display);
     font-size: 2.2rem;
     letter-spacing: 0.1em;
     color: #f0ede8;
@@ -1395,7 +1395,7 @@
     background: #c0392b;
     color: #f0ede8 !important;
     border: none;
-    font-family: 'Space Mono', monospace !important;
+    font-family: var(--font-mono) !important;
     font-size: 0.85rem !important;
     letter-spacing: 0.12em;
     padding: 16px 40px !important;
@@ -1414,7 +1414,7 @@
 /* Service index: in-content links to every service page */
 .svc-index { margin-top: 72px; }
 .svc-index-head {
-  font-family: 'Space Mono', monospace;
+  font-family: var(--font-mono);
   font-size: 0.7rem; letter-spacing: 0.2em; text-transform: uppercase;
   color: var(--red-bright); margin-bottom: 28px;
   display: flex; align-items: center; gap: 14px;
@@ -1427,7 +1427,7 @@
   gap: 32px 28px;
 }
 .svc-group-name {
-  font-family: 'Bebas Neue', sans-serif; font-size: 1.15rem;
+  font-family: var(--font-display); font-size: 1.15rem;
   letter-spacing: 0.08em; color: var(--white); margin-bottom: 14px;
   padding-bottom: 10px; border-bottom: 1px solid rgba(255,255,255,0.09);
 }
