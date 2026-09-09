@@ -1,0 +1,20 @@
+/* Design tokens, shared by every page.
+   Single source of truth for the site's colour system. */
+:root {
+  --black: #0a0a0a;
+  --carbon: #111111;
+  --steel: #1c1c1e;
+  --mid: #2a2a2a;
+  --muted: #555;
+  --silver: #9a9a9a;
+  --light: #d4d4d4;
+  --white: #f0ede8;
+  --red: #c0392b;
+  --gold: #d4a017;
+  --gold-light: #f0b820;
+
+  /* Same colour, two historical names: service pages used --red-b,
+     the homepage and blog used --red-bright. */
+  --red-bright: #e74c3c;
+  --red-b: #e74c3c;
+}
