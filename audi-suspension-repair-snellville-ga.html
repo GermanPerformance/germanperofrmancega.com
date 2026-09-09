@@ -11,63 +11,250 @@
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:opsz,wght@9..40,300;9..40,400&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="assets/css/tokens.css?v=1">
 <link rel="stylesheet" href="assets/css/site.css?v=1">
+<script defer src="assets/js/site.js?v=1"></script>
+
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
-  "@type": "FAQPage",
-  "mainEntity": [
+  "@graph": [
     {
-      "@type": "Question",
-      "name": "How do I know if my Audi needs suspension work?",
-      "acceptedAnswer": {
-        "@type": "Answer",
-        "text": "Common signs include clunking or knocking over bumps, the car pulling to one side, excessive body roll in corners, vague or loose steering feel, uneven tire wear, or a vibration through the steering wheel. Any of these symptoms warrant a suspension inspection — worn components only get worse and directly affect safety and handling."
+      "@type": "AutoRepair",
+      "@id": "https://germanperformancega.com/#business",
+      "name": "German Performance",
+      "url": "https://germanperformancega.com/",
+      "telephone": "+1-678-395-7459",
+      "priceRange": "$$",
+      "foundingDate": "2010",
+      "image": "https://germanperformancega.com/og-image.jpg",
+      "logo": "https://germanperformancega.com/assets/img/logo-288.webp",
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "2144 Parkwood Rd NW",
+        "addressLocality": "Snellville",
+        "addressRegion": "GA",
+        "postalCode": "30078",
+        "addressCountry": "US"
+      },
+      "openingHoursSpecification": [
+        {
+          "@type": "OpeningHoursSpecification",
+          "dayOfWeek": [
+            "Monday",
+            "Tuesday",
+            "Wednesday",
+            "Thursday",
+            "Friday"
+          ],
+          "opens": "09:30",
+          "closes": "18:00"
+        }
+      ],
+      "areaServed": [
+        {
+          "@type": "City",
+          "name": "Snellville"
+        },
+        {
+          "@type": "City",
+          "name": "Loganville"
+        },
+        {
+          "@type": "City",
+          "name": "Grayson"
+        },
+        {
+          "@type": "City",
+          "name": "Lawrenceville"
+        },
+        {
+          "@type": "City",
+          "name": "Stone Mountain"
+        },
+        {
+          "@type": "City",
+          "name": "Gwinnett County"
+        }
+      ],
+      "makesOffer": [
+        {
+          "@type": "Offer",
+          "itemOffered": {
+            "@type": "Service",
+            "name": "BMW repair and service"
+          }
+        },
+        {
+          "@type": "Offer",
+          "itemOffered": {
+            "@type": "Service",
+            "name": "Mercedes-Benz repair and service"
+          }
+        },
+        {
+          "@type": "Offer",
+          "itemOffered": {
+            "@type": "Service",
+            "name": "Audi repair and service"
+          }
+        },
+        {
+          "@type": "Offer",
+          "itemOffered": {
+            "@type": "Service",
+            "name": "Porsche repair and service"
+          }
+        },
+        {
+          "@type": "Offer",
+          "itemOffered": {
+            "@type": "Service",
+            "name": "Volkswagen repair and service"
+          }
+        },
+        {
+          "@type": "Offer",
+          "itemOffered": {
+            "@type": "Service",
+            "name": "MINI repair and service"
+          }
+        }
+      ],
+      "sameAs": [
+        "https://www.instagram.com/germanperformance.auto"
+      ]
+    },
+    {
+      "@type": "WebSite",
+      "@id": "https://germanperformancega.com/#website",
+      "url": "https://germanperformancega.com/",
+      "name": "German Performance",
+      "publisher": {
+        "@id": "https://germanperformancega.com/#business"
       }
     },
     {
-      "@type": "Question",
-      "name": "How long do Audi control arms last?",
-      "acceptedAnswer": {
-        "@type": "Answer",
-        "text": "Audi control arm bushings and ball joints typically last 60,000–100,000 miles depending on road conditions and driving style. Georgia roads with potholes and rough surfaces accelerate wear. We see most Audi control arm replacements in the 80,000–120,000 mile range."
+      "@type": "WebPage",
+      "@id": "https://germanperformancega.com/audi-suspension-repair-snellville-ga.html#webpage",
+      "url": "https://germanperformancega.com/audi-suspension-repair-snellville-ga.html",
+      "name": "Audi Suspension Repair Snellville GA | German Performance",
+      "description": "Expert Audi suspension repair in Snellville, GA. Control arms, struts, bushings, wheel bearings & alignment. Serving Gwinnett County. Call (678) 395-7459.",
+      "isPartOf": {
+        "@id": "https://germanperformancega.com/#website"
+      },
+      "about": {
+        "@id": "https://germanperformancega.com/#business"
       }
     },
     {
-      "@type": "Question",
-      "name": "Should I replace both sides when replacing Audi suspension components?",
-      "acceptedAnswer": {
-        "@type": "Answer",
-        "text": "For control arms, struts, and wheel bearings — yes, we strongly recommend replacing both sides at the same time. Components wear at similar rates on both sides, and replacing one side often makes the difference in ride and handling more noticeable. It also saves labor since the car is already on the lift."
-      }
+      "@type": "Service",
+      "@id": "https://germanperformancega.com/audi-suspension-repair-snellville-ga.html#service",
+      "name": "Audi Suspension Repair",
+      "serviceType": "Audi Suspension Repair",
+      "description": "Expert Audi suspension repair in Snellville, GA. Control arms, struts, bushings, wheel bearings & alignment. Serving Gwinnett County. Call (678) 395-7459.",
+      "url": "https://germanperformancega.com/audi-suspension-repair-snellville-ga.html",
+      "provider": {
+        "@id": "https://germanperformancega.com/#business"
+      },
+      "areaServed": [
+        {
+          "@type": "City",
+          "name": "Snellville"
+        },
+        {
+          "@type": "City",
+          "name": "Loganville"
+        },
+        {
+          "@type": "City",
+          "name": "Grayson"
+        },
+        {
+          "@type": "City",
+          "name": "Lawrenceville"
+        },
+        {
+          "@type": "City",
+          "name": "Stone Mountain"
+        },
+        {
+          "@type": "City",
+          "name": "Gwinnett County"
+        }
+      ]
     },
     {
-      "@type": "Question",
-      "name": "My Audi has DCC adaptive suspension — can you work on it?",
-      "acceptedAnswer": {
-        "@type": "Answer",
-        "text": "Yes. Audi DCC (Dynamic Chassis Control) systems require VCDS diagnostic software to properly diagnose faults and code replacement dampers. We have the tools and experience to service DCC on all Audi models including S and RS variants with sport suspension."
-      }
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://germanperformancega.com/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Audi Suspension Repair — Snellville, GA",
+          "item": "https://germanperformancega.com/audi-suspension-repair-snellville-ga.html"
+        }
+      ]
     },
     {
-      "@type": "Question",
-      "name": "Does Quattro AWD affect suspension wear?",
-      "acceptedAnswer": {
-        "@type": "Answer",
-        "text": "Yes. Quattro all-wheel drive puts additional load on front CV joints, wheel bearings, and suspension bushings compared to front-wheel-drive platforms. High-mileage Quattro vehicles often need more frequent suspension inspections — especially driveshaft and CV joint checks that front-wheel-drive owners rarely need."
-      }
-    },
-    {
-      "@type": "Question",
-      "name": "What suspension parts brands do you use on Audi?",
-      "acceptedAnswer": {
-        "@type": "Answer",
-        "text": "We use OEM Audi parts, Lemförder (the OEM supplier to Audi/VW), Meyle HD, and Bilstein for shocks and struts. We never use cheap no-name suspension components — on a precision vehicle like an Audi, low-quality suspension parts affect handling immediately and wear out quickly."
-      }
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "How do I know if my Audi needs suspension work?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Common signs include clunking or knocking over bumps, the car pulling to one side, excessive body roll in corners, vague or loose steering feel, uneven tire wear, or a vibration through the steering wheel. Any of these symptoms warrant a suspension inspection — worn components only get worse and directly affect safety and handling."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How long do Audi control arms last?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Audi control arm bushings and ball joints typically last 60,000–100,000 miles depending on road conditions and driving style. Georgia roads with potholes and rough surfaces accelerate wear. We see most Audi control arm replacements in the 80,000–120,000 mile range."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Should I replace both sides when replacing Audi suspension components?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "For control arms, struts, and wheel bearings — yes, we strongly recommend replacing both sides at the same time. Components wear at similar rates on both sides, and replacing one side often makes the difference in ride and handling more noticeable. It also saves labor since the car is already on the lift."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "My Audi has DCC adaptive suspension — can you work on it?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes. Audi DCC (Dynamic Chassis Control) systems require VCDS diagnostic software to properly diagnose faults and code replacement dampers. We have the tools and experience to service DCC on all Audi models including S and RS variants with sport suspension."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Does Quattro AWD affect suspension wear?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes. Quattro all-wheel drive puts additional load on front CV joints, wheel bearings, and suspension bushings compared to front-wheel-drive platforms. High-mileage Quattro vehicles often need more frequent suspension inspections — especially driveshaft and CV joint checks that front-wheel-drive owners rarely need."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What suspension parts brands do you use on Audi?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "We use OEM Audi parts, Lemförder (the OEM supplier to Audi/VW), Meyle HD, and Bilstein for shocks and struts. We never use cheap no-name suspension components — on a precision vehicle like an Audi, low-quality suspension parts affect handling immediately and wear out quickly."
+          }
+        }
+      ]
     }
   ]
 }
 </script>
-<script defer src="assets/js/site.js?v=1"></script>
 </head>
 <body>
 <nav>

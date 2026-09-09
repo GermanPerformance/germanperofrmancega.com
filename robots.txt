@@ -1,0 +1,23 @@
+# German Performance -- germanperformancega.com
+
+User-agent: *
+Allow: /
+
+# Build tooling and source images are not content.
+Disallow: /tools/
+Disallow: /images/
+
+# AI answer engines: a local shop wants to be citable in AI results.
+User-agent: GPTBot
+Allow: /
+
+User-agent: OAI-SearchBot
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+Sitemap: https://germanperformancega.com/sitemap.xml

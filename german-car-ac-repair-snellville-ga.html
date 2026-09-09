@@ -11,63 +11,250 @@
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:opsz,wght@9..40,300;9..40,400&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="assets/css/tokens.css?v=1">
 <link rel="stylesheet" href="assets/css/site.css?v=1">
+<script defer src="assets/js/site.js?v=1"></script>
+
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
-  "@type": "FAQPage",
-  "mainEntity": [
+  "@graph": [
     {
-      "@type": "Question",
-      "name": "Why is my German car's AC not blowing cold?",
-      "acceptedAnswer": {
-        "@type": "Answer",
-        "text": "The most common causes are low refrigerant from a leak, a failed AC compressor, a clogged or damaged condenser, or a faulty expansion valve. Less commonly, it can be an electrical issue with the HVAC control module or a blend door actuator failure. We diagnose the root cause before recommending any repair — we don't just recharge and hope for the best."
+      "@type": "AutoRepair",
+      "@id": "https://germanperformancega.com/#business",
+      "name": "German Performance",
+      "url": "https://germanperformancega.com/",
+      "telephone": "+1-678-395-7459",
+      "priceRange": "$$",
+      "foundingDate": "2010",
+      "image": "https://germanperformancega.com/og-image.jpg",
+      "logo": "https://germanperformancega.com/assets/img/logo-288.webp",
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "2144 Parkwood Rd NW",
+        "addressLocality": "Snellville",
+        "addressRegion": "GA",
+        "postalCode": "30078",
+        "addressCountry": "US"
+      },
+      "openingHoursSpecification": [
+        {
+          "@type": "OpeningHoursSpecification",
+          "dayOfWeek": [
+            "Monday",
+            "Tuesday",
+            "Wednesday",
+            "Thursday",
+            "Friday"
+          ],
+          "opens": "09:30",
+          "closes": "18:00"
+        }
+      ],
+      "areaServed": [
+        {
+          "@type": "City",
+          "name": "Snellville"
+        },
+        {
+          "@type": "City",
+          "name": "Loganville"
+        },
+        {
+          "@type": "City",
+          "name": "Grayson"
+        },
+        {
+          "@type": "City",
+          "name": "Lawrenceville"
+        },
+        {
+          "@type": "City",
+          "name": "Stone Mountain"
+        },
+        {
+          "@type": "City",
+          "name": "Gwinnett County"
+        }
+      ],
+      "makesOffer": [
+        {
+          "@type": "Offer",
+          "itemOffered": {
+            "@type": "Service",
+            "name": "BMW repair and service"
+          }
+        },
+        {
+          "@type": "Offer",
+          "itemOffered": {
+            "@type": "Service",
+            "name": "Mercedes-Benz repair and service"
+          }
+        },
+        {
+          "@type": "Offer",
+          "itemOffered": {
+            "@type": "Service",
+            "name": "Audi repair and service"
+          }
+        },
+        {
+          "@type": "Offer",
+          "itemOffered": {
+            "@type": "Service",
+            "name": "Porsche repair and service"
+          }
+        },
+        {
+          "@type": "Offer",
+          "itemOffered": {
+            "@type": "Service",
+            "name": "Volkswagen repair and service"
+          }
+        },
+        {
+          "@type": "Offer",
+          "itemOffered": {
+            "@type": "Service",
+            "name": "MINI repair and service"
+          }
+        }
+      ],
+      "sameAs": [
+        "https://www.instagram.com/germanperformance.auto"
+      ]
+    },
+    {
+      "@type": "WebSite",
+      "@id": "https://germanperformancega.com/#website",
+      "url": "https://germanperformancega.com/",
+      "name": "German Performance",
+      "publisher": {
+        "@id": "https://germanperformancega.com/#business"
       }
     },
     {
-      "@type": "Question",
-      "name": "Can you just recharge my AC without fixing the leak?",
-      "acceptedAnswer": {
-        "@type": "Answer",
-        "text": "We won't. Recharging a leaking system without fixing the leak is a waste of money — the refrigerant will escape again, usually within weeks. We locate and repair the leak first, then recharge. This is the only approach that actually solves the problem."
+      "@type": "WebPage",
+      "@id": "https://germanperformancega.com/german-car-ac-repair-snellville-ga.html#webpage",
+      "url": "https://germanperformancega.com/german-car-ac-repair-snellville-ga.html",
+      "name": "German Car AC Repair Snellville GA | German Performance",
+      "description": "Expert AC repair for BMW, Mercedes, Audi, Porsche & VW in Snellville, GA. Recharge, leak repair & compressor. Serving Gwinnett County. Call (678) 395-7459.",
+      "isPartOf": {
+        "@id": "https://germanperformancega.com/#website"
+      },
+      "about": {
+        "@id": "https://germanperformancega.com/#business"
       }
     },
     {
-      "@type": "Question",
-      "name": "What refrigerant does my German car use?",
-      "acceptedAnswer": {
-        "@type": "Answer",
-        "text": "Most German vehicles built before 2017 use R134a refrigerant. Most post-2017 European vehicles use the newer R1234yf refrigerant, which requires different equipment and is more expensive per pound. We handle both. We confirm the correct spec for your vehicle before any AC work begins."
-      }
+      "@type": "Service",
+      "@id": "https://germanperformancega.com/german-car-ac-repair-snellville-ga.html#service",
+      "name": "German Car AC Repair",
+      "serviceType": "German Car AC Repair",
+      "description": "Expert AC repair for BMW, Mercedes, Audi, Porsche & VW in Snellville, GA. Recharge, leak repair & compressor. Serving Gwinnett County. Call (678) 395-7459.",
+      "url": "https://germanperformancega.com/german-car-ac-repair-snellville-ga.html",
+      "provider": {
+        "@id": "https://germanperformancega.com/#business"
+      },
+      "areaServed": [
+        {
+          "@type": "City",
+          "name": "Snellville"
+        },
+        {
+          "@type": "City",
+          "name": "Loganville"
+        },
+        {
+          "@type": "City",
+          "name": "Grayson"
+        },
+        {
+          "@type": "City",
+          "name": "Lawrenceville"
+        },
+        {
+          "@type": "City",
+          "name": "Stone Mountain"
+        },
+        {
+          "@type": "City",
+          "name": "Gwinnett County"
+        }
+      ]
     },
     {
-      "@type": "Question",
-      "name": "How much does AC repair cost on a German car?",
-      "acceptedAnswer": {
-        "@type": "Answer",
-        "text": "It depends entirely on what's failed. A recharge after a minor O-ring leak is relatively inexpensive. A compressor replacement or evaporator core job is significantly more — especially on vehicles that require dashboard removal. We give you a full diagnosis and written estimate before any work starts, so there are no surprises."
-      }
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://germanperformancega.com/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "German Car AC Repair — Snellville, GA",
+          "item": "https://germanperformancega.com/german-car-ac-repair-snellville-ga.html"
+        }
+      ]
     },
     {
-      "@type": "Question",
-      "name": "My AC works sometimes but not others — what does that mean?",
-      "acceptedAnswer": {
-        "@type": "Answer",
-        "text": "Intermittent AC is usually caused by a failing compressor clutch, a pressure sensor issue, or an electrical fault in the HVAC control system. On German vehicles with dual-zone climate control, it can also be a blend door actuator that's sticking. We'll diagnose it properly with the right scan tools rather than guessing."
-      }
-    },
-    {
-      "@type": "Question",
-      "name": "Do you work on AC for all German brands?",
-      "acceptedAnswer": {
-        "@type": "Answer",
-        "text": "Yes. We service AC systems on BMW, Mercedes-Benz, Audi, Volkswagen, and Porsche. Each brand has its own HVAC diagnostic software and system quirks — we have the tools and experience for all of them."
-      }
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Why is my German car's AC not blowing cold?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "The most common causes are low refrigerant from a leak, a failed AC compressor, a clogged or damaged condenser, or a faulty expansion valve. Less commonly, it can be an electrical issue with the HVAC control module or a blend door actuator failure. We diagnose the root cause before recommending any repair — we don't just recharge and hope for the best."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Can you just recharge my AC without fixing the leak?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "We won't. Recharging a leaking system without fixing the leak is a waste of money — the refrigerant will escape again, usually within weeks. We locate and repair the leak first, then recharge. This is the only approach that actually solves the problem."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What refrigerant does my German car use?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Most German vehicles built before 2017 use R134a refrigerant. Most post-2017 European vehicles use the newer R1234yf refrigerant, which requires different equipment and is more expensive per pound. We handle both. We confirm the correct spec for your vehicle before any AC work begins."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How much does AC repair cost on a German car?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "It depends entirely on what's failed. A recharge after a minor O-ring leak is relatively inexpensive. A compressor replacement or evaporator core job is significantly more — especially on vehicles that require dashboard removal. We give you a full diagnosis and written estimate before any work starts, so there are no surprises."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "My AC works sometimes but not others — what does that mean?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Intermittent AC is usually caused by a failing compressor clutch, a pressure sensor issue, or an electrical fault in the HVAC control system. On German vehicles with dual-zone climate control, it can also be a blend door actuator that's sticking. We'll diagnose it properly with the right scan tools rather than guessing."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Do you work on AC for all German brands?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes. We service AC systems on BMW, Mercedes-Benz, Audi, Volkswagen, and Porsche. Each brand has its own HVAC diagnostic software and system quirks — we have the tools and experience for all of them."
+          }
+        }
+      ]
     }
   ]
 }
 </script>
-<script defer src="assets/js/site.js?v=1"></script>
 </head>
 <body>
 <nav>

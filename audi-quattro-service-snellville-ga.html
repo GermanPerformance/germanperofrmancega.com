@@ -11,63 +11,250 @@
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:opsz,wght@9..40,300;9..40,400&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="assets/css/tokens.css?v=1">
 <link rel="stylesheet" href="assets/css/site.css?v=1">
+<script defer src="assets/js/site.js?v=1"></script>
+
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
-  "@type": "FAQPage",
-  "mainEntity": [
+  "@graph": [
     {
-      "@type": "Question",
-      "name": "What is the difference between Haldex and Torsen Quattro?",
-      "acceptedAnswer": {
-        "@type": "Answer",
-        "text": "Haldex Quattro is used on transverse-engine Audi models (A3, TT, Q3, and Golf R platform vehicles). It uses an electronically controlled clutch pack to send power to the rear wheels on demand. Torsen Quattro is used on longitudinal-engine models (A4, A6, A8, Q5, Q7) and uses a mechanical torsen differential that continuously distributes torque. Both need periodic maintenance — but the service procedures and parts are completely different."
+      "@type": "AutoRepair",
+      "@id": "https://germanperformancega.com/#business",
+      "name": "German Performance",
+      "url": "https://germanperformancega.com/",
+      "telephone": "+1-678-395-7459",
+      "priceRange": "$$",
+      "foundingDate": "2010",
+      "image": "https://germanperformancega.com/og-image.jpg",
+      "logo": "https://germanperformancega.com/assets/img/logo-288.webp",
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "2144 Parkwood Rd NW",
+        "addressLocality": "Snellville",
+        "addressRegion": "GA",
+        "postalCode": "30078",
+        "addressCountry": "US"
+      },
+      "openingHoursSpecification": [
+        {
+          "@type": "OpeningHoursSpecification",
+          "dayOfWeek": [
+            "Monday",
+            "Tuesday",
+            "Wednesday",
+            "Thursday",
+            "Friday"
+          ],
+          "opens": "09:30",
+          "closes": "18:00"
+        }
+      ],
+      "areaServed": [
+        {
+          "@type": "City",
+          "name": "Snellville"
+        },
+        {
+          "@type": "City",
+          "name": "Loganville"
+        },
+        {
+          "@type": "City",
+          "name": "Grayson"
+        },
+        {
+          "@type": "City",
+          "name": "Lawrenceville"
+        },
+        {
+          "@type": "City",
+          "name": "Stone Mountain"
+        },
+        {
+          "@type": "City",
+          "name": "Gwinnett County"
+        }
+      ],
+      "makesOffer": [
+        {
+          "@type": "Offer",
+          "itemOffered": {
+            "@type": "Service",
+            "name": "BMW repair and service"
+          }
+        },
+        {
+          "@type": "Offer",
+          "itemOffered": {
+            "@type": "Service",
+            "name": "Mercedes-Benz repair and service"
+          }
+        },
+        {
+          "@type": "Offer",
+          "itemOffered": {
+            "@type": "Service",
+            "name": "Audi repair and service"
+          }
+        },
+        {
+          "@type": "Offer",
+          "itemOffered": {
+            "@type": "Service",
+            "name": "Porsche repair and service"
+          }
+        },
+        {
+          "@type": "Offer",
+          "itemOffered": {
+            "@type": "Service",
+            "name": "Volkswagen repair and service"
+          }
+        },
+        {
+          "@type": "Offer",
+          "itemOffered": {
+            "@type": "Service",
+            "name": "MINI repair and service"
+          }
+        }
+      ],
+      "sameAs": [
+        "https://www.instagram.com/germanperformance.auto"
+      ]
+    },
+    {
+      "@type": "WebSite",
+      "@id": "https://germanperformancega.com/#website",
+      "url": "https://germanperformancega.com/",
+      "name": "German Performance",
+      "publisher": {
+        "@id": "https://germanperformancega.com/#business"
       }
     },
     {
-      "@type": "Question",
-      "name": "How often should I service my Haldex system?",
-      "acceptedAnswer": {
-        "@type": "Answer",
-        "text": "Audi recommends Haldex fluid and filter changes every 25,000–40,000 miles depending on the generation. In practice, many owners skip this service entirely, which leads to Haldex pump failure. A pump replacement is a $600–$1,200 repair that's almost entirely preventable with regular fluid changes."
+      "@type": "WebPage",
+      "@id": "https://germanperformancega.com/audi-quattro-service-snellville-ga.html#webpage",
+      "url": "https://germanperformancega.com/audi-quattro-service-snellville-ga.html",
+      "name": "Audi Quattro Service Snellville GA | German Performance",
+      "description": "Expert Audi Quattro AWD service in Snellville, GA. Differential service, Haldex, torsen & drivetrain repair. Serving Gwinnett County. Call (678) 395-7459.",
+      "isPartOf": {
+        "@id": "https://germanperformancega.com/#website"
+      },
+      "about": {
+        "@id": "https://germanperformancega.com/#business"
       }
     },
     {
-      "@type": "Question",
-      "name": "How do I know if my Quattro system isn't working properly?",
-      "acceptedAnswer": {
-        "@type": "Answer",
-        "text": "Signs of a Quattro system issue include an AWD warning light, the car behaving like front-wheel drive in slippery conditions, vibration or clunking during tight low-speed turns, or a VCDS fault code related to the Haldex controller or rear differential. If you notice any of these, bring it in before the system fails completely."
-      }
+      "@type": "Service",
+      "@id": "https://germanperformancega.com/audi-quattro-service-snellville-ga.html#service",
+      "name": "Audi Quattro Service",
+      "serviceType": "Audi Quattro Service",
+      "description": "Expert Audi Quattro AWD service in Snellville, GA. Differential service, Haldex, torsen & drivetrain repair. Serving Gwinnett County. Call (678) 395-7459.",
+      "url": "https://germanperformancega.com/audi-quattro-service-snellville-ga.html",
+      "provider": {
+        "@id": "https://germanperformancega.com/#business"
+      },
+      "areaServed": [
+        {
+          "@type": "City",
+          "name": "Snellville"
+        },
+        {
+          "@type": "City",
+          "name": "Loganville"
+        },
+        {
+          "@type": "City",
+          "name": "Grayson"
+        },
+        {
+          "@type": "City",
+          "name": "Lawrenceville"
+        },
+        {
+          "@type": "City",
+          "name": "Stone Mountain"
+        },
+        {
+          "@type": "City",
+          "name": "Gwinnett County"
+        }
+      ]
     },
     {
-      "@type": "Question",
-      "name": "Can a failing Haldex system damage my Audi?",
-      "acceptedAnswer": {
-        "@type": "Answer",
-        "text": "Yes. A Haldex pump that fails while the system is trying to engage can damage the clutch pack and internal components. More commonly, a neglected Haldex system simply stops engaging the rear wheels — turning your Quattro into a front-wheel-drive car without any warning. Regular fluid service is cheap insurance."
-      }
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://germanperformancega.com/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Audi Quattro Service — Snellville, GA",
+          "item": "https://germanperformancega.com/audi-quattro-service-snellville-ga.html"
+        }
+      ]
     },
     {
-      "@type": "Question",
-      "name": "Do you service Audi RS and S models with Quattro?",
-      "acceptedAnswer": {
-        "@type": "Answer",
-        "text": "Yes. We service the full Audi performance lineup including S3, S4, S5, S6, S7, S8, RS3, RS4, RS5, RS6, RS7, and the TT RS. Performance Quattro variants often have sport differentials and torque vectoring systems that require specific diagnostic software and fluid specs — we have both."
-      }
-    },
-    {
-      "@type": "Question",
-      "name": "What does a Quattro service typically involve?",
-      "acceptedAnswer": {
-        "@type": "Answer",
-        "text": "For Haldex vehicles: fluid and filter change, Haldex controller scan, and pump operation test. For Torsen vehicles: rear differential fluid change, center differential inspection, and driveshaft/CV joint check. We always start with a diagnostic scan to check for stored fault codes before recommending any fluid services."
-      }
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "What is the difference between Haldex and Torsen Quattro?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Haldex Quattro is used on transverse-engine Audi models (A3, TT, Q3, and Golf R platform vehicles). It uses an electronically controlled clutch pack to send power to the rear wheels on demand. Torsen Quattro is used on longitudinal-engine models (A4, A6, A8, Q5, Q7) and uses a mechanical torsen differential that continuously distributes torque. Both need periodic maintenance — but the service procedures and parts are completely different."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How often should I service my Haldex system?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Audi recommends Haldex fluid and filter changes every 25,000–40,000 miles depending on the generation. In practice, many owners skip this service entirely, which leads to Haldex pump failure. A pump replacement is a $600–$1,200 repair that's almost entirely preventable with regular fluid changes."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How do I know if my Quattro system isn't working properly?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Signs of a Quattro system issue include an AWD warning light, the car behaving like front-wheel drive in slippery conditions, vibration or clunking during tight low-speed turns, or a VCDS fault code related to the Haldex controller or rear differential. If you notice any of these, bring it in before the system fails completely."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Can a failing Haldex system damage my Audi?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes. A Haldex pump that fails while the system is trying to engage can damage the clutch pack and internal components. More commonly, a neglected Haldex system simply stops engaging the rear wheels — turning your Quattro into a front-wheel-drive car without any warning. Regular fluid service is cheap insurance."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Do you service Audi RS and S models with Quattro?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes. We service the full Audi performance lineup including S3, S4, S5, S6, S7, S8, RS3, RS4, RS5, RS6, RS7, and the TT RS. Performance Quattro variants often have sport differentials and torque vectoring systems that require specific diagnostic software and fluid specs — we have both."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What does a Quattro service typically involve?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "For Haldex vehicles: fluid and filter change, Haldex controller scan, and pump operation test. For Torsen vehicles: rear differential fluid change, center differential inspection, and driveshaft/CV joint check. We always start with a diagnostic scan to check for stored fault codes before recommending any fluid services."
+          }
+        }
+      ]
     }
   ]
 }
 </script>
-<script defer src="assets/js/site.js?v=1"></script>
 </head>
 <body>
 <nav>

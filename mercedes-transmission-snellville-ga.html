@@ -11,63 +11,250 @@
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:opsz,wght@9..40,300;9..40,400&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="assets/css/tokens.css?v=1">
 <link rel="stylesheet" href="assets/css/site.css?v=1">
+<script defer src="assets/js/site.js?v=1"></script>
+
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
-  "@type": "FAQPage",
-  "mainEntity": [
+  "@graph": [
     {
-      "@type": "Question",
-      "name": "How often should I service my Mercedes transmission?",
-      "acceptedAnswer": {
-        "@type": "Answer",
-        "text": "Mercedes labels many of their automatic transmissions as \"lifetime fill\" — but in practice, fluid service every 40,000–60,000 miles dramatically extends transmission life. Degraded fluid is the leading cause of Mercedes transmission solenoid and valve body failures. A fluid service is far less expensive than a rebuild."
+      "@type": "AutoRepair",
+      "@id": "https://germanperformancega.com/#business",
+      "name": "German Performance",
+      "url": "https://germanperformancega.com/",
+      "telephone": "+1-678-395-7459",
+      "priceRange": "$$",
+      "foundingDate": "2010",
+      "image": "https://germanperformancega.com/og-image.jpg",
+      "logo": "https://germanperformancega.com/assets/img/logo-288.webp",
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "2144 Parkwood Rd NW",
+        "addressLocality": "Snellville",
+        "addressRegion": "GA",
+        "postalCode": "30078",
+        "addressCountry": "US"
+      },
+      "openingHoursSpecification": [
+        {
+          "@type": "OpeningHoursSpecification",
+          "dayOfWeek": [
+            "Monday",
+            "Tuesday",
+            "Wednesday",
+            "Thursday",
+            "Friday"
+          ],
+          "opens": "09:30",
+          "closes": "18:00"
+        }
+      ],
+      "areaServed": [
+        {
+          "@type": "City",
+          "name": "Snellville"
+        },
+        {
+          "@type": "City",
+          "name": "Loganville"
+        },
+        {
+          "@type": "City",
+          "name": "Grayson"
+        },
+        {
+          "@type": "City",
+          "name": "Lawrenceville"
+        },
+        {
+          "@type": "City",
+          "name": "Stone Mountain"
+        },
+        {
+          "@type": "City",
+          "name": "Gwinnett County"
+        }
+      ],
+      "makesOffer": [
+        {
+          "@type": "Offer",
+          "itemOffered": {
+            "@type": "Service",
+            "name": "BMW repair and service"
+          }
+        },
+        {
+          "@type": "Offer",
+          "itemOffered": {
+            "@type": "Service",
+            "name": "Mercedes-Benz repair and service"
+          }
+        },
+        {
+          "@type": "Offer",
+          "itemOffered": {
+            "@type": "Service",
+            "name": "Audi repair and service"
+          }
+        },
+        {
+          "@type": "Offer",
+          "itemOffered": {
+            "@type": "Service",
+            "name": "Porsche repair and service"
+          }
+        },
+        {
+          "@type": "Offer",
+          "itemOffered": {
+            "@type": "Service",
+            "name": "Volkswagen repair and service"
+          }
+        },
+        {
+          "@type": "Offer",
+          "itemOffered": {
+            "@type": "Service",
+            "name": "MINI repair and service"
+          }
+        }
+      ],
+      "sameAs": [
+        "https://www.instagram.com/germanperformance.auto"
+      ]
+    },
+    {
+      "@type": "WebSite",
+      "@id": "https://germanperformancega.com/#website",
+      "url": "https://germanperformancega.com/",
+      "name": "German Performance",
+      "publisher": {
+        "@id": "https://germanperformancega.com/#business"
       }
     },
     {
-      "@type": "Question",
-      "name": "Why does checking the fluid level on a Mercedes transmission require a scan tool?",
-      "acceptedAnswer": {
-        "@type": "Answer",
-        "text": "Mercedes 7G-Tronic and 9G-Tronic transmissions have no dipstick. Fluid level is checked through a fill plug at a specific fluid temperature that must be monitored using STAR-compatible software. Without the scan tool, you cannot accurately check or set the fluid level — overfilling or underfilling both cause damage."
+      "@type": "WebPage",
+      "@id": "https://germanperformancega.com/mercedes-transmission-snellville-ga.html#webpage",
+      "url": "https://germanperformancega.com/mercedes-transmission-snellville-ga.html",
+      "name": "Mercedes Transmission Service Snellville GA | German Performance",
+      "description": "Expert Mercedes-Benz transmission service in Snellville, GA. 7G/9G-Tronic fluid service & diagnostics. Serving Gwinnett County. Call (678) 395-7459.",
+      "isPartOf": {
+        "@id": "https://germanperformancega.com/#website"
+      },
+      "about": {
+        "@id": "https://germanperformancega.com/#business"
       }
     },
     {
-      "@type": "Question",
-      "name": "What are signs my Mercedes transmission needs service?",
-      "acceptedAnswer": {
-        "@type": "Answer",
-        "text": "Watch for: harsh or delayed shifts, the transmission entering limp mode, a transmission warning on the COMAND display, shuddering during acceleration, fluid leaks under the vehicle, or unusual noises during gear changes. Any of these should be diagnosed promptly — transmission issues worsen quickly when ignored."
-      }
+      "@type": "Service",
+      "@id": "https://germanperformancega.com/mercedes-transmission-snellville-ga.html#service",
+      "name": "Mercedes Transmission Service",
+      "serviceType": "Mercedes Transmission Service",
+      "description": "Expert Mercedes-Benz transmission service in Snellville, GA. 7G/9G-Tronic fluid service & diagnostics. Serving Gwinnett County. Call (678) 395-7459.",
+      "url": "https://germanperformancega.com/mercedes-transmission-snellville-ga.html",
+      "provider": {
+        "@id": "https://germanperformancega.com/#business"
+      },
+      "areaServed": [
+        {
+          "@type": "City",
+          "name": "Snellville"
+        },
+        {
+          "@type": "City",
+          "name": "Loganville"
+        },
+        {
+          "@type": "City",
+          "name": "Grayson"
+        },
+        {
+          "@type": "City",
+          "name": "Lawrenceville"
+        },
+        {
+          "@type": "City",
+          "name": "Stone Mountain"
+        },
+        {
+          "@type": "City",
+          "name": "Gwinnett County"
+        }
+      ]
     },
     {
-      "@type": "Question",
-      "name": "What transmission does my Mercedes have?",
-      "acceptedAnswer": {
-        "@type": "Answer",
-        "text": "Most modern Mercedes-Benz vehicles use the 7G-Tronic (7-speed) or 9G-Tronic (9-speed) automatic transmission. AMG models use the Speedshift MCT (multi-clutch) or DCT (dual-clutch) depending on the model. Older models use the 5G-Tronic. Call us with your VIN and we'll confirm exactly what you have."
-      }
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://germanperformancega.com/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Mercedes Transmission Service — Snellville, GA",
+          "item": "https://germanperformancega.com/mercedes-transmission-snellville-ga.html"
+        }
+      ]
     },
     {
-      "@type": "Question",
-      "name": "Can a transmission fluid service fix shifting problems on my Mercedes?",
-      "acceptedAnswer": {
-        "@type": "Answer",
-        "text": "Often yes — especially if the transmission hasn't been serviced in a long time. Fresh fluid combined with a transmission adaptation reset can restore smooth shifting on many Mercedes automatics. We always diagnose first to confirm fluid service will address the issue before recommending it."
-      }
-    },
-    {
-      "@type": "Question",
-      "name": "Do you service AMG transmissions?",
-      "acceptedAnswer": {
-        "@type": "Answer",
-        "text": "Yes. We service AMG Speedshift MCT and DCT transmissions across the full AMG lineup including C63, E63, S63, GLC63, GLE63, and GT models. AMG transmissions require specific fluid specs and adaptation procedures that differ from standard Mercedes automatics — we have the tools and experience for both."
-      }
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "How often should I service my Mercedes transmission?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Mercedes labels many of their automatic transmissions as \"lifetime fill\" — but in practice, fluid service every 40,000–60,000 miles dramatically extends transmission life. Degraded fluid is the leading cause of Mercedes transmission solenoid and valve body failures. A fluid service is far less expensive than a rebuild."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Why does checking the fluid level on a Mercedes transmission require a scan tool?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Mercedes 7G-Tronic and 9G-Tronic transmissions have no dipstick. Fluid level is checked through a fill plug at a specific fluid temperature that must be monitored using STAR-compatible software. Without the scan tool, you cannot accurately check or set the fluid level — overfilling or underfilling both cause damage."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What are signs my Mercedes transmission needs service?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Watch for: harsh or delayed shifts, the transmission entering limp mode, a transmission warning on the COMAND display, shuddering during acceleration, fluid leaks under the vehicle, or unusual noises during gear changes. Any of these should be diagnosed promptly — transmission issues worsen quickly when ignored."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What transmission does my Mercedes have?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Most modern Mercedes-Benz vehicles use the 7G-Tronic (7-speed) or 9G-Tronic (9-speed) automatic transmission. AMG models use the Speedshift MCT (multi-clutch) or DCT (dual-clutch) depending on the model. Older models use the 5G-Tronic. Call us with your VIN and we'll confirm exactly what you have."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Can a transmission fluid service fix shifting problems on my Mercedes?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Often yes — especially if the transmission hasn't been serviced in a long time. Fresh fluid combined with a transmission adaptation reset can restore smooth shifting on many Mercedes automatics. We always diagnose first to confirm fluid service will address the issue before recommending it."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Do you service AMG transmissions?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes. We service AMG Speedshift MCT and DCT transmissions across the full AMG lineup including C63, E63, S63, GLC63, GLE63, and GT models. AMG transmissions require specific fluid specs and adaptation procedures that differ from standard Mercedes automatics — we have the tools and experience for both."
+          }
+        }
+      ]
     }
   ]
 }
 </script>
-<script defer src="assets/js/site.js?v=1"></script>
 </head>
 <body>
 <nav>

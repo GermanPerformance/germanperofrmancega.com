@@ -11,63 +11,250 @@
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:opsz,wght@9..40,300;9..40,400&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="assets/css/tokens.css?v=1">
 <link rel="stylesheet" href="assets/css/site.css?v=1">
+<script defer src="assets/js/site.js?v=1"></script>
+
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
-  "@type": "FAQPage",
-  "mainEntity": [
+  "@graph": [
     {
-      "@type": "Question",
-      "name": "Why do BMW cooling systems fail so often?",
-      "acceptedAnswer": {
-        "@type": "Answer",
-        "text": "BMW engineers their cooling systems with plastic components — expansion tanks, thermostat housings, water pump impellers, and radiator end tanks — that degrade with heat cycling over time. These components have a predictable lifespan of roughly 80,000–120,000 miles. The good news is that failures are predictable and preventable with proactive replacement before they crack or fail."
+      "@type": "AutoRepair",
+      "@id": "https://germanperformancega.com/#business",
+      "name": "German Performance",
+      "url": "https://germanperformancega.com/",
+      "telephone": "+1-678-395-7459",
+      "priceRange": "$$",
+      "foundingDate": "2010",
+      "image": "https://germanperformancega.com/og-image.jpg",
+      "logo": "https://germanperformancega.com/assets/img/logo-288.webp",
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "2144 Parkwood Rd NW",
+        "addressLocality": "Snellville",
+        "addressRegion": "GA",
+        "postalCode": "30078",
+        "addressCountry": "US"
+      },
+      "openingHoursSpecification": [
+        {
+          "@type": "OpeningHoursSpecification",
+          "dayOfWeek": [
+            "Monday",
+            "Tuesday",
+            "Wednesday",
+            "Thursday",
+            "Friday"
+          ],
+          "opens": "09:30",
+          "closes": "18:00"
+        }
+      ],
+      "areaServed": [
+        {
+          "@type": "City",
+          "name": "Snellville"
+        },
+        {
+          "@type": "City",
+          "name": "Loganville"
+        },
+        {
+          "@type": "City",
+          "name": "Grayson"
+        },
+        {
+          "@type": "City",
+          "name": "Lawrenceville"
+        },
+        {
+          "@type": "City",
+          "name": "Stone Mountain"
+        },
+        {
+          "@type": "City",
+          "name": "Gwinnett County"
+        }
+      ],
+      "makesOffer": [
+        {
+          "@type": "Offer",
+          "itemOffered": {
+            "@type": "Service",
+            "name": "BMW repair and service"
+          }
+        },
+        {
+          "@type": "Offer",
+          "itemOffered": {
+            "@type": "Service",
+            "name": "Mercedes-Benz repair and service"
+          }
+        },
+        {
+          "@type": "Offer",
+          "itemOffered": {
+            "@type": "Service",
+            "name": "Audi repair and service"
+          }
+        },
+        {
+          "@type": "Offer",
+          "itemOffered": {
+            "@type": "Service",
+            "name": "Porsche repair and service"
+          }
+        },
+        {
+          "@type": "Offer",
+          "itemOffered": {
+            "@type": "Service",
+            "name": "Volkswagen repair and service"
+          }
+        },
+        {
+          "@type": "Offer",
+          "itemOffered": {
+            "@type": "Service",
+            "name": "MINI repair and service"
+          }
+        }
+      ],
+      "sameAs": [
+        "https://www.instagram.com/germanperformance.auto"
+      ]
+    },
+    {
+      "@type": "WebSite",
+      "@id": "https://germanperformancega.com/#website",
+      "url": "https://germanperformancega.com/",
+      "name": "German Performance",
+      "publisher": {
+        "@id": "https://germanperformancega.com/#business"
       }
     },
     {
-      "@type": "Question",
-      "name": "What are the warning signs of a BMW cooling system problem?",
-      "acceptedAnswer": {
-        "@type": "Answer",
-        "text": "Watch for: temperature gauge climbing higher than normal, coolant warning light, sweet smell from the engine bay (coolant leak), white smoke from the exhaust (head gasket), low coolant level with no visible leak (internal leak), or the heater blowing cold air (low coolant or thermostat stuck open). Any of these should be diagnosed immediately."
+      "@type": "WebPage",
+      "@id": "https://germanperformancega.com/bmw-cooling-system-repair-snellville-ga.html#webpage",
+      "url": "https://germanperformancega.com/bmw-cooling-system-repair-snellville-ga.html",
+      "name": "BMW Cooling System Repair Snellville GA | German Performance",
+      "description": "Expert BMW cooling system repair in Snellville, GA. Water pump, thermostat, radiator & coolant flush. Serving Gwinnett County. Call (678) 395-7459.",
+      "isPartOf": {
+        "@id": "https://germanperformancega.com/#website"
+      },
+      "about": {
+        "@id": "https://germanperformancega.com/#business"
       }
     },
     {
-      "@type": "Question",
-      "name": "How often should BMW coolant be flushed?",
-      "acceptedAnswer": {
-        "@type": "Answer",
-        "text": "BMW recommends a coolant flush every 4 years or 50,000 miles. Over time, coolant loses its corrosion inhibitors and becomes acidic, attacking aluminum components in the cooling system. A coolant flush is inexpensive insurance against much more costly damage."
-      }
+      "@type": "Service",
+      "@id": "https://germanperformancega.com/bmw-cooling-system-repair-snellville-ga.html#service",
+      "name": "BMW Cooling System Repair",
+      "serviceType": "BMW Cooling System Repair",
+      "description": "Expert BMW cooling system repair in Snellville, GA. Water pump, thermostat, radiator & coolant flush. Serving Gwinnett County. Call (678) 395-7459.",
+      "url": "https://germanperformancega.com/bmw-cooling-system-repair-snellville-ga.html",
+      "provider": {
+        "@id": "https://germanperformancega.com/#business"
+      },
+      "areaServed": [
+        {
+          "@type": "City",
+          "name": "Snellville"
+        },
+        {
+          "@type": "City",
+          "name": "Loganville"
+        },
+        {
+          "@type": "City",
+          "name": "Grayson"
+        },
+        {
+          "@type": "City",
+          "name": "Lawrenceville"
+        },
+        {
+          "@type": "City",
+          "name": "Stone Mountain"
+        },
+        {
+          "@type": "City",
+          "name": "Gwinnett County"
+        }
+      ]
     },
     {
-      "@type": "Question",
-      "name": "Can I mix different BMW coolant types?",
-      "acceptedAnswer": {
-        "@type": "Answer",
-        "text": "No. BMW uses silicate-free coolant (blue or green depending on model year) that is incompatible with universal green antifreeze. Mixing different coolant types causes a chemical reaction that forms gel, blocking the cooling passages and causing overheating. Always use the correct BMW-spec coolant — which is what we use on every job."
-      }
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://germanperformancega.com/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "BMW Cooling System Repair — Snellville, GA",
+          "item": "https://germanperformancega.com/bmw-cooling-system-repair-snellville-ga.html"
+        }
+      ]
     },
     {
-      "@type": "Question",
-      "name": "My BMW is overheating — is it safe to drive?",
-      "acceptedAnswer": {
-        "@type": "Answer",
-        "text": "No. Pull over immediately and let the engine cool. Driving an overheating BMW can warp the cylinder head, blow the head gasket, or seize the engine — repairs that cost far more than the tow. Call us and we'll advise on the safest next step."
-      }
-    },
-    {
-      "@type": "Question",
-      "name": "Do you replace the water pump and thermostat together?",
-      "acceptedAnswer": {
-        "@type": "Answer",
-        "text": "On most BMW engines, yes — we recommend it. The water pump and thermostat are located near each other and the labor to access them overlaps significantly. Replacing both at the same time saves labor cost compared to two separate jobs, and both components fail at similar mileages. It's the smart approach on any BMW over 80,000 miles."
-      }
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Why do BMW cooling systems fail so often?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "BMW engineers their cooling systems with plastic components — expansion tanks, thermostat housings, water pump impellers, and radiator end tanks — that degrade with heat cycling over time. These components have a predictable lifespan of roughly 80,000–120,000 miles. The good news is that failures are predictable and preventable with proactive replacement before they crack or fail."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What are the warning signs of a BMW cooling system problem?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Watch for: temperature gauge climbing higher than normal, coolant warning light, sweet smell from the engine bay (coolant leak), white smoke from the exhaust (head gasket), low coolant level with no visible leak (internal leak), or the heater blowing cold air (low coolant or thermostat stuck open). Any of these should be diagnosed immediately."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How often should BMW coolant be flushed?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "BMW recommends a coolant flush every 4 years or 50,000 miles. Over time, coolant loses its corrosion inhibitors and becomes acidic, attacking aluminum components in the cooling system. A coolant flush is inexpensive insurance against much more costly damage."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Can I mix different BMW coolant types?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "No. BMW uses silicate-free coolant (blue or green depending on model year) that is incompatible with universal green antifreeze. Mixing different coolant types causes a chemical reaction that forms gel, blocking the cooling passages and causing overheating. Always use the correct BMW-spec coolant — which is what we use on every job."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "My BMW is overheating — is it safe to drive?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "No. Pull over immediately and let the engine cool. Driving an overheating BMW can warp the cylinder head, blow the head gasket, or seize the engine — repairs that cost far more than the tow. Call us and we'll advise on the safest next step."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Do you replace the water pump and thermostat together?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "On most BMW engines, yes — we recommend it. The water pump and thermostat are located near each other and the labor to access them overlaps significantly. Replacing both at the same time saves labor cost compared to two separate jobs, and both components fail at similar mileages. It's the smart approach on any BMW over 80,000 miles."
+          }
+        }
+      ]
     }
   ]
 }
 </script>
-<script defer src="assets/js/site.js?v=1"></script>
 </head>
 <body>
 <nav>

@@ -11,63 +11,250 @@
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:opsz,wght@9..40,300;9..40,400&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="assets/css/tokens.css?v=1">
 <link rel="stylesheet" href="assets/css/site.css?v=1">
+<script defer src="assets/js/site.js?v=1"></script>
+
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
-  "@type": "FAQPage",
-  "mainEntity": [
+  "@graph": [
     {
-      "@type": "Question",
-      "name": "My German car failed the Georgia emissions test — what do I do?",
-      "acceptedAnswer": {
-        "@type": "Answer",
-        "text": "Call us and bring in your emissions failure report. The report lists exactly which tests failed and what codes were present. We use that as a starting point for our diagnosis, confirm the root cause with brand-specific diagnostic software, and give you a written repair estimate. Don't just replace the part listed on the failure report — sometimes it's a symptom, not the root cause."
+      "@type": "AutoRepair",
+      "@id": "https://germanperformancega.com/#business",
+      "name": "German Performance",
+      "url": "https://germanperformancega.com/",
+      "telephone": "+1-678-395-7459",
+      "priceRange": "$$",
+      "foundingDate": "2010",
+      "image": "https://germanperformancega.com/og-image.jpg",
+      "logo": "https://germanperformancega.com/assets/img/logo-288.webp",
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "2144 Parkwood Rd NW",
+        "addressLocality": "Snellville",
+        "addressRegion": "GA",
+        "postalCode": "30078",
+        "addressCountry": "US"
+      },
+      "openingHoursSpecification": [
+        {
+          "@type": "OpeningHoursSpecification",
+          "dayOfWeek": [
+            "Monday",
+            "Tuesday",
+            "Wednesday",
+            "Thursday",
+            "Friday"
+          ],
+          "opens": "09:30",
+          "closes": "18:00"
+        }
+      ],
+      "areaServed": [
+        {
+          "@type": "City",
+          "name": "Snellville"
+        },
+        {
+          "@type": "City",
+          "name": "Loganville"
+        },
+        {
+          "@type": "City",
+          "name": "Grayson"
+        },
+        {
+          "@type": "City",
+          "name": "Lawrenceville"
+        },
+        {
+          "@type": "City",
+          "name": "Stone Mountain"
+        },
+        {
+          "@type": "City",
+          "name": "Gwinnett County"
+        }
+      ],
+      "makesOffer": [
+        {
+          "@type": "Offer",
+          "itemOffered": {
+            "@type": "Service",
+            "name": "BMW repair and service"
+          }
+        },
+        {
+          "@type": "Offer",
+          "itemOffered": {
+            "@type": "Service",
+            "name": "Mercedes-Benz repair and service"
+          }
+        },
+        {
+          "@type": "Offer",
+          "itemOffered": {
+            "@type": "Service",
+            "name": "Audi repair and service"
+          }
+        },
+        {
+          "@type": "Offer",
+          "itemOffered": {
+            "@type": "Service",
+            "name": "Porsche repair and service"
+          }
+        },
+        {
+          "@type": "Offer",
+          "itemOffered": {
+            "@type": "Service",
+            "name": "Volkswagen repair and service"
+          }
+        },
+        {
+          "@type": "Offer",
+          "itemOffered": {
+            "@type": "Service",
+            "name": "MINI repair and service"
+          }
+        }
+      ],
+      "sameAs": [
+        "https://www.instagram.com/germanperformance.auto"
+      ]
+    },
+    {
+      "@type": "WebSite",
+      "@id": "https://germanperformancega.com/#website",
+      "url": "https://germanperformancega.com/",
+      "name": "German Performance",
+      "publisher": {
+        "@id": "https://germanperformancega.com/#business"
       }
     },
     {
-      "@type": "Question",
-      "name": "Why did my car fail emissions even though the check engine light isn't on?",
-      "acceptedAnswer": {
-        "@type": "Answer",
-        "text": "Georgia's OBD emissions test checks for two things: active fault codes AND OBD readiness monitor completion. If you recently cleared codes or disconnected the battery, the readiness monitors may not have completed their drive cycles — causing a \"not ready\" failure even with no active faults. We check monitor status and advise on the correct drive cycle to complete them before you go for re-testing."
+      "@type": "WebPage",
+      "@id": "https://germanperformancega.com/german-car-emissions-repair-snellville-ga.html#webpage",
+      "url": "https://germanperformancega.com/german-car-emissions-repair-snellville-ga.html",
+      "name": "German Car Emissions Repair Snellville GA | German Performance",
+      "description": "German car emissions repair in Snellville, GA. Failed emissions test? We diagnose & fix BMW, Mercedes, Audi, VW & Porsche. Call (678) 395-7459.",
+      "isPartOf": {
+        "@id": "https://germanperformancega.com/#website"
+      },
+      "about": {
+        "@id": "https://germanperformancega.com/#business"
       }
     },
     {
-      "@type": "Question",
-      "name": "How long after repairs do I need to wait before re-testing?",
-      "acceptedAnswer": {
-        "@type": "Answer",
-        "text": "After emissions repairs, most vehicles need 50–100 miles of mixed driving to complete all OBD readiness monitors. Some monitors — particularly the catalyst and EVAP monitors — require specific drive conditions to complete. We advise on the correct procedure for your specific vehicle so you pass on the first re-test rather than making multiple trips."
-      }
+      "@type": "Service",
+      "@id": "https://germanperformancega.com/german-car-emissions-repair-snellville-ga.html#service",
+      "name": "German Car Emissions Repair",
+      "serviceType": "German Car Emissions Repair",
+      "description": "German car emissions repair in Snellville, GA. Failed emissions test? We diagnose & fix BMW, Mercedes, Audi, VW & Porsche. Call (678) 395-7459.",
+      "url": "https://germanperformancega.com/german-car-emissions-repair-snellville-ga.html",
+      "provider": {
+        "@id": "https://germanperformancega.com/#business"
+      },
+      "areaServed": [
+        {
+          "@type": "City",
+          "name": "Snellville"
+        },
+        {
+          "@type": "City",
+          "name": "Loganville"
+        },
+        {
+          "@type": "City",
+          "name": "Grayson"
+        },
+        {
+          "@type": "City",
+          "name": "Lawrenceville"
+        },
+        {
+          "@type": "City",
+          "name": "Stone Mountain"
+        },
+        {
+          "@type": "City",
+          "name": "Gwinnett County"
+        }
+      ]
     },
     {
-      "@type": "Question",
-      "name": "Is there an emissions repair cost waiver in Georgia?",
-      "acceptedAnswer": {
-        "@type": "Answer",
-        "text": "Georgia offers a cost waiver that allows a vehicle to pass emissions even with a remaining fault if you've spent over a certain threshold on repairs at a certified emissions repair facility. The requirements and amounts change periodically — call us and we'll advise on whether your situation qualifies and provide the required repair documentation."
-      }
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://germanperformancega.com/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "German Car Emissions Repair — Snellville, GA",
+          "item": "https://germanperformancega.com/german-car-emissions-repair-snellville-ga.html"
+        }
+      ]
     },
     {
-      "@type": "Question",
-      "name": "Do you work on all German car brands for emissions repairs?",
-      "acceptedAnswer": {
-        "@type": "Answer",
-        "text": "Yes. We diagnose and repair emissions failures on BMW, Mercedes-Benz, Audi, Volkswagen, and Porsche using brand-specific diagnostic software for each. Generic scan tools miss a lot of what these vehicles can tell us about the emissions system — we use the right tools for every brand."
-      }
-    },
-    {
-      "@type": "Question",
-      "name": "My car keeps failing emissions for a catalytic converter — is it really the cat?",
-      "acceptedAnswer": {
-        "@type": "Answer",
-        "text": "Not always. A P0420 or P0430 code (catalyst efficiency below threshold) can be caused by a failing catalytic converter, but it can also be triggered by a faulty upstream or downstream O2 sensor, an exhaust leak before the cat, or engine oil consumption contaminating the cat. We verify catalyst efficiency with live O2 sensor data before recommending a replacement — saving you from an unnecessary $1,000+ repair."
-      }
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "My German car failed the Georgia emissions test — what do I do?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Call us and bring in your emissions failure report. The report lists exactly which tests failed and what codes were present. We use that as a starting point for our diagnosis, confirm the root cause with brand-specific diagnostic software, and give you a written repair estimate. Don't just replace the part listed on the failure report — sometimes it's a symptom, not the root cause."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Why did my car fail emissions even though the check engine light isn't on?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Georgia's OBD emissions test checks for two things: active fault codes AND OBD readiness monitor completion. If you recently cleared codes or disconnected the battery, the readiness monitors may not have completed their drive cycles — causing a \"not ready\" failure even with no active faults. We check monitor status and advise on the correct drive cycle to complete them before you go for re-testing."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How long after repairs do I need to wait before re-testing?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "After emissions repairs, most vehicles need 50–100 miles of mixed driving to complete all OBD readiness monitors. Some monitors — particularly the catalyst and EVAP monitors — require specific drive conditions to complete. We advise on the correct procedure for your specific vehicle so you pass on the first re-test rather than making multiple trips."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Is there an emissions repair cost waiver in Georgia?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Georgia offers a cost waiver that allows a vehicle to pass emissions even with a remaining fault if you've spent over a certain threshold on repairs at a certified emissions repair facility. The requirements and amounts change periodically — call us and we'll advise on whether your situation qualifies and provide the required repair documentation."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Do you work on all German car brands for emissions repairs?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes. We diagnose and repair emissions failures on BMW, Mercedes-Benz, Audi, Volkswagen, and Porsche using brand-specific diagnostic software for each. Generic scan tools miss a lot of what these vehicles can tell us about the emissions system — we use the right tools for every brand."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "My car keeps failing emissions for a catalytic converter — is it really the cat?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Not always. A P0420 or P0430 code (catalyst efficiency below threshold) can be caused by a failing catalytic converter, but it can also be triggered by a faulty upstream or downstream O2 sensor, an exhaust leak before the cat, or engine oil consumption contaminating the cat. We verify catalyst efficiency with live O2 sensor data before recommending a replacement — saving you from an unnecessary $1,000+ repair."
+          }
+        }
+      ]
     }
   ]
 }
 </script>
-<script defer src="assets/js/site.js?v=1"></script>
 </head>
 <body>
 <nav>

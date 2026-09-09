@@ -11,63 +11,250 @@
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:opsz,wght@9..40,300;9..40,400&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="assets/css/tokens.css?v=1">
 <link rel="stylesheet" href="assets/css/site.css?v=1">
+<script defer src="assets/js/site.js?v=1"></script>
+
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
-  "@type": "FAQPage",
-  "mainEntity": [
+  "@graph": [
     {
-      "@type": "Question",
-      "name": "What qualifies as a fleet for your fleet service program?",
-      "acceptedAnswer": {
-        "@type": "Answer",
-        "text": "We work with businesses and individuals operating 3 or more German vehicles — whether that's a company running executive BMW or Mercedes vehicles, a dealership needing overflow service, or an individual collector with multiple cars. Call us to discuss your situation and we'll tailor a service arrangement that works for you."
+      "@type": "AutoRepair",
+      "@id": "https://germanperformancega.com/#business",
+      "name": "German Performance",
+      "url": "https://germanperformancega.com/",
+      "telephone": "+1-678-395-7459",
+      "priceRange": "$$",
+      "foundingDate": "2010",
+      "image": "https://germanperformancega.com/og-image.jpg",
+      "logo": "https://germanperformancega.com/assets/img/logo-288.webp",
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "2144 Parkwood Rd NW",
+        "addressLocality": "Snellville",
+        "addressRegion": "GA",
+        "postalCode": "30078",
+        "addressCountry": "US"
+      },
+      "openingHoursSpecification": [
+        {
+          "@type": "OpeningHoursSpecification",
+          "dayOfWeek": [
+            "Monday",
+            "Tuesday",
+            "Wednesday",
+            "Thursday",
+            "Friday"
+          ],
+          "opens": "09:30",
+          "closes": "18:00"
+        }
+      ],
+      "areaServed": [
+        {
+          "@type": "City",
+          "name": "Snellville"
+        },
+        {
+          "@type": "City",
+          "name": "Loganville"
+        },
+        {
+          "@type": "City",
+          "name": "Grayson"
+        },
+        {
+          "@type": "City",
+          "name": "Lawrenceville"
+        },
+        {
+          "@type": "City",
+          "name": "Stone Mountain"
+        },
+        {
+          "@type": "City",
+          "name": "Gwinnett County"
+        }
+      ],
+      "makesOffer": [
+        {
+          "@type": "Offer",
+          "itemOffered": {
+            "@type": "Service",
+            "name": "BMW repair and service"
+          }
+        },
+        {
+          "@type": "Offer",
+          "itemOffered": {
+            "@type": "Service",
+            "name": "Mercedes-Benz repair and service"
+          }
+        },
+        {
+          "@type": "Offer",
+          "itemOffered": {
+            "@type": "Service",
+            "name": "Audi repair and service"
+          }
+        },
+        {
+          "@type": "Offer",
+          "itemOffered": {
+            "@type": "Service",
+            "name": "Porsche repair and service"
+          }
+        },
+        {
+          "@type": "Offer",
+          "itemOffered": {
+            "@type": "Service",
+            "name": "Volkswagen repair and service"
+          }
+        },
+        {
+          "@type": "Offer",
+          "itemOffered": {
+            "@type": "Service",
+            "name": "MINI repair and service"
+          }
+        }
+      ],
+      "sameAs": [
+        "https://www.instagram.com/germanperformance.auto"
+      ]
+    },
+    {
+      "@type": "WebSite",
+      "@id": "https://germanperformancega.com/#website",
+      "url": "https://germanperformancega.com/",
+      "name": "German Performance",
+      "publisher": {
+        "@id": "https://germanperformancega.com/#business"
       }
     },
     {
-      "@type": "Question",
-      "name": "Can you service a mixed fleet of different German brands?",
-      "acceptedAnswer": {
-        "@type": "Answer",
-        "text": "Yes — this is one of our key advantages. We have brand-specific diagnostic software, oil specs, and technician knowledge for BMW, Mercedes-Benz, Audi, Volkswagen, and Porsche. A mixed fleet doesn't require multiple specialist shops — we handle all five brands correctly under one roof."
+      "@type": "WebPage",
+      "@id": "https://germanperformancega.com/german-car-fleet-service-snellville-ga.html#webpage",
+      "url": "https://germanperformancega.com/german-car-fleet-service-snellville-ga.html",
+      "name": "German Car Fleet Service Snellville GA | German Performance",
+      "description": "German car fleet service in Snellville, GA. BMW, Mercedes, Audi, VW & Porsche fleet maintenance, priority scheduling & volume pricing. Call (678) 395-7459.",
+      "isPartOf": {
+        "@id": "https://germanperformancega.com/#website"
+      },
+      "about": {
+        "@id": "https://germanperformancega.com/#business"
       }
     },
     {
-      "@type": "Question",
-      "name": "How does priority scheduling work for fleet accounts?",
-      "acceptedAnswer": {
-        "@type": "Answer",
-        "text": "Fleet account vehicles are given scheduling priority over walk-in and standard appointment traffic. Call your fleet service coordinator, tell us what vehicles need service and when, and we'll reserve time for them. We understand that fleet vehicles generate revenue — they need to be back on the road quickly."
-      }
+      "@type": "Service",
+      "@id": "https://germanperformancega.com/german-car-fleet-service-snellville-ga.html#service",
+      "name": "German Car Fleet Service",
+      "serviceType": "German Car Fleet Service",
+      "description": "German car fleet service in Snellville, GA. BMW, Mercedes, Audi, VW & Porsche fleet maintenance, priority scheduling & volume pricing. Call (678) 395-7459.",
+      "url": "https://germanperformancega.com/german-car-fleet-service-snellville-ga.html",
+      "provider": {
+        "@id": "https://germanperformancega.com/#business"
+      },
+      "areaServed": [
+        {
+          "@type": "City",
+          "name": "Snellville"
+        },
+        {
+          "@type": "City",
+          "name": "Loganville"
+        },
+        {
+          "@type": "City",
+          "name": "Grayson"
+        },
+        {
+          "@type": "City",
+          "name": "Lawrenceville"
+        },
+        {
+          "@type": "City",
+          "name": "Stone Mountain"
+        },
+        {
+          "@type": "City",
+          "name": "Gwinnett County"
+        }
+      ]
     },
     {
-      "@type": "Question",
-      "name": "Do you provide consolidated billing for fleet accounts?",
-      "acceptedAnswer": {
-        "@type": "Answer",
-        "text": "Yes. Fleet accounts can be set up with monthly consolidated invoicing rather than per-visit payment — simplifying accounting and giving you a complete record of all service costs across your fleet in a single document. Call us to discuss billing arrangements."
-      }
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://germanperformancega.com/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "German Car Fleet Service — Snellville, GA",
+          "item": "https://germanperformancega.com/german-car-fleet-service-snellville-ga.html"
+        }
+      ]
     },
     {
-      "@type": "Question",
-      "name": "Can you handle emergency repairs for fleet vehicles?",
-      "acceptedAnswer": {
-        "@type": "Answer",
-        "text": "Yes. Fleet account vehicles with emergency repair needs are given same-day or next-day priority. If a vehicle breaks down and needs immediate diagnosis and repair, call us directly and we'll do our best to get it in as quickly as possible."
-      }
-    },
-    {
-      "@type": "Question",
-      "name": "What geographic area do you serve for fleet accounts?",
-      "acceptedAnswer": {
-        "@type": "Answer",
-        "text": "We serve businesses and fleet operators throughout Gwinnett County and surrounding areas including Snellville, Loganville, Grayson, Lawrenceville, Duluth, Suwanee, and Stone Mountain. If you're outside this area, call us — we may still be able to accommodate your fleet depending on vehicle count and service needs."
-      }
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "What qualifies as a fleet for your fleet service program?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "We work with businesses and individuals operating 3 or more German vehicles — whether that's a company running executive BMW or Mercedes vehicles, a dealership needing overflow service, or an individual collector with multiple cars. Call us to discuss your situation and we'll tailor a service arrangement that works for you."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Can you service a mixed fleet of different German brands?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes — this is one of our key advantages. We have brand-specific diagnostic software, oil specs, and technician knowledge for BMW, Mercedes-Benz, Audi, Volkswagen, and Porsche. A mixed fleet doesn't require multiple specialist shops — we handle all five brands correctly under one roof."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How does priority scheduling work for fleet accounts?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Fleet account vehicles are given scheduling priority over walk-in and standard appointment traffic. Call your fleet service coordinator, tell us what vehicles need service and when, and we'll reserve time for them. We understand that fleet vehicles generate revenue — they need to be back on the road quickly."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Do you provide consolidated billing for fleet accounts?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes. Fleet accounts can be set up with monthly consolidated invoicing rather than per-visit payment — simplifying accounting and giving you a complete record of all service costs across your fleet in a single document. Call us to discuss billing arrangements."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Can you handle emergency repairs for fleet vehicles?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes. Fleet account vehicles with emergency repair needs are given same-day or next-day priority. If a vehicle breaks down and needs immediate diagnosis and repair, call us directly and we'll do our best to get it in as quickly as possible."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What geographic area do you serve for fleet accounts?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "We serve businesses and fleet operators throughout Gwinnett County and surrounding areas including Snellville, Loganville, Grayson, Lawrenceville, Duluth, Suwanee, and Stone Mountain. If you're outside this area, call us — we may still be able to accommodate your fleet depending on vehicle count and service needs."
+          }
+        }
+      ]
     }
   ]
 }
 </script>
-<script defer src="assets/js/site.js?v=1"></script>
 </head>
 <body>
 <nav>

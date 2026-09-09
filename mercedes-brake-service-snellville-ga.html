@@ -11,63 +11,250 @@
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:opsz,wght@9..40,300;9..40,400&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="assets/css/tokens.css?v=1">
 <link rel="stylesheet" href="assets/css/site.css?v=1">
+<script defer src="assets/js/site.js?v=1"></script>
+
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
-  "@type": "FAQPage",
-  "mainEntity": [
+  "@graph": [
     {
-      "@type": "Question",
-      "name": "How often do Mercedes brake pads need replacing?",
-      "acceptedAnswer": {
-        "@type": "Answer",
-        "text": "It depends heavily on how you drive. Most Mercedes owners see 30,000–70,000 miles from a set of pads, with front pads wearing faster than rears. Your car will tell you before it becomes urgent — Mercedes uses electronic wear sensors that trigger a dashboard message when the pads reach their limit."
+      "@type": "AutoRepair",
+      "@id": "https://germanperformancega.com/#business",
+      "name": "German Performance",
+      "url": "https://germanperformancega.com/",
+      "telephone": "+1-678-395-7459",
+      "priceRange": "$$",
+      "foundingDate": "2010",
+      "image": "https://germanperformancega.com/og-image.jpg",
+      "logo": "https://germanperformancega.com/assets/img/logo-288.webp",
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "2144 Parkwood Rd NW",
+        "addressLocality": "Snellville",
+        "addressRegion": "GA",
+        "postalCode": "30078",
+        "addressCountry": "US"
+      },
+      "openingHoursSpecification": [
+        {
+          "@type": "OpeningHoursSpecification",
+          "dayOfWeek": [
+            "Monday",
+            "Tuesday",
+            "Wednesday",
+            "Thursday",
+            "Friday"
+          ],
+          "opens": "09:30",
+          "closes": "18:00"
+        }
+      ],
+      "areaServed": [
+        {
+          "@type": "City",
+          "name": "Snellville"
+        },
+        {
+          "@type": "City",
+          "name": "Loganville"
+        },
+        {
+          "@type": "City",
+          "name": "Grayson"
+        },
+        {
+          "@type": "City",
+          "name": "Lawrenceville"
+        },
+        {
+          "@type": "City",
+          "name": "Stone Mountain"
+        },
+        {
+          "@type": "City",
+          "name": "Gwinnett County"
+        }
+      ],
+      "makesOffer": [
+        {
+          "@type": "Offer",
+          "itemOffered": {
+            "@type": "Service",
+            "name": "BMW repair and service"
+          }
+        },
+        {
+          "@type": "Offer",
+          "itemOffered": {
+            "@type": "Service",
+            "name": "Mercedes-Benz repair and service"
+          }
+        },
+        {
+          "@type": "Offer",
+          "itemOffered": {
+            "@type": "Service",
+            "name": "Audi repair and service"
+          }
+        },
+        {
+          "@type": "Offer",
+          "itemOffered": {
+            "@type": "Service",
+            "name": "Porsche repair and service"
+          }
+        },
+        {
+          "@type": "Offer",
+          "itemOffered": {
+            "@type": "Service",
+            "name": "Volkswagen repair and service"
+          }
+        },
+        {
+          "@type": "Offer",
+          "itemOffered": {
+            "@type": "Service",
+            "name": "MINI repair and service"
+          }
+        }
+      ],
+      "sameAs": [
+        "https://www.instagram.com/germanperformance.auto"
+      ]
+    },
+    {
+      "@type": "WebSite",
+      "@id": "https://germanperformancega.com/#website",
+      "url": "https://germanperformancega.com/",
+      "name": "German Performance",
+      "publisher": {
+        "@id": "https://germanperformancega.com/#business"
       }
     },
     {
-      "@type": "Question",
-      "name": "Why is my brake warning light still on after new pads?",
-      "acceptedAnswer": {
-        "@type": "Answer",
-        "text": "Because the wear sensor was almost certainly not replaced. Mercedes brake wear sensors are consumable — once the pad wears down to them, the sensor circuit is destroyed and a new pad alone will not clear the message. We fit new sensors with every pad replacement and reset the service message before the car leaves."
+      "@type": "WebPage",
+      "@id": "https://germanperformancega.com/mercedes-brake-service-snellville-ga.html#webpage",
+      "url": "https://germanperformancega.com/mercedes-brake-service-snellville-ga.html",
+      "name": "Mercedes Brake Service Snellville GA | German Performance",
+      "description": "Expert Mercedes-Benz brake service in Snellville, GA. Pads, rotors, calipers & brake fluid flush. OEM parts. Serving Gwinnett County. Call (678) 395-7459.",
+      "isPartOf": {
+        "@id": "https://germanperformancega.com/#website"
+      },
+      "about": {
+        "@id": "https://germanperformancega.com/#business"
       }
     },
     {
-      "@type": "Question",
-      "name": "Do you replace rotors every time, or can they be resurfaced?",
-      "acceptedAnswer": {
-        "@type": "Answer",
-        "text": "We measure them and let the numbers decide. Every Mercedes rotor has a minimum thickness stamped on it. If the rotor is above spec and the surface is true, resurfacing is fine. If it is below spec, warped, or heat-cracked, it gets replaced — we will show you the measurement either way."
-      }
+      "@type": "Service",
+      "@id": "https://germanperformancega.com/mercedes-brake-service-snellville-ga.html#service",
+      "name": "Mercedes Brake Service",
+      "serviceType": "Mercedes Brake Service",
+      "description": "Expert Mercedes-Benz brake service in Snellville, GA. Pads, rotors, calipers & brake fluid flush. OEM parts. Serving Gwinnett County. Call (678) 395-7459.",
+      "url": "https://germanperformancega.com/mercedes-brake-service-snellville-ga.html",
+      "provider": {
+        "@id": "https://germanperformancega.com/#business"
+      },
+      "areaServed": [
+        {
+          "@type": "City",
+          "name": "Snellville"
+        },
+        {
+          "@type": "City",
+          "name": "Loganville"
+        },
+        {
+          "@type": "City",
+          "name": "Grayson"
+        },
+        {
+          "@type": "City",
+          "name": "Lawrenceville"
+        },
+        {
+          "@type": "City",
+          "name": "Stone Mountain"
+        },
+        {
+          "@type": "City",
+          "name": "Gwinnett County"
+        }
+      ]
     },
     {
-      "@type": "Question",
-      "name": "How often should Mercedes brake fluid be flushed?",
-      "acceptedAnswer": {
-        "@type": "Answer",
-        "text": "Every two years, regardless of mileage. Brake fluid is hygroscopic, meaning it absorbs moisture from the air over time. That moisture lowers the fluid's boiling point and can cause a soft pedal or brake fade under hard use. We flush and refill with the correct DOT specification for your model."
-      }
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://germanperformancega.com/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Mercedes Brake Service — Snellville, GA",
+          "item": "https://germanperformancega.com/mercedes-brake-service-snellville-ga.html"
+        }
+      ]
     },
     {
-      "@type": "Question",
-      "name": "Can I use aftermarket brake pads on my Mercedes?",
-      "acceptedAnswer": {
-        "@type": "Answer",
-        "text": "You can, but we generally recommend OEM or OEM-equivalent compounds. Mercedes tunes pad friction material to match the car's ABS and stability control calibration, and cheaper pads often bring noise, more dust, and a different pedal feel. We will talk through the options for your model before ordering anything."
-      }
-    },
-    {
-      "@type": "Question",
-      "name": "Do you service AMG and performance brake systems?",
-      "acceptedAnswer": {
-        "@type": "Answer",
-        "text": "Yes. We service the full Mercedes range including AMG models with multi-piston calipers and larger composite rotors. These systems use different pad compounds and torque specifications than the standard range, and we set them up to the correct specification."
-      }
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "How often do Mercedes brake pads need replacing?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "It depends heavily on how you drive. Most Mercedes owners see 30,000–70,000 miles from a set of pads, with front pads wearing faster than rears. Your car will tell you before it becomes urgent — Mercedes uses electronic wear sensors that trigger a dashboard message when the pads reach their limit."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Why is my brake warning light still on after new pads?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Because the wear sensor was almost certainly not replaced. Mercedes brake wear sensors are consumable — once the pad wears down to them, the sensor circuit is destroyed and a new pad alone will not clear the message. We fit new sensors with every pad replacement and reset the service message before the car leaves."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Do you replace rotors every time, or can they be resurfaced?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "We measure them and let the numbers decide. Every Mercedes rotor has a minimum thickness stamped on it. If the rotor is above spec and the surface is true, resurfacing is fine. If it is below spec, warped, or heat-cracked, it gets replaced — we will show you the measurement either way."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How often should Mercedes brake fluid be flushed?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Every two years, regardless of mileage. Brake fluid is hygroscopic, meaning it absorbs moisture from the air over time. That moisture lowers the fluid's boiling point and can cause a soft pedal or brake fade under hard use. We flush and refill with the correct DOT specification for your model."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Can I use aftermarket brake pads on my Mercedes?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "You can, but we generally recommend OEM or OEM-equivalent compounds. Mercedes tunes pad friction material to match the car's ABS and stability control calibration, and cheaper pads often bring noise, more dust, and a different pedal feel. We will talk through the options for your model before ordering anything."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Do you service AMG and performance brake systems?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes. We service the full Mercedes range including AMG models with multi-piston calipers and larger composite rotors. These systems use different pad compounds and torque specifications than the standard range, and we set them up to the correct specification."
+          }
+        }
+      ]
     }
   ]
 }
 </script>
-<script defer src="assets/js/site.js?v=1"></script>
 </head>
 <body>
 <nav>

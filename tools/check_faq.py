@@ -20,7 +20,8 @@ REPO_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 JSONLD_RE = re.compile(
     r'<script type="application/ld\+json">(.*?)</script>', re.S)
-QUESTION_BTN_RE = re.compile(r'<button class="fq"[^>]*>(.*?)</button>', re.S)
+# Service pages use .fq/.ficon, the homepage uses .faq-q/.faq-icon.
+QUESTION_BTN_RE = re.compile(r'<button class="(?:fq|faq-q)"[^>]*>(.*?)</button>', re.S)
 
 # Marques, so we can flag a page describing a brand it does not serve.
 BRANDS = {"bmw": "BMW", "mercedes": "Mercedes", "audi": "Audi",
@@ -33,22 +34,30 @@ def visible_questions(content):
     """Question text as rendered, with the +/- icon span stripped."""
     out = []
     for raw in QUESTION_BTN_RE.findall(content):
-        text = re.sub(r'<span class="ficon">.*?</span>', "", raw, flags=re.S)
+        text = re.sub(r'<span class="(?:ficon|faq-icon)">.*?</span>', "", raw, flags=re.S)
         out.append(html.unescape(re.sub(r"<[^>]+>", "", text)).strip())
     return out
 
 
 def schema_questions(content):
-    """Question names declared in every FAQPage block on the page."""
+    """Question names declared in every FAQPage on the page.
+
+    Handles both a bare FAQPage and one nested inside an @graph, which is how
+    the site now emits it.
+    """
     out = []
     for block in JSONLD_RE.findall(content):
         try:
             data = json.loads(block)
         except json.JSONDecodeError as exc:
             raise ValueError(f"invalid JSON-LD: {exc}") from exc
-        for entity in data.get("mainEntity", []):
-            if entity.get("@type") == "Question":
-                out.append(entity["name"].strip())
+        nodes = data.get("@graph") or [data]
+        for node in nodes:
+            if node.get("@type") != "FAQPage":
+                continue
+            for entity in node.get("mainEntity", []):
+                if entity.get("@type") == "Question":
+                    out.append(entity["name"].strip())
     return out
 
 

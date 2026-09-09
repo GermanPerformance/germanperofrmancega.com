@@ -11,63 +11,250 @@
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:opsz,wght@9..40,300;9..40,400&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="assets/css/tokens.css?v=1">
 <link rel="stylesheet" href="assets/css/site.css?v=1">
+<script defer src="assets/js/site.js?v=1"></script>
+
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
-  "@type": "FAQPage",
-  "mainEntity": [
+  "@graph": [
     {
-      "@type": "Question",
-      "name": "What are PCCB brakes and how are they different?",
-      "acceptedAnswer": {
-        "@type": "Answer",
-        "text": "PCCB stands for Porsche Ceramic Composite Brake — an optional upgrade on many Porsche models. The rotors are made from a carbon-ceramic composite rather than cast iron. They're significantly lighter, resist fade better at high temperatures, and last much longer than iron rotors. However, they require specific carbon-ceramic brake pads. Using standard iron-rotor pads on PCCB destroys the rotor surface rapidly and permanently — PCCB rotors cost $8,000–$15,000 to replace."
+      "@type": "AutoRepair",
+      "@id": "https://germanperformancega.com/#business",
+      "name": "German Performance",
+      "url": "https://germanperformancega.com/",
+      "telephone": "+1-678-395-7459",
+      "priceRange": "$$",
+      "foundingDate": "2010",
+      "image": "https://germanperformancega.com/og-image.jpg",
+      "logo": "https://germanperformancega.com/assets/img/logo-288.webp",
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "2144 Parkwood Rd NW",
+        "addressLocality": "Snellville",
+        "addressRegion": "GA",
+        "postalCode": "30078",
+        "addressCountry": "US"
+      },
+      "openingHoursSpecification": [
+        {
+          "@type": "OpeningHoursSpecification",
+          "dayOfWeek": [
+            "Monday",
+            "Tuesday",
+            "Wednesday",
+            "Thursday",
+            "Friday"
+          ],
+          "opens": "09:30",
+          "closes": "18:00"
+        }
+      ],
+      "areaServed": [
+        {
+          "@type": "City",
+          "name": "Snellville"
+        },
+        {
+          "@type": "City",
+          "name": "Loganville"
+        },
+        {
+          "@type": "City",
+          "name": "Grayson"
+        },
+        {
+          "@type": "City",
+          "name": "Lawrenceville"
+        },
+        {
+          "@type": "City",
+          "name": "Stone Mountain"
+        },
+        {
+          "@type": "City",
+          "name": "Gwinnett County"
+        }
+      ],
+      "makesOffer": [
+        {
+          "@type": "Offer",
+          "itemOffered": {
+            "@type": "Service",
+            "name": "BMW repair and service"
+          }
+        },
+        {
+          "@type": "Offer",
+          "itemOffered": {
+            "@type": "Service",
+            "name": "Mercedes-Benz repair and service"
+          }
+        },
+        {
+          "@type": "Offer",
+          "itemOffered": {
+            "@type": "Service",
+            "name": "Audi repair and service"
+          }
+        },
+        {
+          "@type": "Offer",
+          "itemOffered": {
+            "@type": "Service",
+            "name": "Porsche repair and service"
+          }
+        },
+        {
+          "@type": "Offer",
+          "itemOffered": {
+            "@type": "Service",
+            "name": "Volkswagen repair and service"
+          }
+        },
+        {
+          "@type": "Offer",
+          "itemOffered": {
+            "@type": "Service",
+            "name": "MINI repair and service"
+          }
+        }
+      ],
+      "sameAs": [
+        "https://www.instagram.com/germanperformance.auto"
+      ]
+    },
+    {
+      "@type": "WebSite",
+      "@id": "https://germanperformancega.com/#website",
+      "url": "https://germanperformancega.com/",
+      "name": "German Performance",
+      "publisher": {
+        "@id": "https://germanperformancega.com/#business"
       }
     },
     {
-      "@type": "Question",
-      "name": "How do I know if my Porsche has PCCB brakes?",
-      "acceptedAnswer": {
-        "@type": "Answer",
-        "text": "PCCB rotors are yellow — the distinctive yellow calipers visible through the wheels are the easiest identifier. Standard Porsche brakes use red or black Brembo calipers. If you're unsure, call us with your VIN and we'll confirm before any brake work begins."
+      "@type": "WebPage",
+      "@id": "https://germanperformancega.com/porsche-brake-service-snellville-ga.html#webpage",
+      "url": "https://germanperformancega.com/porsche-brake-service-snellville-ga.html",
+      "name": "Porsche Brake Service Snellville GA | German Performance",
+      "description": "Expert Porsche brake service in Snellville, GA. Pads, rotors, PCCB ceramic brakes, calipers & fluid flush. Serving Gwinnett County. Call (678) 395-7459.",
+      "isPartOf": {
+        "@id": "https://germanperformancega.com/#website"
+      },
+      "about": {
+        "@id": "https://germanperformancega.com/#business"
       }
     },
     {
-      "@type": "Question",
-      "name": "How long do Porsche PCCB rotors last?",
-      "acceptedAnswer": {
-        "@type": "Answer",
-        "text": "PCCB rotors typically last 60,000–100,000 miles on street-driven Porsches when maintained correctly. Track use significantly reduces lifespan. The rotors have a minimum thickness spec — we measure them at every brake service and advise when replacement is approaching so you can plan for the cost."
-      }
+      "@type": "Service",
+      "@id": "https://germanperformancega.com/porsche-brake-service-snellville-ga.html#service",
+      "name": "Porsche Brake Service",
+      "serviceType": "Porsche Brake Service",
+      "description": "Expert Porsche brake service in Snellville, GA. Pads, rotors, PCCB ceramic brakes, calipers & fluid flush. Serving Gwinnett County. Call (678) 395-7459.",
+      "url": "https://germanperformancega.com/porsche-brake-service-snellville-ga.html",
+      "provider": {
+        "@id": "https://germanperformancega.com/#business"
+      },
+      "areaServed": [
+        {
+          "@type": "City",
+          "name": "Snellville"
+        },
+        {
+          "@type": "City",
+          "name": "Loganville"
+        },
+        {
+          "@type": "City",
+          "name": "Grayson"
+        },
+        {
+          "@type": "City",
+          "name": "Lawrenceville"
+        },
+        {
+          "@type": "City",
+          "name": "Stone Mountain"
+        },
+        {
+          "@type": "City",
+          "name": "Gwinnett County"
+        }
+      ]
     },
     {
-      "@type": "Question",
-      "name": "How often should Porsche brake fluid be flushed?",
-      "acceptedAnswer": {
-        "@type": "Answer",
-        "text": "Porsche recommends brake fluid flush every 2 years for street use. For track-driven Porsches, we recommend flushing before and after every track day — heat degrades brake fluid rapidly under sustained hard braking and moisture contamination causes dangerous fade at the worst possible moment."
-      }
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://germanperformancega.com/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Porsche Brake Service — Snellville, GA",
+          "item": "https://germanperformancega.com/porsche-brake-service-snellville-ga.html"
+        }
+      ]
     },
     {
-      "@type": "Question",
-      "name": "Do you service all Porsche models?",
-      "acceptedAnswer": {
-        "@type": "Answer",
-        "text": "Yes. We service brakes on the full Porsche lineup including 911 (996, 997, 991, 992), Boxster, Cayman, Cayenne, Macan, and Panamera — with both standard iron and PCCB ceramic brake systems."
-      }
-    },
-    {
-      "@type": "Question",
-      "name": "Can I use aftermarket pads on my Porsche?",
-      "acceptedAnswer": {
-        "@type": "Answer",
-        "text": "Yes — with the right compound selection. For street use, OEM or OEM-equivalent pads are the best choice. For track use, we can source higher-temperature compounds from Pagid, Hawk, or Ferodo matched to your specific Porsche model and brake system. We never install random aftermarket pads without confirming they're appropriate for your setup."
-      }
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "What are PCCB brakes and how are they different?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "PCCB stands for Porsche Ceramic Composite Brake — an optional upgrade on many Porsche models. The rotors are made from a carbon-ceramic composite rather than cast iron. They're significantly lighter, resist fade better at high temperatures, and last much longer than iron rotors. However, they require specific carbon-ceramic brake pads. Using standard iron-rotor pads on PCCB destroys the rotor surface rapidly and permanently — PCCB rotors cost $8,000–$15,000 to replace."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How do I know if my Porsche has PCCB brakes?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "PCCB rotors are yellow — the distinctive yellow calipers visible through the wheels are the easiest identifier. Standard Porsche brakes use red or black Brembo calipers. If you're unsure, call us with your VIN and we'll confirm before any brake work begins."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How long do Porsche PCCB rotors last?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "PCCB rotors typically last 60,000–100,000 miles on street-driven Porsches when maintained correctly. Track use significantly reduces lifespan. The rotors have a minimum thickness spec — we measure them at every brake service and advise when replacement is approaching so you can plan for the cost."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How often should Porsche brake fluid be flushed?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Porsche recommends brake fluid flush every 2 years for street use. For track-driven Porsches, we recommend flushing before and after every track day — heat degrades brake fluid rapidly under sustained hard braking and moisture contamination causes dangerous fade at the worst possible moment."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Do you service all Porsche models?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes. We service brakes on the full Porsche lineup including 911 (996, 997, 991, 992), Boxster, Cayman, Cayenne, Macan, and Panamera — with both standard iron and PCCB ceramic brake systems."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Can I use aftermarket pads on my Porsche?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes — with the right compound selection. For street use, OEM or OEM-equivalent pads are the best choice. For track use, we can source higher-temperature compounds from Pagid, Hawk, or Ferodo matched to your specific Porsche model and brake system. We never install random aftermarket pads without confirming they're appropriate for your setup."
+          }
+        }
+      ]
     }
   ]
 }
 </script>
-<script defer src="assets/js/site.js?v=1"></script>
 </head>
 <body>
 <nav>

@@ -11,63 +11,250 @@
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:opsz,wght@9..40,300;9..40,400&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="assets/css/tokens.css?v=1">
 <link rel="stylesheet" href="assets/css/site.css?v=1">
+<script defer src="assets/js/site.js?v=1"></script>
+
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
-  "@type": "FAQPage",
-  "mainEntity": [
+  "@graph": [
     {
-      "@type": "Question",
-      "name": "How do I know if my BMW needs suspension work?",
-      "acceptedAnswer": {
-        "@type": "Answer",
-        "text": "Common signs include clunking or knocking over bumps, the car pulling to one side, excessive body roll in corners, a vibration through the steering wheel, uneven tire wear, or a vague or loose steering feel. Any of these symptoms warrants a suspension inspection — worn components only get worse and can affect safety."
+      "@type": "AutoRepair",
+      "@id": "https://germanperformancega.com/#business",
+      "name": "German Performance",
+      "url": "https://germanperformancega.com/",
+      "telephone": "+1-678-395-7459",
+      "priceRange": "$$",
+      "foundingDate": "2010",
+      "image": "https://germanperformancega.com/og-image.jpg",
+      "logo": "https://germanperformancega.com/assets/img/logo-288.webp",
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "2144 Parkwood Rd NW",
+        "addressLocality": "Snellville",
+        "addressRegion": "GA",
+        "postalCode": "30078",
+        "addressCountry": "US"
+      },
+      "openingHoursSpecification": [
+        {
+          "@type": "OpeningHoursSpecification",
+          "dayOfWeek": [
+            "Monday",
+            "Tuesday",
+            "Wednesday",
+            "Thursday",
+            "Friday"
+          ],
+          "opens": "09:30",
+          "closes": "18:00"
+        }
+      ],
+      "areaServed": [
+        {
+          "@type": "City",
+          "name": "Snellville"
+        },
+        {
+          "@type": "City",
+          "name": "Loganville"
+        },
+        {
+          "@type": "City",
+          "name": "Grayson"
+        },
+        {
+          "@type": "City",
+          "name": "Lawrenceville"
+        },
+        {
+          "@type": "City",
+          "name": "Stone Mountain"
+        },
+        {
+          "@type": "City",
+          "name": "Gwinnett County"
+        }
+      ],
+      "makesOffer": [
+        {
+          "@type": "Offer",
+          "itemOffered": {
+            "@type": "Service",
+            "name": "BMW repair and service"
+          }
+        },
+        {
+          "@type": "Offer",
+          "itemOffered": {
+            "@type": "Service",
+            "name": "Mercedes-Benz repair and service"
+          }
+        },
+        {
+          "@type": "Offer",
+          "itemOffered": {
+            "@type": "Service",
+            "name": "Audi repair and service"
+          }
+        },
+        {
+          "@type": "Offer",
+          "itemOffered": {
+            "@type": "Service",
+            "name": "Porsche repair and service"
+          }
+        },
+        {
+          "@type": "Offer",
+          "itemOffered": {
+            "@type": "Service",
+            "name": "Volkswagen repair and service"
+          }
+        },
+        {
+          "@type": "Offer",
+          "itemOffered": {
+            "@type": "Service",
+            "name": "MINI repair and service"
+          }
+        }
+      ],
+      "sameAs": [
+        "https://www.instagram.com/germanperformance.auto"
+      ]
+    },
+    {
+      "@type": "WebSite",
+      "@id": "https://germanperformancega.com/#website",
+      "url": "https://germanperformancega.com/",
+      "name": "German Performance",
+      "publisher": {
+        "@id": "https://germanperformancega.com/#business"
       }
     },
     {
-      "@type": "Question",
-      "name": "How long do BMW control arms last?",
-      "acceptedAnswer": {
-        "@type": "Answer",
-        "text": "BMW control arm bushings and ball joints typically last 60,000–100,000 miles depending on road conditions and driving style. Georgia roads with potholes and rough surfaces accelerate wear. We see a lot of control arm replacements on BMWs in the 80,000–120,000 mile range."
+      "@type": "WebPage",
+      "@id": "https://germanperformancega.com/bmw-suspension-repair-snellville-ga.html#webpage",
+      "url": "https://germanperformancega.com/bmw-suspension-repair-snellville-ga.html",
+      "name": "BMW Suspension Repair Snellville GA | German Performance",
+      "description": "Expert BMW suspension repair in Snellville, GA. Control arms, struts, bushings, wheel bearings & more. Serving Gwinnett County. Call (678) 395-7459.",
+      "isPartOf": {
+        "@id": "https://germanperformancega.com/#website"
+      },
+      "about": {
+        "@id": "https://germanperformancega.com/#business"
       }
     },
     {
-      "@type": "Question",
-      "name": "Should I replace both sides when replacing suspension components?",
-      "acceptedAnswer": {
-        "@type": "Answer",
-        "text": "For control arms, struts, and wheel bearings — yes, we strongly recommend replacing both sides at the same time. Components on both sides wear at similar rates, and replacing one side often makes the difference in ride and handling more noticeable. It also saves on labor since the car is already on the lift."
-      }
+      "@type": "Service",
+      "@id": "https://germanperformancega.com/bmw-suspension-repair-snellville-ga.html#service",
+      "name": "BMW Suspension Repair",
+      "serviceType": "BMW Suspension Repair",
+      "description": "Expert BMW suspension repair in Snellville, GA. Control arms, struts, bushings, wheel bearings & more. Serving Gwinnett County. Call (678) 395-7459.",
+      "url": "https://germanperformancega.com/bmw-suspension-repair-snellville-ga.html",
+      "provider": {
+        "@id": "https://germanperformancega.com/#business"
+      },
+      "areaServed": [
+        {
+          "@type": "City",
+          "name": "Snellville"
+        },
+        {
+          "@type": "City",
+          "name": "Loganville"
+        },
+        {
+          "@type": "City",
+          "name": "Grayson"
+        },
+        {
+          "@type": "City",
+          "name": "Lawrenceville"
+        },
+        {
+          "@type": "City",
+          "name": "Stone Mountain"
+        },
+        {
+          "@type": "City",
+          "name": "Gwinnett County"
+        }
+      ]
     },
     {
-      "@type": "Question",
-      "name": "Do you do wheel alignments after suspension work?",
-      "acceptedAnswer": {
-        "@type": "Answer",
-        "text": "Yes — always. Any suspension repair that changes a component connected to steering geometry requires a wheel alignment. We include an alignment check with every suspension job and perform a full 4-wheel alignment when specs are out of range. Skipping alignment after suspension work causes rapid tire wear and poor handling."
-      }
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://germanperformancega.com/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "BMW Suspension Repair — Snellville, GA",
+          "item": "https://germanperformancega.com/bmw-suspension-repair-snellville-ga.html"
+        }
+      ]
     },
     {
-      "@type": "Question",
-      "name": "My BMW has adaptive suspension (EDC) — can you work on it?",
-      "acceptedAnswer": {
-        "@type": "Answer",
-        "text": "Yes. BMW's EDC (Electronic Damper Control) and Adaptive M Suspension systems require BMW ISTA diagnostic software to properly diagnose faults and calibrate replacement dampers. We have the tools and experience to service adaptive suspension on all BMW models including M cars."
-      }
-    },
-    {
-      "@type": "Question",
-      "name": "What brands of suspension parts do you use?",
-      "acceptedAnswer": {
-        "@type": "Answer",
-        "text": "We use OEM BMW parts, Lemförder (the OEM supplier to BMW), Meyle HD, and Bilstein for shocks and struts. We never use cheap no-name suspension components — on a precision vehicle like a BMW, low-quality suspension parts affect handling and wear out quickly."
-      }
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "How do I know if my BMW needs suspension work?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Common signs include clunking or knocking over bumps, the car pulling to one side, excessive body roll in corners, a vibration through the steering wheel, uneven tire wear, or a vague or loose steering feel. Any of these symptoms warrants a suspension inspection — worn components only get worse and can affect safety."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How long do BMW control arms last?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "BMW control arm bushings and ball joints typically last 60,000–100,000 miles depending on road conditions and driving style. Georgia roads with potholes and rough surfaces accelerate wear. We see a lot of control arm replacements on BMWs in the 80,000–120,000 mile range."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Should I replace both sides when replacing suspension components?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "For control arms, struts, and wheel bearings — yes, we strongly recommend replacing both sides at the same time. Components on both sides wear at similar rates, and replacing one side often makes the difference in ride and handling more noticeable. It also saves on labor since the car is already on the lift."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Do you do wheel alignments after suspension work?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes — always. Any suspension repair that changes a component connected to steering geometry requires a wheel alignment. We include an alignment check with every suspension job and perform a full 4-wheel alignment when specs are out of range. Skipping alignment after suspension work causes rapid tire wear and poor handling."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "My BMW has adaptive suspension (EDC) — can you work on it?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes. BMW's EDC (Electronic Damper Control) and Adaptive M Suspension systems require BMW ISTA diagnostic software to properly diagnose faults and calibrate replacement dampers. We have the tools and experience to service adaptive suspension on all BMW models including M cars."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What brands of suspension parts do you use?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "We use OEM BMW parts, Lemförder (the OEM supplier to BMW), Meyle HD, and Bilstein for shocks and struts. We never use cheap no-name suspension components — on a precision vehicle like a BMW, low-quality suspension parts affect handling and wear out quickly."
+          }
+        }
+      ]
     }
   ]
 }
 </script>
-<script defer src="assets/js/site.js?v=1"></script>
 </head>
 <body>
 <nav>
