@@ -56,6 +56,10 @@
   --wdth-body:    100;
 
   /* Fluid scale, all clamped so nothing shouts on a large screen. */
+  /* --step--2 exists because the mono micro-labels were being set at six
+     different hand-picked values between 0.60 and 0.75rem. They are one
+     tier, so they get one token. */
+  --step--2:  clamp(0.66rem, 0.64rem + 0.08vw, 0.72rem);
   --step--1:  clamp(0.78rem, 0.75rem + 0.15vw, 0.85rem);
   --step-0:   clamp(0.95rem, 0.92rem + 0.18vw, 1.05rem);
   --step-1:   clamp(1.1rem,  1.02rem + 0.4vw,  1.3rem);

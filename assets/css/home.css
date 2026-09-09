@@ -6,7 +6,7 @@
     background: var(--black);
     color: var(--white);
     font-family: var(--font-body);
-    font-weight: 300;
+    font-weight:400;
     overflow-x: hidden;
   }
 
@@ -34,7 +34,7 @@
     color: var(--silver);
     text-decoration: none;
     font-family: var(--font-mono);
-    font-size: 0.72rem;
+    font-size:var(--step--2);
     letter-spacing: 0.12em;
     text-transform: uppercase;
     transition: color .2s;
@@ -47,7 +47,7 @@
     padding: 10px 24px;
     border: none;
     font-family: var(--font-mono) !important;
-    font-size: 0.72rem !important;
+    font-size:var(--step--2)!important;
     letter-spacing: 0.1em;
     text-transform: uppercase;
     text-decoration: none;
@@ -83,14 +83,15 @@
   }
 
   .hero-eyebrow {
-    font-family: var(--font-display);
-    font-size: 1.1rem;
-    letter-spacing: 0.25em;
+    font-family: var(--font-mono);
+    font-size:var(--step--1);
+    letter-spacing: 0.16em;
     text-transform: uppercase;
     color: var(--white);
     margin-bottom: 24px;
     position: relative;
-    display: flex; align-items: center; gap: 16px;
+    display: block;
+    line-height: 1.8;
     background: rgba(192,57,43,0.15);
     border: 1px solid rgba(192,57,43,0.5);
     padding: 10px 20px;
@@ -99,7 +100,8 @@
   .hero-eyebrow::before {
     content: '★';
     color: var(--gold);
-    font-size: 1rem;
+    font-size:var(--step--1);
+    margin-right: 14px;
   }
   .hero-eyebrow .eyebrow-highlight {
     color: var(--gold);
@@ -108,7 +110,7 @@
 
   .hero-title {
     font-family: var(--font-display);
-    font-size: clamp(5rem, 13vw, 13rem);
+    font-size:var(--step-5);
     line-height: 0.88;
     letter-spacing: -0.01em;
     color: var(--white);
@@ -122,12 +124,12 @@
   .hero-title .accent { color: var(--red); }
 
   .hero-sub {
-    font-size: 1.05rem;
+    font-size:var(--step-0);
     color: var(--silver);
     max-width: 440px;
     line-height: 1.7;
     margin-bottom: 50px;
-    font-weight: 300;
+    font-weight:400;
     letter-spacing: 0.01em;
   }
 
@@ -140,7 +142,7 @@
     color: var(--white);
     padding: 16px 40px;
     font-family: var(--font-mono);
-    font-size: 0.75rem;
+    font-size:var(--step--2);
     letter-spacing: 0.12em;
     text-transform: uppercase;
     text-decoration: none;
@@ -160,7 +162,7 @@
   .btn-ghost {
     color: var(--silver);
     font-family: var(--font-mono);
-    font-size: 0.75rem;
+    font-size:var(--step--2);
     letter-spacing: 0.12em;
     text-transform: uppercase;
     text-decoration: none;
@@ -178,7 +180,7 @@
   }
   .hero-scroll span {
     font-family: var(--font-mono);
-    font-size: 0.6rem;
+    font-size:var(--step--2);
     letter-spacing: 0.2em;
     text-transform: uppercase;
     writing-mode: vertical-rl;
@@ -204,7 +206,7 @@
   }
   .hero-badge-inner {
     font-family: var(--font-mono);
-    font-size: 0.58rem;
+    font-size:var(--step--2);
     letter-spacing: 0.25em;
     text-transform: uppercase;
     color: var(--red);
@@ -229,14 +231,14 @@
   }
   .marquee-track span {
     font-family: var(--font-display);
-    font-size: 1.6rem;
+    font-size:var(--step-1);
     letter-spacing: 0.35em;
     color: var(--white);
     padding: 0 44px;
     font-weight: 700;
     text-shadow: 0 0 20px rgba(255,255,255,0.15);
   }
-  .marquee-track span.dot { color: var(--red); letter-spacing: 0; padding: 0; font-size: 1.2rem; }
+  .marquee-track span.dot { color: var(--red); letter-spacing: 0; padding: 0; font-size:var(--step-1); }
   @keyframes marquee { from{transform:translateX(0)} to{transform:translateX(-50%)} }
 
   /* SECTION COMMONS */
@@ -244,7 +246,7 @@
 
   .section-label {
     font-family: var(--font-mono);
-    font-size: 0.68rem;
+    font-size:var(--step--2);
     letter-spacing: 0.3em;
     text-transform: uppercase;
     color: var(--red);
@@ -259,7 +261,7 @@
 
   .section-title {
     font-family: var(--font-display);
-    font-size: clamp(2.8rem, 6vw, 5.5rem);
+    font-size:var(--step-5);
     line-height: 0.92;
     letter-spacing: 0.01em;
     margin-bottom: 24px;
@@ -267,17 +269,17 @@
 
   .section-desc {
     color: var(--silver);
-    font-size: 1rem;
+    font-size:var(--step-0);
     line-height: 1.75;
     max-width: 480px;
-    font-weight: 300;
+    font-weight:400;
   }
 
   /* ABOUT / BRANDS */
   .about-section {
     background: var(--carbon);
     display: grid; grid-template-columns: 1fr 1fr;
-    gap: 80px; align-items: center;
+    gap: var(--space-section); align-items: start;
   }
   .about-photo:hover {
     transform: scale(1.03);
@@ -285,15 +287,16 @@
   }
 
   .brand-logos {
-    display: grid; grid-template-columns: repeat(5, 1fr);
+    display: grid;
+    grid-template-columns: repeat(5, minmax(0, 1fr));
     gap: 1px;
     background: rgba(255,255,255,0.06);
     border: 1px solid rgba(255,255,255,0.06);
-    margin-top: 60px;
+    margin-top: 0;
   }
   .brand-item {
     background: var(--carbon);
-    padding: 36px 28px;
+    padding: 30px 10px;
     display: flex; flex-direction: column; align-items: center;
     gap: 10px;
     transition: background .25s;
@@ -302,14 +305,16 @@
   .brand-item:hover { background: var(--steel); }
   .brand-icon {
     font-family: var(--font-display);
-    font-size: 1.8rem;
-    letter-spacing: 0.1em;
+    font-size:var(--step-1);
+    letter-spacing: 0.01em;
     color: var(--white);
+    white-space: nowrap;
   }
   .brand-sub {
     font-family: var(--font-mono);
-    font-size: 0.6rem;
-    letter-spacing: 0.2em;
+    font-size:var(--step--2);
+    letter-spacing: 0.06em;
+    text-align: center;
     color: var(--silver);
     text-transform: uppercase;
   }
@@ -326,13 +331,13 @@
   }
   .stat-number {
     font-family: var(--font-display);
-    font-size: 3.5rem;
+    font-size:var(--step-3);
     color: var(--red);
     line-height: 1;
   }
   .stat-label {
     font-family: var(--font-mono);
-    font-size: 0.65rem;
+    font-size:var(--step--2);
     letter-spacing: 0.15em;
     text-transform: uppercase;
     color: var(--silver);
@@ -373,24 +378,24 @@
   .service-card:hover::before { height: 100%; }
 
   .service-icon {
-    font-size: 1.6rem;
+    font-size:var(--step-1);
     margin-bottom: 16px;
     display: block;
   }
 
   .service-name {
     font-family: var(--font-display);
-    font-size: 1.5rem;
+    font-size:var(--step-1);
     letter-spacing: 0.05em;
     color: var(--white);
     margin-bottom: 12px;
   }
 
   .service-desc {
-    font-size: 0.88rem;
+    font-size:var(--step--1);
     color: var(--silver);
     line-height: 1.7;
-    font-weight: 300;
+    font-weight:400;
   }
 
   .service-list {
@@ -399,7 +404,7 @@
   }
   .service-list li {
     font-family: var(--font-mono);
-    font-size: 0.68rem;
+    font-size:var(--step--2);
     letter-spacing: 0.05em;
     color: var(--muted);
     list-style: none;
@@ -410,7 +415,7 @@
   .service-list li::before {
     content: '—';
     color: var(--red);
-    font-size: 0.6rem;
+    font-size:var(--step--2);
   }
 
   /* PERFORMANCE */
@@ -423,7 +428,7 @@
   .perf-bg-text {
     position: absolute;
     font-family: var(--font-display);
-    font-size: 28vw;
+    font-size: var(--step-5);
     color: rgba(255,255,255,0.02);
     top: 50%; right: -5%;
     transform: translateY(-50%);
@@ -466,7 +471,7 @@
 
   .perf-card-tag {
     font-family: var(--font-mono);
-    font-size: 0.62rem;
+    font-size:var(--step--2);
     letter-spacing: 0.2em;
     text-transform: uppercase;
     color: var(--red);
@@ -475,7 +480,7 @@
 
   .perf-card-name {
     font-family: var(--font-display);
-    font-size: 2rem;
+    font-size:var(--step-2);
     letter-spacing: 0.04em;
     color: var(--white);
     margin-bottom: 14px;
@@ -483,10 +488,10 @@
   }
 
   .perf-card-desc {
-    font-size: 0.9rem;
+    font-size:var(--step--1);
     color: var(--silver);
     line-height: 1.7;
-    font-weight: 300;
+    font-weight:400;
   }
 
   .perf-specs {
@@ -500,20 +505,20 @@
   }
   .perf-spec-label {
     font-family: var(--font-mono);
-    font-size: 0.65rem;
+    font-size:var(--step--2);
     letter-spacing: 0.1em;
     text-transform: uppercase;
     color: var(--silver);
   }
   .perf-spec-val {
     font-family: var(--font-display);
-    font-size: 1.1rem;
+    font-size:var(--step-0);
     color: var(--red);
     letter-spacing: 0.05em;
   }
 
   .perf-icon-large {
-    font-size: 5rem;
+    font-size:var(--step-4);
     text-align: center;
     opacity: 0.15;
     position: absolute; right: 30px; bottom: 20px;
@@ -540,16 +545,16 @@
 
   .step-title {
     font-family: var(--font-display);
-    font-size: 1.4rem;
+    font-size:var(--step-1);
     letter-spacing: 0.04em;
     color: var(--white);
     margin-bottom: 12px;
   }
   .step-desc {
-    font-size: 0.88rem;
+    font-size:var(--step--1);
     color: var(--silver);
     line-height: 1.7;
-    font-weight: 300;
+    font-weight:400;
   }
 
   /* GALLERY */
@@ -602,11 +607,11 @@
   }
   .gallery-card:hover .gallery-placeholder-inner { opacity: 0.6; }
 
-  .gallery-icon { font-size: 2.5rem; }
+  .gallery-icon { font-size:var(--step-2); }
 
   .gallery-upload-label {
     font-family: var(--font-mono);
-    font-size: 0.65rem;
+    font-size:var(--step--2);
     letter-spacing: 0.2em;
     text-transform: uppercase;
     color: var(--silver);
@@ -624,7 +629,7 @@
 
   .gallery-tag {
     font-family: var(--font-mono);
-    font-size: 0.65rem;
+    font-size:var(--step--2);
     letter-spacing: 0.12em;
     text-transform: uppercase;
     color: var(--red);
@@ -658,16 +663,16 @@
   .testimonial-card:hover { background: var(--steel); }
   .testimonial-stars {
     color: var(--gold);
-    font-size: 0.9rem;
+    font-size:var(--step--1);
     letter-spacing: 2px;
     margin-bottom: 20px;
   }
   .testimonial-text {
-    font-size: 0.95rem;
+    font-size:var(--step--1);
     color: var(--light);
     line-height: 1.8;
     font-style: italic;
-    font-weight: 300;
+    font-weight:400;
     margin-bottom: 28px;
   }
   .testimonial-author {
@@ -679,18 +684,18 @@
     border: 1px solid rgba(255,255,255,0.1);
     display: flex; align-items: center; justify-content: center;
     font-family: var(--font-display);
-    font-size: 1.1rem;
+    font-size:var(--step-0);
     color: var(--red);
   }
   .author-info .name {
     font-family: var(--font-mono);
-    font-size: 0.72rem;
+    font-size:var(--step--2);
     letter-spacing: 0.08em;
     color: var(--white);
     text-transform: uppercase;
   }
   .author-info .vehicle {
-    font-size: 0.78rem;
+    font-size:var(--step--2);
     color: var(--silver);
     margin-top: 3px;
   }
@@ -709,14 +714,14 @@
   }
   .cta-section .section-label { justify-content: center; }
   .cta-section .section-label::before { display: none; }
-  .cta-section .section-title { text-align: center; font-size: clamp(3rem, 7vw, 7rem); }
+  .cta-section .section-title { text-align: center; font-size:var(--step-5); }
   .cta-desc {
     color: var(--silver);
-    font-size: 1rem;
+    font-size:var(--step-0);
     line-height: 1.75;
     max-width: 500px;
     margin: 0 auto 50px;
-    font-weight: 300;
+    font-weight:400;
   }
   .cta-actions {
     display: flex; gap: 20px; justify-content: center; align-items: center;
@@ -724,7 +729,7 @@
   }
   .btn-large {
     padding: 18px 52px;
-    font-size: 0.8rem;
+    font-size:var(--step--1);
   }
   .contact-info {
     display: flex; gap: 60px; justify-content: center;
@@ -736,7 +741,7 @@
   .contact-item { text-align: center; }
   .contact-label {
     font-family: var(--font-mono);
-    font-size: 0.62rem;
+    font-size:var(--step--2);
     letter-spacing: 0.2em;
     text-transform: uppercase;
     color: var(--muted);
@@ -744,7 +749,7 @@
   }
   .contact-val {
     font-family: var(--font-display);
-    font-size: 1.4rem;
+    font-size:var(--step-1);
     letter-spacing: 0.05em;
     color: var(--white);
   }
@@ -774,7 +779,7 @@
   }
   .footer-copy {
     font-family: var(--font-mono);
-    font-size: 0.62rem;
+    font-size:var(--step--2);
     letter-spacing: 0.1em;
     color: var(--muted);
   }
@@ -783,7 +788,7 @@
   }
   .footer-links a {
     font-family: var(--font-mono);
-    font-size: 0.58rem;
+    font-size:var(--step--2);
     letter-spacing: 0.08em;
     text-transform: uppercase;
     color: var(--muted);
@@ -814,7 +819,7 @@
     .nav-links { display: none; }
     section { padding: 80px 28px; }
     .hero { padding: 100px 28px 60px; }
-    .hero-title { font-size: clamp(4rem, 18vw, 8rem); }
+    .hero-title { font-size:var(--step-5); }
     .about-section, .services-header, .perf-header, .perf-card.featured {
       grid-template-columns: 1fr;
       gap: 40px;
@@ -854,8 +859,8 @@
       gap: 36px;
       z-index: 999;
     }
-    .nav-links.open a { font-size: 1.1rem; letter-spacing: 0.15em; }
-    .nav-links.open .nav-cta { padding: 14px 32px; font-size: 0.85rem !important; }
+    .nav-links.open a { font-size:var(--step-0); letter-spacing: 0.15em; }
+    .nav-links.open .nav-cta { padding: 14px 32px; font-size:var(--step--1)!important; }
     .hamburger {
       display: flex;
       flex-direction: column;
@@ -879,22 +884,22 @@
 
     /* Hero */
     .hero { padding: 100px 20px 60px; min-height: 100svh; display: flex; flex-direction: column; justify-content: center; }
-    .hero-title { font-size: clamp(3.5rem, 15vw, 6rem); line-height: 0.9; }
-    .hero-sub { font-size: 0.9rem; max-width: 100%; }
+    .hero-title { font-size:var(--step-5); line-height: 0.9; }
+    .hero-sub { font-size:var(--step--1); max-width: 100%; }
     .hero-actions { flex-direction: column; gap: 14px; align-items: flex-start; }
-    .btn-primary { padding: 14px 28px; font-size: 0.7rem; }
+    .btn-primary { padding: 14px 28px; font-size:var(--step--2); }
     .hero-badge, .hero-scroll { display: none; }
-    .hero-eyebrow { font-size: 0.75rem; padding: 8px 14px; }
+    .hero-eyebrow { font-size:var(--step--2); padding: 8px 14px; }
 
     /* Sections */
     section { padding: 60px 20px; }
-    .section-title { font-size: clamp(2.2rem, 10vw, 3.5rem); }
+    .section-title { font-size:var(--step-3); }
 
     /* About */
     .about-section { grid-template-columns: 1fr; gap: 40px; }
     .brand-logos { grid-template-columns: repeat(2, 1fr); }
     .stats-grid { grid-template-columns: 1fr 1fr; }
-    .stat-number { font-size: 2.5rem; }
+    .stat-number { font-size:var(--step-2); }
 
     /* Services */
     .services-header { grid-template-columns: 1fr; gap: 20px; }
@@ -929,7 +934,7 @@
     .footer-links { flex-wrap: wrap; justify-content: center; gap: 16px; }
 
     /* Marquee */
-    .marquee-track span { font-size: 1.1rem; padding: 0 24px; }
+    .marquee-track span { font-size:var(--step-0); padding: 0 24px; }
   }
 
   /* ── TABLET VIEW ── */
@@ -937,7 +942,7 @@
     nav { padding: 14px 32px; }
     section { padding: 80px 32px; }
     .hero { padding: 110px 32px 70px; }
-    .hero-title { font-size: clamp(4rem, 14vw, 8rem); }
+    .hero-title { font-size:var(--step-5); }
     .about-section { grid-template-columns: 1fr; gap: 50px; }
     .brand-logos { grid-template-columns: repeat(3, 1fr); }
     .services-grid { grid-template-columns: 1fr 1fr; }
@@ -1012,20 +1017,20 @@
   width: 32px; height: 32px;
   background: var(--red);
   display: flex; align-items: center; justify-content: center;
-  font-size: 0.9rem;
+  font-size:var(--step--1);
   flex-shrink: 0;
 }
 
 .trust-card-title {
   font-family: var(--font-display);
-  font-size: 0.95rem;
+  font-size:var(--step--1);
   letter-spacing: 0.1em;
   color: var(--gold-light);
 }
 
 .trust-card-sub {
   font-family: var(--font-mono);
-  font-size: 0.55rem;
+  font-size:var(--step--2);
   letter-spacing: 0.08em;
   color: var(--silver);
   text-transform: uppercase;
@@ -1042,7 +1047,7 @@
 
 .trust-item {
   font-family: var(--font-mono);
-  font-size: 0.58rem;
+  font-size:var(--step--2);
   letter-spacing: 0.04em;
   color: var(--light);
   background: rgba(255,255,255,0.04);
@@ -1060,7 +1065,7 @@
 
 .trust-footer {
   font-family: var(--font-mono);
-  font-size: 0.55rem;
+  font-size:var(--step--2);
   letter-spacing: 0.06em;
   color: var(--muted);
   text-align: center;
@@ -1075,17 +1080,17 @@
 .trust-card .rp-track { display: flex; transition: transform 0.5s ease; }
 .trust-card .rp-slide { min-width: 100%; }
 .trust-card .rp-text {
-  font-size: 0.72rem;
+  font-size:var(--step--2);
   line-height: 1.65;
   color: var(--light);
   font-style: italic;
   margin-bottom: 10px;
   font-family: var(--font-body);
-  font-weight: 300;
+  font-weight:400;
 }
 .trust-card .rp-author {
   font-family: var(--font-mono);
-  font-size: 0.55rem;
+  font-size:var(--step--2);
   letter-spacing: 0.06em;
   color: var(--gold-light);
   text-transform: uppercase;
@@ -1141,7 +1146,7 @@
 }
 .ticker-label {
   font-family: var(--font-mono);
-  font-size: 0.62rem;
+  font-size:var(--step--2);
   letter-spacing: 0.3em;
   text-transform: uppercase;
   color: var(--red);
@@ -1162,8 +1167,8 @@
   gap: 0;
 }
 .ticker-item {
-  font-family: var(--font-display);
-  font-size: 1.15rem;
+  font-family: var(--font-mono);
+  font-size:var(--step-0);
   letter-spacing: 0.06em;
   color: var(--muted);
   padding: 10px 0;
@@ -1176,7 +1181,7 @@
 }
 .ticker-item:last-child { border-bottom: none; }
 .ticker-arrow {
-  font-size: 0.5rem;
+  font-size:var(--step--2);
   color: var(--red);
   opacity: 0;
   transition: opacity 0.3s;
@@ -1203,17 +1208,17 @@
 .hero-reviews-panel .rp-track { display: flex; transition: transform 0.5s ease; }
 .hero-reviews-panel .rp-slide { min-width: 100%; }
 .hero-reviews-panel .rp-text {
-  font-size: 0.78rem;
+  font-size:var(--step--2);
   line-height: 1.65;
   color: var(--light);
   font-style: italic;
   margin-bottom: 10px;
   font-family: var(--font-body);
-  font-weight: 300;
+  font-weight:400;
 }
 .hero-reviews-panel .rp-author {
   font-family: var(--font-mono);
-  font-size: 0.58rem;
+  font-size:var(--step--2);
   letter-spacing: 0.06em;
   color: var(--gold-light);
   text-transform: uppercase;
@@ -1230,7 +1235,7 @@
 }
 .mini-ticker-item {
   font-family: var(--font-mono);
-  font-size: 0.6rem;
+  font-size:var(--step--2);
   letter-spacing: 0.04em;
   color: var(--muted);
   padding: 7px 0;
@@ -1244,7 +1249,7 @@
 .mini-ticker-item::before {
   content: '—';
   color: var(--red);
-  font-size: 0.5rem;
+  font-size:var(--step--2);
   opacity: 0;
   transition: opacity 0.3s;
   flex-shrink: 0;
@@ -1296,7 +1301,7 @@
   border: none;
   color: var(--white);
   font-family: var(--font-mono);
-  font-size: 0.85rem;
+  font-size:var(--step--1);
   letter-spacing: 0.04em;
   text-align: left;
   padding: 24px 0;
@@ -1311,8 +1316,8 @@
 .faq-q[aria-expanded="true"] { color: var(--gold-light); }
 
 .faq-icon {
-  font-size: 1.4rem;
-  font-weight: 300;
+  font-size:var(--step-1);
+  font-weight:400;
   color: var(--red);
   flex-shrink: 0;
   transition: transform 0.3s;
@@ -1327,15 +1332,15 @@
 .faq-a.open { display: block; }
 .faq-a p {
   color: var(--silver);
-  font-size: 0.95rem;
+  font-size:var(--step--1);
   line-height: 1.75;
-  font-weight: 300;
+  font-weight:400;
 }
-.faq-a p strong { color: var(--white); font-weight: 500; }
+.faq-a p strong { color: var(--white); font-weight:600; }
 
 @media (max-width: 768px) {
   #faq { padding: 70px 24px; }
-  .faq-q { font-size: 0.78rem; padding: 20px 0; }
+  .faq-q { font-size:var(--step--2); padding: 20px 0; }
 }
 /* MOBILE MENU */
 @media (max-width: 768px) {
@@ -1376,8 +1381,8 @@
   }
   #mobile-menu.open { display: flex; }
   #mobile-menu a {
-    font-family: var(--font-display);
-    font-size: 2.2rem;
+    font-family: var(--font-mono);
+    font-size:var(--step-2);
     letter-spacing: 0.1em;
     color: #f0ede8;
     text-decoration: none;
@@ -1396,7 +1401,7 @@
     color: #f0ede8 !important;
     border: none;
     font-family: var(--font-mono) !important;
-    font-size: 0.85rem !important;
+    font-size:var(--step--1)!important;
     letter-spacing: 0.12em;
     padding: 16px 40px !important;
     width: auto !important;
@@ -1415,7 +1420,7 @@
 .svc-index { margin-top: 72px; }
 .svc-index-head {
   font-family: var(--font-mono);
-  font-size: 0.7rem; letter-spacing: 0.2em; text-transform: uppercase;
+  font-size:var(--step--2); letter-spacing: 0.2em; text-transform: uppercase;
   color: var(--red-bright); margin-bottom: 28px;
   display: flex; align-items: center; gap: 14px;
 }
@@ -1427,13 +1432,13 @@
   gap: 32px 28px;
 }
 .svc-group-name {
-  font-family: var(--font-display); font-size: 1.15rem;
+  font-family: var(--font-display); font-size:var(--step-0);
   letter-spacing: 0.08em; color: var(--white); margin-bottom: 14px;
   padding-bottom: 10px; border-bottom: 1px solid rgba(255,255,255,0.09);
 }
 .svc-group a {
   display: block; text-decoration: none; color: var(--silver);
-  font-size: 0.9rem; line-height: 1.5; padding: 5px 0;
+  font-size:var(--step--1); line-height: 1.5; padding: 5px 0;
   transition: color .2s, padding-left .2s;
 }
 .svc-group a:hover { color: var(--white); padding-left: 6px; }

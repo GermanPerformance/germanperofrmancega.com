@@ -24,32 +24,73 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 
+/* Every selector that uses the display face is listed here, in one rule.
+   The previous version named ten of them and left seventeen behind --
+   .perf-card-name, .ct, .step-title, .brand-icon and the rest asked for
+   var(--font-display) but never set weight or width, so they inherited
+   400 / wdth 100 from body and rendered as a visibly different family
+   next to the headings they sat beside. Adding a display selector to a
+   page sheet without adding it here reintroduces that split, which is
+   what tools/check_design_system.py exists to catch. */
 h1, h2, h3,
-.hero-title, .section-title, .fb, .cbt, .stat-number, .tv, .rp-score {
+.hero-title, .section-title, .fb, .cbt, .stat-number, .tv, .rp-score,
+.perf-card-name, .perf-spec-val, .perf-bg-text, .service-name,
+.svc-group-name, .trust-card-title, .step-title, .ct, .iv,
+.brand-icon, .contact-val, .author-avatar, .marquee-track span {
   font-family: var(--font-display);
   font-variation-settings: 'wdth' var(--wdth-display);
   font-weight: 800;
   letter-spacing: -0.015em;
-  line-height: 1.02;
+  line-height: 1.05;
   color: var(--white);
   text-transform: uppercase;
 }
 
-h1, .hero-title { font-size: var(--step-5); letter-spacing: -0.025em; }
-h2, .section-title { font-size: var(--step-4); }
-h3 { font-size: var(--step-2); font-weight: 700; letter-spacing: -0.01em; }
+/* Three display tiers and no more. Everything above resolves to one of
+   them, so a card title is the same object wherever it appears. */
+h1, .hero-title            { font-size: var(--step-5); letter-spacing: -0.03em; }
+h2, .section-title         { font-size: var(--step-4); }
 
-/* Outline treatment: a drawn contour rather than a filled word. */
-.outline {
-  -webkit-text-stroke: 1.5px rgba(242, 240, 236, 0.30);
-  color: transparent;
+/* A watermark, not a heading. It is in the display rule above only so
+   it takes the same face and width axis; it must not take the white.
+   Left at var(--white) it rendered as a solid word bleeding off the
+   right edge of the performance section. */
+.perf-bg-text {
+  font-size: var(--step-5);
+  color: rgba(255, 255, 255, 0.022);
+}
+.cbt, .fb                  { font-size: var(--step-3); }
+
+/* Tier 3 -- card and panel titles. These were the worst of the drift:
+   the same rank rendered at 400/22px sentence case in one section and
+   800/56px uppercase in the next. */
+h3, .service-name, .perf-card-name, .ct, .step-title,
+.tv, .iv, .brand-icon, .contact-val {
+  font-size: var(--step-1);
+  font-weight: 700;
+  letter-spacing: 0.005em;
+  line-height: 1.2;
+}
+.tv, .stat-number          { font-size: var(--step-2); }
+.svc-group-name, .author-avatar, .trust-card-title,
+.marquee-track span        { font-size: var(--step-0); letter-spacing: 0.04em; }
+.marquee-track span        { font-size: var(--step-2); }
+
+/* The hero stack is white / white / red. It used to be white, then a
+   1.5px contour at 30% alpha, then red -- three treatments in a
+   three-word headline, and the middle word was effectively invisible on
+   the h1, which is the one line on the page that has to be read. */
+h1 .outline, .hero-title .outline, .outline {
+  color: var(--white);
+  -webkit-text-stroke: 0;
 }
 .accent, h1 .accent { color: var(--red); }
 
 p { max-width: 68ch; }
 
 /* Monospace micro-labels -- the service-manual voice of the design. */
-.sl, .section-label, .eyebrow, .tl, .stat-label, .ftag, .fct,
+.sl, .section-label, .eyebrow, .hero-eyebrow, .tl, .stat-label, .ftag, .fct,
+.ticker-item, #mobile-menu a, .spec-note, .spec-note-quiet, .rating-text,
 .flinks a, .cbs, .rp-author, .gallery-tag, .gallery-upload-label,
 .svc-index-head, .rel-go, .cta-sub, .breadcrumb a, .breadcrumb span {
   font-family: var(--font-mono);
@@ -133,6 +174,148 @@ section:first-of-type { border-top: 0; }
   transition: color .18s var(--ease);
 }
 .bg:hover { color: var(--white); }
+
+/* Three micro-labels that were carrying the mono face inline. They are the
+   same object as every other spec label, so they resolve to the same rule
+   above and differ only in tone. */
+.spec-note       { color: var(--silver); letter-spacing: 0.15em; }
+.spec-note-quiet { color: var(--muted); letter-spacing: 0.08em; text-transform: none; }
+.rating-text     { color: var(--white); letter-spacing: 0.05em; text-transform: none; }
+.rating-text span { color: var(--silver); }
+
+/* --------------------------------------------------------------------------
+   4a. Prose links
+   --------------------------------------------------------------------------
+   The internal links added to the blog post had no rule anywhere, so they
+   rendered at the user-agent default -- #0000EE underlined on a #0a0a0a
+   ground, roughly 1.3:1 and effectively unreadable. Gold is already the
+   colour that marks a verified fact, which is what an internal reference
+   is; it clears AA on all three grounds.
+   -------------------------------------------------------------------------- */
+
+p a, li a, td a, dd a {
+  color: var(--gold);
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
+  text-decoration-color: var(--line-gold);
+  transition: color .18s var(--ease), text-decoration-color .18s var(--ease);
+}
+p a:hover, li a:hover, td a:hover, dd a:hover {
+  color: var(--gold-light);
+  text-decoration-color: var(--gold-light);
+}
+
+/* --------------------------------------------------------------------------
+   4b. Iconography
+   --------------------------------------------------------------------------
+   The site previously used 43 distinct colour emoji as icons. They render
+   in the system emoji font, so they take none of the palette, none of the
+   type scale, and look different on every OS. Two replacements:
+
+     .ico   inline SVG on a 24px grid, 1.5px stroke, currentColor. Used
+            only where an icon carries meaning -- the top of a category
+            card.
+     .ci    a two-digit index in the mono face, numbered per grid. Used
+            where the pictogram was decorative: a manual numbers its
+            callouts rather than illustrating each one.
+   -------------------------------------------------------------------------- */
+
+.ico {
+  width: 24px;
+  height: 24px;
+  display: block;
+  color: var(--gold);
+}
+.ico-wrap {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  border: 1px solid var(--line-gold);
+  background: var(--gold-dim);
+  flex: none;
+}
+.service-card:hover .ico,
+.trust-card:hover .ico { color: var(--gold-light); }
+
+/* The card index. Gold, monospaced, with a rule under it -- the same
+   grammar as the section labels, one level quieter. */
+.ci {
+  font-family: var(--font-mono);
+  font-weight: 600;
+  font-size: var(--step--2);
+  letter-spacing: 0.18em;
+  color: var(--gold);
+  display: inline-block;
+  padding-bottom: 6px;
+  margin-bottom: 14px;
+  border-bottom: 1px solid var(--line-gold);
+  min-width: 34px;
+}
+
+/* Marquee separator: a drawn square, not a U+2726 glyph. */
+.dot {
+  display: inline-block;
+  width: 4px;
+  height: 4px;
+  background: var(--red);
+  vertical-align: middle;
+  margin: 0 28px 6px;
+}
+
+/* --------------------------------------------------------------------------
+   4d. FAQ
+   --------------------------------------------------------------------------
+   The same question rendered two ways: Archivo at 16.8px on the service
+   pages, IBM Plex at 13.6px with tracking on the homepage. Monospace is
+   the micro-label voice in this system -- a full sentence set in it, two
+   steps down, was both off-voice and hard to read. One component now.
+   -------------------------------------------------------------------------- */
+
+.fq, .faq-q {
+  font-family: var(--font-body);
+  font-size: var(--step-0);
+  font-weight: 600;
+  letter-spacing: 0;
+  line-height: 1.45;
+  color: var(--white);
+  text-transform: none;
+}
+.ficon, .faq-icon {
+  font-family: var(--font-mono);
+  font-size: var(--step-1);
+  font-weight: 400;
+  color: var(--red-b);
+  line-height: 1;
+}
+
+/* --------------------------------------------------------------------------
+   4c. Rating display
+   --------------------------------------------------------------------------
+   The badge showed five filled stars beside the figure 4.5. Half a star is
+   drawn by clipping a gold layer over a grey one, so the mark cannot
+   contradict the number it sits next to.
+   -------------------------------------------------------------------------- */
+
+.stars {
+  position: relative;
+  display: inline-block;
+  font-size: var(--step--1);
+  letter-spacing: 0.12em;
+  color: var(--graphite);
+  line-height: 1;
+  white-space: nowrap;
+}
+.stars::before {
+  content: attr(data-stars);
+  position: absolute;
+  inset: 0;
+  width: var(--fill, 100%);
+  overflow: hidden;
+  color: var(--gold);
+}
 
 /* --------------------------------------------------------------------------
    5. Cards and panels -- hairline boxes on a dark ground
@@ -320,7 +503,7 @@ h1, h2, h3, .hero-title, .section-title {
 .eyebrow { letter-spacing: 0.12em; line-height: 1.7; }
 
 /* Gold marks the verified fact inside the eyebrow. */
-.eyebrow-highlight { color: var(--gold); }
+.eyebrow-highlight { color: var(--gold); font-weight: 700; }
 
 @media (max-width: 700px) {
   /* Keep the nav CTA present but let the logo and hamburger breathe. */
