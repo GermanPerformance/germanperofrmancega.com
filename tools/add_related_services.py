@@ -11,10 +11,20 @@ one job is deciding what else their car needs.
 Reuses the ranking from fix_footer_links (same brand first, then the same job
 on other marques, then the cross-brand pages) so the two agree.
 
+This writes markup only. It used to append a stylesheet block to
+site.css when the literal ".rel-grid{" was absent -- a substring test that
+went false the moment .rel-grid moved into a selector list, so the block was
+re-appended on every run. Worse, it still declared 'DM Sans' and 'Space
+Mono', which stopped being loaded when the type system moved to Archivo and
+IBM Plex Mono, so .rel-name and .rel-go silently fell back to system fonts.
+A markup generator has no business writing stylesheets; the classes it emits
+are styled in the design system.
+
 Run from the repo root:  python3 tools/add_related_services.py
 """
 
 import os
+import re
 import sys
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
@@ -31,19 +41,15 @@ BRAND_TITLES = {
 }
 DEFAULT_TITLE = ("RELATED", "SERVICES")
 
-CSS = """
-/* Related services: in-content links between sibling service pages */
-.rel-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:14px;margin-top:40px}
-.rel-card{display:flex;align-items:center;justify-content:space-between;gap:16px;
-  padding:20px 22px;background:var(--steel);border:1px solid rgba(255,255,255,.07);
-  text-decoration:none;transition:border-color .2s,background .2s}
-.rel-card:hover{border-color:var(--red);background:#232326}
-.rel-name{font-family:'DM Sans',sans-serif;font-size:.95rem;color:var(--white);line-height:1.35}
-.rel-go{font-family:'Space Mono',monospace;font-size:.9rem;color:var(--red-b);flex-shrink:0}
-@media(max-width:600px){.rel-grid{grid-template-columns:1fr}}
-"""
 
-MARKER = 'class="rel-grid"'
+# The block this writes carries class="rel-grid fu", so a marker with the
+# closing quote never matched and every run appended another copy. Three
+# blocks had accumulated on 30 pages before it was noticed.
+MARKER = 'class="rel-grid'
+BLOCK = re.compile(
+    r'<section style="background:var\(--carbon\)">\s*\n'
+    r'  <div class="fu"><div class="sl">Keep Your Car Right</div>.*?</section>\n',
+    re.S)
 ANCHOR = '<section style="background:var(--black);padding:80px 60px;text-align:center">'
 
 
@@ -73,29 +79,32 @@ def main():
         path = os.path.join(REPO_ROOT, page)
         with open(path, encoding="utf-8") as fh:
             content = fh.read()
+        original = content
+
+        block = build_block(page)
 
         if MARKER in content:
-            continue
-        if ANCHOR not in content:
-            print(f"  !! {page}: closing CTA section not found")
-            continue
+            # Replace rather than skip, so adding a service refreshes the
+            # related links on every page that should now point at it.
+            updated, n = BLOCK.subn(block, content, count=1)
+            if n != 1:
+                print(f"  !! {page}: rel-grid present but not replaceable")
+                continue
+            content = updated
+        else:
+            if ANCHOR not in content:
+                print(f"  !! {page}: closing CTA section not found")
+                continue
+            idx = content.rindex(ANCHOR)
+            content = content[:idx] + block + content[idx:]
 
-        idx = content.rindex(ANCHOR)
-        content = content[:idx] + build_block(page) + content[idx:]
-
+        if content == original:
+            continue
         with open(path, "w", encoding="utf-8") as fh:
             fh.write(content)
         changed += 1
 
-    if changed:
-        css_path = os.path.join(REPO_ROOT, "assets", "css", "site.css")
-        with open(css_path, encoding="utf-8") as fh:
-            existing = fh.read()
-        if ".rel-grid{" not in existing:
-            with open(css_path, "a", encoding="utf-8") as fh:
-                fh.write(CSS)
-
-    print(f"related-services block added to {changed} pages")
+    print(f"related-services block written on {changed} pages")
     return 0
 
 

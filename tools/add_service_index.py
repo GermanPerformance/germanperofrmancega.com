@@ -39,6 +39,7 @@ GROUPS = [
         ("mercedes-transmission-snellville-ga.html", "Transmission Service"),
         ("mercedes-ac-repair-snellville-ga.html", "AC Repair"),
         ("mercedes-engine-diagnostics-snellville-ga.html", "Engine Diagnostics"),
+        ("mercedes-cooling-system-snellville-ga.html", "Cooling System"),
     ]),
     ("Audi", [
         ("audi-oil-change-snellville-ga.html", "Oil Change"),
@@ -48,11 +49,14 @@ GROUPS = [
         ("audi-quattro-service-snellville-ga.html", "Quattro AWD Service"),
     ]),
     ("Porsche", [
+        ("porsche-oil-change-snellville-ga.html", "Oil Change"),
         ("porsche-brake-service-snellville-ga.html", "Brake Service"),
+        ("porsche-suspension-repair-snellville-ga.html", "Suspension Repair"),
         ("porsche-inspection-snellville-ga.html", "Full Inspection"),
     ]),
     ("Volkswagen", [
         ("volkswagen-oil-change-snellville-ga.html", "Oil Change"),
+        ("volkswagen-brake-service-snellville-ga.html", "Brake Service"),
         ("volkswagen-engine-repair-snellville-ga.html", "Engine Repair"),
         ("volkswagen-timing-chain-snellville-ga.html", "Timing Chain"),
     ]),
@@ -66,37 +70,24 @@ GROUPS = [
     ]),
 ]
 
-CSS = """
-/* Service index: in-content links to every service page */
-.svc-index { margin-top: 72px; }
-.svc-index-head {
-  font-family: 'Space Mono', monospace;
-  font-size: 0.7rem; letter-spacing: 0.2em; text-transform: uppercase;
-  color: var(--red-bright); margin-bottom: 28px;
-  display: flex; align-items: center; gap: 14px;
+
+
+# Each make's heading is the entry point to its repair hub.
+HUBS = {
+    "BMW": "bmw-repair-snellville-ga.html",
+    "Mercedes-Benz": "mercedes-repair-snellville-ga.html",
+    "Audi": "audi-repair-snellville-ga.html",
+    "Porsche": "porsche-repair-snellville-ga.html",
+    "Volkswagen": "volkswagen-repair-snellville-ga.html",
 }
-.svc-index-head::before {
-  content: ''; width: 32px; height: 1px; background: var(--red-bright);
-}
-.svc-index-grid {
-  display: grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
-  gap: 32px 28px;
-}
-.svc-group-name {
-  font-family: 'Bebas Neue', sans-serif; font-size: 1.15rem;
-  letter-spacing: 0.08em; color: var(--white); margin-bottom: 14px;
-  padding-bottom: 10px; border-bottom: 1px solid rgba(255,255,255,0.09);
-}
-.svc-group a {
-  display: block; text-decoration: none; color: var(--silver);
-  font-size: 0.9rem; line-height: 1.5; padding: 5px 0;
-  transition: color .2s, padding-left .2s;
-}
-.svc-group a:hover { color: var(--white); padding-left: 6px; }
-@media (max-width: 600px) {
-  .svc-index-grid { grid-template-columns: 1fr 1fr; gap: 26px 18px; }
-}
-"""
+
+
+def group_heading(name):
+    hub = HUBS.get(name)
+    if not hub:
+        return f'        <div class="svc-group-name">{name}</div>\n'
+    return (f'        <div class="svc-group-name"><a href="{hub}">{name} '
+            f'<span class="svc-hub-go">&rarr;</span></a></div>\n')
 
 
 def build_block():
@@ -108,13 +99,13 @@ def build_block():
         )
         groups.append(
             f'      <div class="svc-group">\n'
-            f'        <div class="svc-group-name">{name}</div>\n'
+            f'{group_heading(name)}'
             f'{links}'
             f'      </div>\n'
         )
     return (
-        '\n  <div class="svc-index fade-up">\n'
-        '    <div class="svc-index-head">Browse services by make</div>\n'
+        '\n  <div class="svc-index fu">\n'
+        '    <div class="svc-index-head"><div class="sl">Browse services by make</div></div>\n'
         '    <div class="svc-index-grid">\n'
         + "".join(groups) +
         '    </div>\n'
@@ -127,8 +118,28 @@ def main():
     with open(path, encoding="utf-8") as fh:
         content = fh.read()
 
+    block = build_block()
+
     if 'class="svc-index' in content:
-        print("service index already present")
+        # Replace rather than skip. Skipping meant that adding a service
+        # page could never surface it in the homepage index -- the block
+        # was written once and then frozen.
+        # Consume the leading blank line and indent too. build_block()
+        # emits them, so a regex that starts at <div left one behind on
+        # every run and the block drifted right by two spaces each time.
+        existing = re.compile(
+            r'\n\s*<div class="svc-index.*?\n  </div>\n', re.S)
+        updated, n = existing.subn(block, content, count=1)
+        if n != 1:
+            print("service index present but not replaceable")
+            return 1
+        if updated == content:
+            print("service index already current")
+            return 0
+        with open(path, "w", encoding="utf-8") as fh:
+            fh.write(updated)
+        total = sum(len(e) for _, e in GROUPS)
+        print(f"service index updated: {total} links across {len(GROUPS)} groups")
         return 0
 
     # Insert after the services grid, still inside #services.
@@ -138,15 +149,11 @@ def main():
 
     marker = section.rindex("</div>\n\n</section>") if "</div>\n\n</section>" in section \
         else section.rindex("</section>")
-    section = section[:marker] + build_block() + section[marker:]
+    section = section[:marker] + block + section[marker:]
     content = content[:start] + section + content[end:]
 
     with open(path, "w", encoding="utf-8") as fh:
         fh.write(content)
-
-    css_path = os.path.join(REPO_ROOT, "assets", "css", "home.css")
-    with open(css_path, "a", encoding="utf-8") as fh:
-        fh.write(CSS)
 
     total = sum(len(entries) for _, entries in GROUPS)
     print(f"service index added: {total} links across {len(GROUPS)} groups")

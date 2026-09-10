@@ -20,8 +20,10 @@ REPO_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 JSONLD_RE = re.compile(
     r'<script type="application/ld\+json">(.*?)</script>', re.S)
-# Service pages use .fq/.ficon, the homepage uses .faq-q/.faq-icon.
-QUESTION_BTN_RE = re.compile(r'<button class="(?:fq|faq-q)"[^>]*>(.*?)</button>', re.S)
+# Every page now renders a question as <details><summary class="fq">; the
+# button form is kept so the check still reads any page not yet converted.
+QUESTION_BTN_RE = re.compile(
+    r'<(button|summary) class="(?:fq|faq-q)"[^>]*>(.*?)</\1>', re.S)
 
 # Marques, so we can flag a page describing a brand it does not serve.
 BRANDS = {"bmw": "BMW", "mercedes": "Mercedes", "audi": "Audi",
@@ -33,8 +35,8 @@ BRAND_PATTERNS = {"BMW": r"\bBMW\b", "Mercedes": r"Mercedes", "Audi": r"\bAudi\b
 def visible_questions(content):
     """Question text as rendered, with the +/- icon span stripped."""
     out = []
-    for raw in QUESTION_BTN_RE.findall(content):
-        text = re.sub(r'<span class="(?:ficon|faq-icon)">.*?</span>', "", raw, flags=re.S)
+    for _tag, raw in QUESTION_BTN_RE.findall(content):
+        text = re.sub(r'<span class="(?:ficon|faq-icon)"[^>]*>.*?</span>', "", raw, flags=re.S)
         out.append(html.unescape(re.sub(r"<[^>]+>", "", text)).strip())
     return out
 

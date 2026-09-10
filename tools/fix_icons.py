@@ -171,8 +171,12 @@ def main():
         # Anything left is a stray glyph inside link or button text.
         html, n = EMOJI.subn("", html)
         counters["stray"] += n
-        # Strip the double spaces that removing an inline glyph leaves behind.
-        html = re.sub(r">\s+([A-Z(])", r">\1", html)
+        # Removing an inline glyph from link text leaves a leading space.
+        # This used to be a blanket re.sub(r">\\s+([A-Z(])", r">\\1"), which
+        # also matched '</strong> Under' and deleted the word space in
+        # twelve places of running prose. Scope it to the elements a glyph
+        # was actually removed from: anchors and buttons.
+        html = re.sub(r"(<(?:a|button)\b[^>]*>)\s+(?=[A-Z(])", r"\1", html)
 
         if html != original:
             with open(path, "w", encoding="utf-8") as fh:

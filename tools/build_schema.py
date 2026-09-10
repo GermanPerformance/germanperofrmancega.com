@@ -156,12 +156,25 @@ def visible_faq(content):
     once the FAQPage was nested inside an @graph, a second run could no
     longer find it and silently dropped the FAQ.
 
-    Service pages use .fq/.ficon; the homepage uses .faq-q/.faq-icon.
+    Three markups exist across the site and all three must parse:
+      .fq/.ficon on a <button>      -- service pages
+      .faq-q/.faq-icon on a <button> -- the older homepage
+      .fq on a <summary> inside <details> -- the rewritten homepage
+
+    The last one is a native disclosure widget and needs no JavaScript,
+    which is why it is worth supporting rather than arguing with. Matching
+    only <button> meant the homepage silently produced no FAQ at all.
     """
-    section = content[content.find('class="faq-list"'):]
+    # No closing quote: the container is class="faq-list fu" on some pages,
+    # and matching the quote silently found nothing and returned the last
+    # character of the document.
+    start = content.find('class="faq-list')
+    if start == -1:
+        return None
+    section = content[start:]
     section = section[:section.find("</section>")] if "</section>" in section else section
     items = re.findall(
-        r'<button class="(?:fq|faq-q)"[^>]*>(.*?)</button>\s*'
+        r'<(?:button|summary) class="(?:fq|faq-q)"[^>]*>(.*?)</(?:button|summary)>\s*'
         r'<div class="(?:fa|faq-a)"[^>]*>(.*?)</div>', section, re.S)
     if not items:
         return None
@@ -232,7 +245,11 @@ def main():
         graph = [business(), website(), webpage(url, title, description)]
 
         if name == HOME:
-            graph.append(visible_faq(content))
+            faq = visible_faq(content)
+            if faq:
+                graph.append(faq)
+            else:
+                print("  !! index.html: no FAQ found in the visible markup")
             counts["home"] += 1
         elif name == POST:
             crumb = title.split("|")[0].strip()
