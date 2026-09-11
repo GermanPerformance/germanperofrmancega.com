@@ -441,6 +441,28 @@ MARQUE_TOKENS = {
 }
 
 
+
+CHECK_SVG = ('<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" '
+             'stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" '
+             'aria-hidden="true"><path d="M5 12.5 10 17.5 19 7"/></svg>')
+
+
+def checks_list(marque=None):
+    """The four trust facts, under the hero button where they get read.
+
+    Replaces the old four-cell trust strip. The fourth line names the
+    marque when the page has one, so a Porsche page never claims to fit
+    BMW parts -- the guarantee the old strip's donor copy kept breaking.
+    """
+    parts = "Genuine %s parts and fluids" % marque if marque else \
+        "Genuine factory parts and fluids"
+    items = ["4.5-star Google rating", "Top-rated CARFAX shop",
+             "15+ years in business", parts]
+    rows = "".join(
+        '      <li>%s<span>%s</span></li>\n' % (CHECK_SVG, text) for text in items)
+    return '    <ul class="checks fu">\n%s    </ul>' % rows
+
+
 def skeleton(donor):
     """Nav, mobile menu, trust bar, call bar, NAP grid and footer from a page
     of the same marque, so nothing marque-specific has to be rewritten."""
@@ -455,7 +477,6 @@ def skeleton(donor):
     return {
         "nav": grab(r"<nav>.*?</nav>"),
         "mob": grab(r'<div id="mobile-menu">.*?\n</div>'),
-        "trust": grab(r'<div class="trust">.*?\n</div>'),
         "callbar": "",  # the fixed bottom call bar was removed site-wide
         "nap": grab(r'<div class="ic-grid">.*?\n      </div>'),
         "footer": grab(r"<footer>.*?</footer>"),
@@ -520,11 +541,11 @@ def build(page, sk):
     <div class="eyebrow fu">{page['brand']} Specialists &nbsp;·&nbsp; Snellville, GA &nbsp;·&nbsp;<span class="eyebrow-highlight">4.5★ Rated</span></div>
     <h1 class="fu">{line1}<br><span class="outline">{line2}</span><br><span class="accent">{line3}</span></h1>
     <p class="sub fu">{page['sub']}</p>
-    <div class="acts fu"><a href="tel:+16783957459" class="bp">Call to Schedule — (678) 395-7459</a><a href="index.html#services" class="bg">All Services {ARROW}</a></div>
+    <div class="acts fu"><a href="tel:+16783957459" class="bp"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M6.6 2.5a1.6 1.6 0 0 1 1.5 1l1 2.4a1.6 1.6 0 0 1-.4 1.8L7.4 8.9a11.6 11.6 0 0 0 5.7 5.7l1.2-1.3a1.6 1.6 0 0 1 1.8-.4l2.4 1a1.6 1.6 0 0 1 1 1.5v2.3a2.3 2.3 0 0 1-2.5 2.3 A18.4 18.4 0 0 1 2.2 5a2.3 2.3 0 0 1 2.3-2.5z"/></svg><span>Service My Car</span></a><a href="index.html#services" class="bg">All Services {ARROW}</a></div>
+{checks_list(page['brand'])}
   </div>
 </section>
 
-{sk['trust']}
 
 <section style="background:var(--carbon)">
   <div class="fu"><div class="sl">What You Get</div><h2>{ch1}<br><span style="color:var(--red)">{ch2}</span></h2><p class="sd">{page['cards_sub']}</p></div>
@@ -556,7 +577,7 @@ def build(page, sk):
     </div>
 </section>
 
-<div class="cta-band fu"><div><div class="cbt">{cta1}<br>{cta2}</div><div class="cbs">{page['cta_sub']}</div></div><a href="tel:+16783957459">Call (678) 395-7459</a></div>
+<div class="cta-band fu"><div><div class="cbt">{cta1}<br>{cta2}</div><div class="cbs">{page['cta_sub']}</div></div><a href="tel:+16783957459" class="bw"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M6.6 2.5a1.6 1.6 0 0 1 1.5 1l1 2.4a1.6 1.6 0 0 1-.4 1.8L7.4 8.9a11.6 11.6 0 0 0 5.7 5.7l1.2-1.3a1.6 1.6 0 0 1 1.8-.4l2.4 1a1.6 1.6 0 0 1 1 1.5v2.3a2.3 2.3 0 0 1-2.5 2.3 A18.4 18.4 0 0 1 2.2 5a2.3 2.3 0 0 1 2.3-2.5z"/></svg><span>Service My Car</span></a></div>
 
 <section style="background:var(--black);padding:80px 60px;text-align:center">
   <div class="fu">
@@ -564,7 +585,7 @@ def build(page, sk):
     <h2 style="margin-bottom:20px">SNELLVILLE'S {page['brand'].upper()} <span style="color:var(--red)">SPECIALISTS</span></h2>
     <p class="sd" style="margin:0 auto 44px;text-align:center;max-width:480px">Serving Snellville, Loganville, Grayson, Lawrenceville, and all of Gwinnett County.</p>
     <div style="display:flex;gap:20px;justify-content:center;flex-wrap:wrap">
-      <a href="tel:+16783957459" class="bp">Call (678) 395-7459</a>
+      <a href="tel:+16783957459" class="bp"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M6.6 2.5a1.6 1.6 0 0 1 1.5 1l1 2.4a1.6 1.6 0 0 1-.4 1.8L7.4 8.9a11.6 11.6 0 0 0 5.7 5.7l1.2-1.3a1.6 1.6 0 0 1 1.8-.4l2.4 1a1.6 1.6 0 0 1 1 1.5v2.3a2.3 2.3 0 0 1-2.5 2.3 A18.4 18.4 0 0 1 2.2 5a2.3 2.3 0 0 1 2.3-2.5z"/></svg><span>Service My Car</span></a>
       <a href="https://maps.google.com/?q=2144+Parkwood+Rd+NW+Snellville+GA+30078" target="_blank" rel="noopener" class="bg">Get Directions {ARROW}</a>
     </div>
   </div>
@@ -583,20 +604,23 @@ def main():
     for page in PAGES:
         sk = skeleton(page["donor"])
 
-        # Assert the donor's trust bar names this marque rather than
-        # trusting that it does -- copying a BMW donor is exactly how
-        # "BMW-Approved Parts & Fluids" once shipped on the Porsche hub.
-        # Both short and full forms count: the VW pages say "VW-Approved"
-        # deliberately, which is how the marque writes it.
-        if "-Approved" in sk["trust"] and not any(
-                token in sk["trust"] for token in MARQUE_TOKENS[page["brand"]]):
+        # Assert the hero checklist names this marque rather than trusting
+        # that it does -- copying a BMW donor is exactly how "BMW-Approved
+        # Parts & Fluids" once shipped on the Porsche hub. Both short and
+        # full forms count: the VW pages say "VW" deliberately, which is
+        # how the marque writes it.
+        page_html = build(page, sk)
+
+        checks = page_html[page_html.find('<ul class="checks'):]
+        checks = checks[:checks.find("</ul>")]
+        if not any(token in checks for token in MARQUE_TOKENS[page["brand"]]):
             raise SystemExit(
-                f"{page['slug']}: donor trust bar does not name {page['brand']}")
+                f"{page['slug']}: hero checklist does not name {page['brand']}")
 
         path = os.path.join(REPO_ROOT, page["slug"])
         with open(path, "w", encoding="utf-8") as fh:
-            fh.write(build(page, sk))
-        words = len(re.sub(r"<[^>]+>", " ", build(page, sk)).split())
+            fh.write(page_html)
+        words = len(re.sub(r"<[^>]+>", " ", page_html).split())
         written.append((page["slug"], words))
 
     for slug, words in written:

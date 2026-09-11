@@ -33,7 +33,7 @@ import re
 import sys
 
 REPO_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-VERSION = "8"
+VERSION = "9"
 
 LOGO_NAV = (
     '<picture class="logo-pic"><source type="image/webp" '
@@ -53,12 +53,64 @@ PHONE_ICO = (
 TOPBAR = ('<div class="topbar"><a href="tel:+16783957459">'
           f'{PHONE_ICO}<span>(678) 395-7459</span></a></div>')
 
+# The same handset without the .tb-ico class, for use inside buttons.
+BTN_ICO = PHONE_ICO.replace(' class="tb-ico"', '')
+CTA = f'{BTN_ICO}<span>Service My Car</span>'
+
+CHECK_SVG = ('<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" '
+             'stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" '
+             'aria-hidden="true"><path d="M5 12.5 10 17.5 19 7"/></svg>')
+
+# The four trust facts the old strip carried, as a checklist under the
+# hero button. The marque is read out of the strip being replaced, so a
+# Porsche page keeps saying Porsche.
+MARQUES = {"BMW": "BMW", "Mercedes": "Mercedes-Benz", "Audi": "Audi",
+           "Porsche": "Porsche", "VW": "Volkswagen"}
+
+
+def checks_list(marque=None):
+    parts = f"Genuine {marque} parts and fluids" if marque else \
+        "Genuine factory parts and fluids"
+    items = ["4.5-star Google rating", "Top-rated CARFAX shop",
+             "15+ years in business", parts]
+    rows = "".join(f'      <li>{CHECK_SVG}<span>{t}</span></li>\n' for t in items)
+    return f'    <ul class="checks fu">\n{rows}    </ul>'
+
+
+def hero_checklist(html):
+    """Retire the four-cell trust strip in favour of a hero checklist.
+
+    The strip sat between sections where it was scrolled past; the same
+    four facts belong under the button, which is where the eye already
+    is. Idempotent: a page that already has the list is left alone.
+    """
+    if 'class="checks' in html:
+        return html
+    marque = None
+    strip = re.search(r'\n?<div class="trust">.*?\n</div>\n?', html, re.S)
+    if strip:
+        named = re.search(r'>([A-Za-z-]+)-Approved<', strip.group(0))
+        if named:
+            marque = MARQUES.get(named.group(1))
+        html = html[:strip.start()] + "\n" + html[strip.end():]
+    hero = re.search(r'<section class="hero"[^>]*>.*?</section>', html, re.S)
+    if not hero:
+        return html
+    # The row is one line on generated pages and three on the 404; the
+    # anchors inside it contain no divs, so the lazy match ends on its own
+    # closing tag either way.
+    acts = re.search(r'<div class="acts fu">.*?</div>', hero.group(0), re.S)
+    if not acts:
+        return html
+    at = hero.start() + acts.end()
+    return html[:at] + "\n" + checks_list(marque) + html[at:]
+
 NAV = f'''{TOPBAR}
 <nav>
   <a href="index.html" class="nav-logo">{LOGO_NAV}</a>
   <ul class="nav-links"><li><a href="index.html#services">Services</a></li><li><a href="about.html">About</a></li><li><a href="index.html#reviews">Reviews</a></li><li><a href="index.html#faq">FAQ</a></li><li><a href="contact.html">Contact</a></li></ul>
   <div class="nav-right">
-    <a href="tel:+16783957459" class="nav-cta"><span class="nav-cta-full">Call (678) 395-7459</span><span class="nav-cta-short">Call</span></a>
+    <a href="tel:+16783957459" class="nav-cta">{CTA}</a>
     <button id="hamburger" onclick="toggleMenu()" aria-label="Menu" aria-expanded="false" aria-controls="mobile-menu"><span></span><span></span><span></span></button>
   </div>
 </nav>
@@ -68,7 +120,7 @@ NAV = f'''{TOPBAR}
   <a href="index.html#reviews" onclick="closeMenu()">Reviews</a>
   <a href="index.html#faq" onclick="closeMenu()">FAQ</a>
   <a href="contact.html" onclick="closeMenu()">Contact</a>
-  <a href="tel:+16783957459" class="mcta" onclick="closeMenu()">Call (678) 395-7459</a>
+  <a href="tel:+16783957459" class="mcta" onclick="closeMenu()">{CTA}</a>
 </div>'''
 
 FOOTER_COLUMNS = f'''  <div class="ft">
@@ -134,6 +186,17 @@ RULES = [
     (r'<div class="fi fu"><button class="fq" onclick="toggleFaq\(this\)">(.*?)<span class="ficon">\+</span></button><div class="fa">(.*?)</div></div>',
      r'<details class="fi fu" name="faq"><summary class="fq">\1<span class="ficon" aria-hidden="true"></span></summary><div class="fa">\2</div></details>'),
 
+    # Four generated pages plus about and contact shipped this anchor with
+    # no class at all, so the band's CTA rendered as a bare link.
+    (r'(<div class="cta-band fu">[^\n]*?)<a href="tel:\+16783957459">',
+     r'\1<a href="tel:+16783957459" class="bw">'),
+
+    # -- one wording on every button --------------------------------------
+    # The owner's: the phone glyph, then the job. The href never changes,
+    # so the number still dials and the call tracking still resolves.
+    (r'(<a href="tel:\+16783957459"[^>]*class="(?:bp|bw|btn-primary)"[^>]*>)'
+     r'(?:(?!</a>).)*?(</a>)', r'\1' + CTA + r'\2'),
+
     # -- red band: a red button on a red band is invisible ----------------
     # The band is written on one line, so stay on that line; a dot-all
     # match would reach the next .bp on the page, in the closing section.
@@ -161,6 +224,7 @@ def transform(html):
         html = re.sub(pattern, replacement, html, flags=re.S)
     html = LINK_ROW_BUTTONS.sub(
         lambda m: m.group(1) + m.group(2).replace(' class="bg"', '') + m.group(3), html)
+    html = hero_checklist(html)
     # The blog post had no site.js; every page needs the menu script.
     if 'assets/js/site.js' not in html:
         html = html.replace(

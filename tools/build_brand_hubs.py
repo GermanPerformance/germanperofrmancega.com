@@ -29,6 +29,12 @@ import os
 import re
 import sys
 
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+# One definition of the hero checklist, shared. Three copies of it is
+# how this project has repeatedly ended up with the same helper fixed
+# in one file and stale in the others.
+from build_service_pages import checks_list  # noqa: E402
+
 REPO_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SITE = "https://germanperformancega.com"
 TEMPLATE_PAGE = "bmw-oil-change-snellville-ga.html"
@@ -288,7 +294,6 @@ def skeleton():
     return {
         "nav": grab(r'<nav>.*?</nav>'),
         "mob": grab(r'<div id="mobile-menu">.*?\n</div>'),
-        "trust": grab(r'<div class="trust">.*?\n</div>'),
         "callbar": "",  # the fixed bottom call bar was removed site-wide
         "footer": grab(r'<footer>.*?</footer>'),
         # Every deferred script, in document order. Naming site.js
@@ -337,8 +342,6 @@ def build(b, sk):
     # The skeleton comes from a BMW page, so the trust bar names BMW. Re-brand
     # it -- shipping "BMW-Approved" on the Porsche hub is the same copy-paste
     # bug that was fixed across the service pages in Phase 1.
-    trust = sk["trust"].replace(
-        "BMW-Approved", f"{b['possessive']}-Approved")
 
     return f'''<!DOCTYPE html>
 <html lang="en">
@@ -362,10 +365,10 @@ def build(b, sk):
     <div class="eyebrow fu">{b["brand"]} Specialists &nbsp;·&nbsp; Snellville, GA &nbsp;·&nbsp; <span class="eyebrow-highlight">4.5★ Rated</span></div>
     <h1 class="fu">{line1}<br><span class="outline">{line2}</span><br><span class="accent">{line3}</span></h1>
     <p class="sub fu">{b["sub"]}</p>
-    <div class="acts fu"><a href="tel:+16783957459" class="bp">Call and describe the symptom</a><a href="index.html#services" class="bg">All Services <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8H13M9 4L13 8L9 12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></a></div>
+    <div class="acts fu"><a href="tel:+16783957459" class="bp"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M6.6 2.5a1.6 1.6 0 0 1 1.5 1l1 2.4a1.6 1.6 0 0 1-.4 1.8L7.4 8.9a11.6 11.6 0 0 0 5.7 5.7l1.2-1.3a1.6 1.6 0 0 1 1.8-.4l2.4 1a1.6 1.6 0 0 1 1 1.5v2.3a2.3 2.3 0 0 1-2.5 2.3 A18.4 18.4 0 0 1 2.2 5a2.3 2.3 0 0 1 2.3-2.5z"/></svg><span>Service My Car</span></a><a href="index.html#services" class="bg">All Services <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8H13M9 4L13 8L9 12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></a></div>
+{checks_list(b['possessive'])}
   </div>
 </section>
-{trust}
 
 <section style="background:var(--carbon)">
   <div class="fu"><div class="sl">Why people call us</div>
@@ -400,7 +403,7 @@ def build(b, sk):
   <p class="sd fu" style="margin-top:36px"><strong style="color:var(--white)">Models we service:</strong> {b["models"]}</p>
 </section>
 
-<div class="cta-band fu"><div><div class="cbt">NOT SURE WHAT'S WRONG?<br>THAT'S THE POINT OF CALLING.</div><div class="cbs">Describe what the car is doing. We'll tell you what we'd check first.</div></div><a href="tel:+16783957459" class="bp">Call (678) 395-7459</a></div>
+<div class="cta-band fu"><div><div class="cbt">NOT SURE WHAT'S WRONG?<br>THAT'S THE POINT OF CALLING.</div><div class="cbs">Describe what the car is doing. We'll tell you what we'd check first.</div></div><a href="tel:+16783957459" class="bw"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M6.6 2.5a1.6 1.6 0 0 1 1.5 1l1 2.4a1.6 1.6 0 0 1-.4 1.8L7.4 8.9a11.6 11.6 0 0 0 5.7 5.7l1.2-1.3a1.6 1.6 0 0 1 1.8-.4l2.4 1a1.6 1.6 0 0 1 1 1.5v2.3a2.3 2.3 0 0 1-2.5 2.3 A18.4 18.4 0 0 1 2.2 5a2.3 2.3 0 0 1 2.3-2.5z"/></svg><span>Service My Car</span></a></div>
 
 <section style="background:var(--carbon)">
   <div style="max-width:820px;margin:0 auto">
@@ -423,7 +426,7 @@ def build(b, sk):
     <h2 style="margin-bottom:20px">SNELLVILLE'S {b["possessive"].upper()} <span style="color:var(--red)">SPECIALISTS</span></h2>
     <p class="sd" style="margin:0 auto 44px;text-align:center;max-width:480px">Serving Snellville, Loganville, Grayson, Lawrenceville, and all of Gwinnett County.</p>
     <div style="display:flex;gap:20px;justify-content:center;flex-wrap:wrap">
-      <a href="tel:+16783957459" class="bp">Call (678) 395-7459</a>
+      <a href="tel:+16783957459" class="bp"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M6.6 2.5a1.6 1.6 0 0 1 1.5 1l1 2.4a1.6 1.6 0 0 1-.4 1.8L7.4 8.9a11.6 11.6 0 0 0 5.7 5.7l1.2-1.3a1.6 1.6 0 0 1 1.8-.4l2.4 1a1.6 1.6 0 0 1 1 1.5v2.3a2.3 2.3 0 0 1-2.5 2.3 A18.4 18.4 0 0 1 2.2 5a2.3 2.3 0 0 1 2.3-2.5z"/></svg><span>Service My Car</span></a>
       <a href="https://maps.google.com/?q=2144+Parkwood+Rd+NW+Snellville+GA+30078" target="_blank" rel="noopener" class="bg">Get Directions</a>
     </div>
   </div>

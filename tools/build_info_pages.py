@@ -36,6 +36,12 @@ import os
 import re
 import sys
 
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+# One definition of the hero checklist, shared. Three copies of it
+# is how this project has repeatedly ended up with the same helper
+# fixed in one file and stale in the others.
+from build_service_pages import checks_list  # noqa: E402
+
 REPO_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SITE = "https://germanperformancega.com"
 DONOR = "porsche-oil-change-snellville-ga.html"
@@ -326,7 +332,8 @@ def build(page, sk):
     <div class="eyebrow fu">{page['eyebrow']}</div>
     <h1 class="fu">{l1}<br><span class="outline">{l2}</span><br><span class="accent">{l3}</span></h1>
     <p class="sub fu">{page['sub']}</p>
-    <div class="acts fu"><a href="tel:+16783957459" class="bp">Call to Schedule — (678) 395-7459</a><a href="index.html#services" class="bg">All Services {ARROW}</a></div>
+    <div class="acts fu"><a href="tel:+16783957459" class="bp"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M6.6 2.5a1.6 1.6 0 0 1 1.5 1l1 2.4a1.6 1.6 0 0 1-.4 1.8L7.4 8.9a11.6 11.6 0 0 0 5.7 5.7l1.2-1.3a1.6 1.6 0 0 1 1.8-.4l2.4 1a1.6 1.6 0 0 1 1 1.5v2.3a2.3 2.3 0 0 1-2.5 2.3 A18.4 18.4 0 0 1 2.2 5a2.3 2.3 0 0 1 2.3-2.5z"/></svg><span>Service My Car</span></a><a href="index.html#services" class="bg">All Services {ARROW}</a></div>
+{checks_list()}
   </div>
 </section>
 
@@ -360,7 +367,7 @@ def build(page, sk):
     </div>
 </section>
 
-<div class="cta-band fu"><div><div class="cbt">{c1}<br>{c2}</div><div class="cbs">{page['cta_sub']}</div></div><a href="tel:+16783957459">Call (678) 395-7459</a></div>
+<div class="cta-band fu"><div><div class="cbt">{c1}<br>{c2}</div><div class="cbs">{page['cta_sub']}</div></div><a href="tel:+16783957459" class="bw"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M6.6 2.5a1.6 1.6 0 0 1 1.5 1l1 2.4a1.6 1.6 0 0 1-.4 1.8L7.4 8.9a11.6 11.6 0 0 0 5.7 5.7l1.2-1.3a1.6 1.6 0 0 1 1.8-.4l2.4 1a1.6 1.6 0 0 1 1 1.5v2.3a2.3 2.3 0 0 1-2.5 2.3 A18.4 18.4 0 0 1 2.2 5a2.3 2.3 0 0 1 2.3-2.5z"/></svg><span>Service My Car</span></a></div>
 
 </main>
 {sk['footer']}
