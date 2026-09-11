@@ -33,7 +33,7 @@ import re
 import sys
 
 REPO_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-VERSION = "7"
+VERSION = "8"
 
 LOGO_NAV = (
     '<picture class="logo-pic"><source type="image/webp" '
@@ -43,7 +43,15 @@ LOGO_NAV = (
 )
 LOGO_FOOT = LOGO_NAV.replace(' fetchpriority="high"', ' loading="lazy"')
 
-TOPBAR = '<div class="topbar"><a href="tel:+16783957459">(678) 395-7459</a></div>'
+PHONE_ICO = (
+    '<svg class="tb-ico" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">'
+    '<path d="M6.6 2.5a1.6 1.6 0 0 1 1.5 1l1 2.4a1.6 1.6 0 0 1-.4 1.8L7.4 8.9a11.6 11.6 0 0 0 '
+    '5.7 5.7l1.2-1.3a1.6 1.6 0 0 1 1.8-.4l2.4 1a1.6 1.6 0 0 1 1 1.5v2.3a2.3 2.3 0 0 1-2.5 2.3 '
+    'A18.4 18.4 0 0 1 2.2 5a2.3 2.3 0 0 1 2.3-2.5z"/></svg>'
+)
+
+TOPBAR = ('<div class="topbar"><a href="tel:+16783957459">'
+          f'{PHONE_ICO}<span>(678) 395-7459</span></a></div>')
 
 NAV = f'''{TOPBAR}
 <nav>

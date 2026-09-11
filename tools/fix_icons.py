@@ -129,7 +129,7 @@ def replace_svg_icons(html, counters):
 
 def replace_ci_numerals(html, counters):
     """span.ci -> a two-digit index, restarting at each grid."""
-    tokens = list(re.finditer(r'class="g[2-4]\b|<span class="ci">[^<]*</span>', html))
+    tokens = list(re.finditer(r'class="g[2-5]\b|<span class="ci">[^<]*</span>', html))
     out, cursor, index = [], 0, 0
     for token in tokens:
         if token.group(0).startswith('class="g'):
