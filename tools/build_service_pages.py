@@ -461,8 +461,13 @@ def skeleton(donor):
         "footer": grab(r"<footer>.*?</footer>"),
         "fonts": grab(r'<link rel="preconnect"[^>]*>\s*<link rel="preconnect"'
                       r'[^>]*>\s*<link href="https://fonts\.googleapis[^>]*>'),
-        "css": grab(r'<link rel="stylesheet" href="assets/css/tokens\.css[^>]*>'
-                    r'.*?werkstatt\.css[^>]*>'),
+        # Every local stylesheet, in document order. This used to be a
+        # range regex from tokens.css to werkstatt.css, which captured all
+        # three sheets only while the order was tokens -> site -> werkstatt.
+        # The redesign moved the page sheet last, so the range stopped at
+        # werkstatt and these pages shipped without site.css at all.
+        "css": "\n".join(
+            re.findall(r'<link rel="stylesheet" href="assets/css/[^"]+"[^>]*>', src)),
         # Both script tags, so a new page is never missing the tracker.
         "scripts": "\n".join(
             re.findall(r'<script defer src="assets/js/[^"]+"></script>', src)),

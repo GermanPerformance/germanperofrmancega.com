@@ -230,6 +230,10 @@ def visible_crumb(content):
 
 LD_RE = re.compile(r'\s*<script type="application/ld\+json">.*?</script>', re.S)
 
+# Pages that describe the business rather than a job it performs. They get
+# the matching WebPage subtype instead of a Service entity.
+INFO_PAGES = {"about.html": "AboutPage", "contact.html": "ContactPage"}
+
 
 def main():
     pages = sorted(f for f in os.listdir(REPO_ROOT) if f.endswith(".html"))
@@ -256,6 +260,16 @@ def main():
             graph.append(blog_entity(url, title, description))
             graph.append(breadcrumbs([("Home", f"{SITE}/"), (crumb, url)]))
             counts["post"] += 1
+        elif name in INFO_PAGES:
+            crumb = visible_crumb(content)
+            # The WebPage node is already in the graph; narrow its type
+            # rather than adding a second page entity for the same URL.
+            graph[2]["@type"] = INFO_PAGES[name]
+            graph.append(breadcrumbs([("Home", f"{SITE}/"), (crumb, url)]))
+            faq = visible_faq(content)
+            if faq:
+                graph.append(faq)
+            counts["info"] = counts.get("info", 0) + 1
         else:
             crumb = visible_crumb(content)
             graph.append(service_entity(url, title, description, crumb))
