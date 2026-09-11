@@ -8,8 +8,12 @@ old markup onto the new system:
 
   * stylesheets load tokens -> werkstatt (base) -> page sheet, so the base
     no longer has to out-specify the page sheet it used to load after
-  * one nav and one mobile menu on every page, with the call button and
-    hamburger grouped so the bar reads logo | links | call
+  * a fixed phone bar above one nav and one mobile menu on every page,
+    with the call button and hamburger grouped so the bar reads
+    logo | links | call; About and Contact point at their own pages, so
+    tools/link_info_pages.py is a no-op after this runs in either order
+  * the fixed bottom call bar is removed; the phone bar and the nav
+    button are the call paths on every screen
   * the hero grid overlay goes; the hero is centred by the base sheet
   * the trust strip drops from five cells to four so it splits evenly
     into 2x2 on a phone and 4x1 on a desktop
@@ -29,7 +33,7 @@ import re
 import sys
 
 REPO_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-VERSION = "4"
+VERSION = "7"
 
 LOGO_NAV = (
     '<picture class="logo-pic"><source type="image/webp" '
@@ -39,20 +43,23 @@ LOGO_NAV = (
 )
 LOGO_FOOT = LOGO_NAV.replace(' fetchpriority="high"', ' loading="lazy"')
 
-NAV = f'''<nav>
+TOPBAR = '<div class="topbar"><a href="tel:+16783957459">(678) 395-7459</a></div>'
+
+NAV = f'''{TOPBAR}
+<nav>
   <a href="index.html" class="nav-logo">{LOGO_NAV}</a>
-  <ul class="nav-links"><li><a href="index.html#services">Services</a></li><li><a href="index.html#about">About</a></li><li><a href="index.html#reviews">Reviews</a></li><li><a href="index.html#faq">FAQ</a></li><li><a href="index.html#contact">Contact</a></li></ul>
+  <ul class="nav-links"><li><a href="index.html#services">Services</a></li><li><a href="about.html">About</a></li><li><a href="index.html#reviews">Reviews</a></li><li><a href="index.html#faq">FAQ</a></li><li><a href="contact.html">Contact</a></li></ul>
   <div class="nav-right">
-    <a href="tel:+16783957459" class="nav-cta">Call Now</a>
+    <a href="tel:+16783957459" class="nav-cta"><span class="nav-cta-full">Call (678) 395-7459</span><span class="nav-cta-short">Call</span></a>
     <button id="hamburger" onclick="toggleMenu()" aria-label="Menu" aria-expanded="false" aria-controls="mobile-menu"><span></span><span></span><span></span></button>
   </div>
 </nav>
 <div id="mobile-menu">
   <a href="index.html#services" onclick="closeMenu()">Services</a>
-  <a href="index.html#about" onclick="closeMenu()">About</a>
+  <a href="about.html" onclick="closeMenu()">About</a>
   <a href="index.html#reviews" onclick="closeMenu()">Reviews</a>
   <a href="index.html#faq" onclick="closeMenu()">FAQ</a>
-  <a href="index.html#contact" onclick="closeMenu()">Contact</a>
+  <a href="contact.html" onclick="closeMenu()">Contact</a>
   <a href="tel:+16783957459" class="mcta" onclick="closeMenu()">Call (678) 395-7459</a>
 </div>'''
 
@@ -60,7 +67,7 @@ FOOTER_COLUMNS = f'''  <div class="ft">
     <div><div class="fb">{LOGO_FOOT}</div><div class="ftag">German auto specialists<br>BMW · Mercedes · Audi · Porsche · VW</div></div>
     <div class="fc"><div class="fct">Contact</div><a href="tel:+16783957459">(678) 395-7459</a><p>2144 Parkwood Rd NW</p><p>Snellville, GA 30078</p><p>Mon–Fri: 9:30 AM–6 PM</p></div>
     <div class="fc"><div class="fct">Services</div><a href="bmw-repair-snellville-ga.html">BMW Repair</a><a href="mercedes-repair-snellville-ga.html">Mercedes-Benz Repair</a><a href="audi-repair-snellville-ga.html">Audi Repair</a><a href="porsche-repair-snellville-ga.html">Porsche Repair</a><a href="volkswagen-repair-snellville-ga.html">Volkswagen Repair</a></div>
-    <div class="fc"><div class="fct">Navigate</div><a href="index.html">Home</a><a href="index.html#about">About</a><a href="index.html#reviews">Reviews</a><a href="index.html#faq">FAQ</a><a href="dealer-vs-independent-german-car-repair.html">Dealer vs. Independent</a></div>
+    <div class="fc"><div class="fct">Navigate</div><a href="index.html">Home</a><a href="about.html">About</a><a href="index.html#reviews">Reviews</a><a href="index.html#faq">FAQ</a><a href="dealer-vs-independent-german-car-repair.html">Dealer vs. Independent</a></div>
   </div>'''
 
 # (pattern, replacement) pairs applied in order to every page.
@@ -72,13 +79,17 @@ RULES = [
      f'<link rel="stylesheet" href="assets/css/tokens.css?v={VERSION}">\n'
      f'<link rel="stylesheet" href="assets/css/werkstatt.css?v={VERSION}">\n'
      f'<link rel="stylesheet" href="assets/css/\\1.css?v={VERSION}">'),
+    # Every stylesheet and script carries the current cache-buster, whatever
+    # order the links are in. Bump VERSION whenever a sheet changes, or a
+    # browser that saw the old sheet keeps it against the new markup.
+    (r'(assets/(?:css|js)/[a-z]+\.(?:css|js))\?v=\d+', f'\\1?v={VERSION}'),
     (r'<script defer src="assets/js/site\.js\?v=\d+"></script>',
      f'<script defer src="assets/js/site.js?v={VERSION}"></script>'),
     (r'<script defer src="assets/js/analytics\.js\?v=\d+"></script>',
      f'<script defer src="assets/js/analytics.js?v={VERSION}"></script>'),
 
-    # -- nav and mobile menu ------------------------------------------------
-    (r'<nav>.*?</nav>(?:\s*<div id="mobile-menu">.*?</div>)?', NAV),
+    # -- phone bar, nav and mobile menu ---------------------------------------
+    (r'(?:<div class="topbar">.*?</div>\s*)?<nav>.*?</nav>(?:\s*<div id="mobile-menu">.*?</div>)?', NAV),
 
     # -- hero -----------------------------------------------------------------
     (r'<div class="hgrid"></div>', ''),
@@ -129,8 +140,8 @@ RULES = [
     (r'<footer>\s*<div class="footer-copy">(.*?)</div>\s*<div class="footer-links">(.*?)</div>\s*</footer>',
      '<footer>\n' + FOOTER_COLUMNS + r'\n  <div class="flinks">\2</div>' + '\n' + r'  <div class="fcopy">\1</div>' + '\n</footer>'),
 
-    # -- call bar: two buttons, no hours line -----------------------------
-    (r'\s*<div class="cb-hours">.*?</div>', ''),
+    # -- the fixed bottom call bar is gone ---------------------------------
+    (r'\s*<div class="call-bar">.*?</div>', ''),
 ]
 
 # The 404 page listed its shortcuts as eight outlined buttons in a row.

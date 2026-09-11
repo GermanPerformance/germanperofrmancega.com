@@ -262,7 +262,7 @@ def skeleton():
     return {
         "nav": grab(r"<nav.*?</nav>"),
         "mob": grab(r'<div id="mobile-menu".*?\n</div>'),
-        "callbar": grab(r'<div class="call-bar">.*?\n</div>'),
+        "callbar": "",  # the fixed bottom call bar was removed site-wide
         "footer": neutral_footer(grab(r"<footer>.*?</footer>")),
         "fonts": grab(r'<link rel="preconnect"[^>]*>\s*<link rel="preconnect"'
                       r'[^>]*>\s*<link href="https://fonts\.googleapis[^>]*>'),
@@ -364,7 +364,6 @@ def build(page, sk):
 
 </main>
 {sk['footer']}
-{sk['callbar']}
 {sk['scripts']}
 </body>
 </html>

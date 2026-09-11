@@ -2,8 +2,10 @@
 """Turn the six shop photos into responsive web assets.
 
 photo1.webp .. photo6.webp in the repo root are the owner's own photographs
-of customer cars in the bay. They are all portrait, roughly 800 x 1020, so
-the widest rendition never exceeds the source: nothing is upscaled.
+of customer cars in the bay, all portrait and roughly 800 x 1020;
+photo2_replace.png is a sharper 1122 x 1402 take of the lift scene and
+supersedes photo2.webp. The widest rendition never exceeds the source:
+nothing is upscaled.
 
 Each photo gets a descriptive slug and three widths in WebP plus a JPEG
 fallback, written to assets/img/shop/.
@@ -24,20 +26,22 @@ OUT = os.path.join(REPO_ROOT, "assets", "img", "shop")
 # source file -> slug used in the asset names
 PHOTOS = {
     "photo1.webp": "bmw-2-series",
-    "photo2.webp": "bmw-m3-on-lift",
+    "photo2_replace.png": "bmw-m3-on-lift",
     "photo3.webp": "bmw-5-series",
     "photo4.webp": "mercedes-amg-gt",
     "photo5.webp": "mercedes-amg-gle",
     "photo6.webp": "porsche-cayenne-gts",
 }
-WIDTHS = (420, 640, 800)
+WIDTHS = (420, 640, 800, 1100)
 
 
 def renditions(source_width):
-    """Widths to write: the fixed steps below the source, then the source."""
-    steps = [w for w in WIDTHS if w < source_width]
-    top = min(source_width, WIDTHS[-1])
-    return steps if top in steps else steps + [top]
+    """Widths to write: the fixed steps that fit, plus the source width when
+    it is meaningfully (10%+) wider than the largest step that fit."""
+    steps = [w for w in WIDTHS if w <= source_width]
+    if source_width > steps[-1] * 1.1 and source_width < WIDTHS[-1]:
+        steps.append(source_width)
+    return steps
 
 
 def build(name, slug):

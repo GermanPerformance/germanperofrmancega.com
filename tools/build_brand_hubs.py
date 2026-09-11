@@ -289,10 +289,21 @@ def skeleton():
         "nav": grab(r'<nav>.*?</nav>'),
         "mob": grab(r'<div id="mobile-menu">.*?\n</div>'),
         "trust": grab(r'<div class="trust">.*?\n</div>'),
-        "callbar": grab(r'<div class="call-bar">.*?\n</div>'),
+        "callbar": "",  # the fixed bottom call bar was removed site-wide
         "footer": grab(r'<footer>.*?</footer>'),
-        "scripts": grab(r'<script defer src="assets/js/site\.js[^>]*></script>'),
+        # Every deferred script, in document order. Naming site.js
+        # specifically meant these five pages silently shipped without
+        # analytics.js the moment a second script existed -- caught by
+        # tools/check_analytics.py, not by anything visible on the page.
+        "scripts": "\n".join(
+            re.findall(r'<script defer src="assets/js/[^"]+"></script>', src)),
         "fonts": grab(r'<link rel="preconnect"[^>]*>\s*<link rel="preconnect"[^>]*>\s*<link href="https://fonts\.googleapis[^>]*>'),
+        # Every local stylesheet, in document order. The head used to
+        # hardcode three <link> tags at ?v=2 in the pre-redesign order
+        # (tokens -> site -> werkstatt), so regenerating a hub pinned it to
+        # a stale cache-busting version and the wrong cascade order.
+        "css": "\n".join(
+            re.findall(r'<link rel="stylesheet" href="assets/css/[^"]+"[^>]*>', src)),
     }
 
 
@@ -338,19 +349,17 @@ def build(b, sk):
 <link rel="icon" type="image/png" href="assets/img/logo-144.png">
 <link rel="canonical" href="{url}"/>
 {sk["fonts"]}
-<link rel="stylesheet" href="assets/css/tokens.css?v=2">
-<link rel="stylesheet" href="assets/css/site.css?v=2">
-<link rel="stylesheet" href="assets/css/werkstatt.css?v=2">
+{sk["css"]}
 {sk["scripts"]}
 </head>
-<body>
+<body data-page-type="hub">
 {sk["nav"]}
 {sk["mob"]}
 <main>
 <div class="breadcrumb"><a href="index.html">Home</a><span>/</span><span style="color:var(--silver)">{b["crumb"]}</span></div>
 <section class="hero"><div class="hbg"></div><div class="hgrid"></div>
   <div class="hc">
-    <div class="eyebrow fu">{b["brand"]} Specialists &nbsp;·&nbsp; Snellville, GA &nbsp;·&nbsp; <span style="color:var(--gold);font-weight:700">4.5★ Rated</span></div>
+    <div class="eyebrow fu">{b["brand"]} Specialists &nbsp;·&nbsp; Snellville, GA &nbsp;·&nbsp; <span class="eyebrow-highlight">4.5★ Rated</span></div>
     <h1 class="fu">{line1}<br><span class="outline">{line2}</span><br><span class="accent">{line3}</span></h1>
     <p class="sub fu">{b["sub"]}</p>
     <div class="acts fu"><a href="tel:+16783957459" class="bp">Call and describe the symptom</a><a href="index.html#services" class="bg">All Services <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8H13M9 4L13 8L9 12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></a></div>
@@ -420,7 +429,6 @@ def build(b, sk):
   </div>
 </section>
 </main>
-{sk["callbar"]}
 {sk["footer"]}
 </body></html>
 '''
