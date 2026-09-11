@@ -1,11 +1,11 @@
 /* ==========================================================================
    German Performance -- design tokens
-   Single source of truth for colour, type and spacing across all 32 pages.
+   Single source of truth for colour, type and spacing across all 37 pages.
 
-   Direction: "Werkstatt" -- German technical documentation. Bauhaus/Ulm grid
-   discipline, service-manual precision. Black, red and gold are the German
-   flag, used deliberately rather than as generic performance styling:
-   red means action, gold means precision, and everything else is ground.
+   Direction: "Werkstatt" -- German technical documentation. Ulm/Bauhaus grid
+   discipline, hairline rules, measured spacing. Black, red and gold are the
+   German flag, used deliberately: red means action, gold means precision and
+   verified fact, and everything else is ground.
 
    Every colour pair here is verified by tools/check_contrast.py against
    WCAG AA. Do not change a value without re-running it.
@@ -14,9 +14,9 @@
 :root {
   /* ---- Ground -------------------------------------------------------- */
   --black:      #0a0a0a;   /* page ground */
-  --carbon:     #101214;   /* raised panels, alternating sections */
-  --steel:      #16191d;   /* cards */
-  --graphite:   #1f2329;   /* card hover, insets */
+  --carbon:     #101214;   /* raised panels, cards */
+  --steel:      #16191d;   /* inset panels */
+  --graphite:   #1f2329;   /* card hover */
 
   /* Hairlines. The technical-drawing grammar of the design lives here. */
   --line:        rgba(255, 255, 255, 0.09);
@@ -26,8 +26,8 @@
   /* ---- Ink ----------------------------------------------------------- */
   --white:      #f2f0ec;   /* headings, primary text     16.5:1 on black */
   --light:      #d2d5d9;   /* body copy                  12.4:1 */
-  --silver:     #9aa0a6;   /*      secondary text         7.0:1 */
-  --muted:      #8a8f94;   /* tertiary, footer            5.4:1 (was 2.66 -- failed AA) */
+  --silver:     #9aa0a6;   /* secondary text              7.0:1 */
+  --muted:      #8a8f94;   /* tertiary, footer            5.4:1 */
 
   /* ---- Accents ------------------------------------------------------- */
   /* Red is reserved for action: CTAs, and display type at 24px and above.
@@ -56,25 +56,47 @@
   --wdth-body:    100;
 
   /* Fluid scale, all clamped so nothing shouts on a large screen. */
-  /* --step--2 exists because the mono micro-labels were being set at six
-     different hand-picked values between 0.60 and 0.75rem. They are one
-     tier, so they get one token. */
   --step--2:  clamp(0.66rem, 0.64rem + 0.08vw, 0.72rem);
   --step--1:  clamp(0.78rem, 0.75rem + 0.15vw, 0.85rem);
   --step-0:   clamp(0.95rem, 0.92rem + 0.18vw, 1.05rem);
   --step-1:   clamp(1.1rem,  1.02rem + 0.4vw,  1.3rem);
   --step-2:   clamp(1.5rem,  1.3rem  + 1vw,    2rem);
   --step-3:   clamp(2rem,    1.6rem  + 2vw,    3rem);
-  --step-4:   clamp(2.6rem,  1.9rem  + 3.4vw,  4.4rem);
-  --step-5:   clamp(3rem,    2rem    + 5vw,    6rem);
+  --step-4:   clamp(2.4rem,  1.7rem  + 3.2vw,  4.2rem);
+  --step-5:   clamp(2.7rem,  1.6rem  + 5.4vw,  6.2rem);
+  /* Homepage hero only: sized so its 23-character first line stays on one
+     line inside the container from 960px up (measured 17.2em wide). */
+  --step-hero: clamp(2.4rem, 5vw, 4.2rem);
 
   /* ---- Space --------------------------------------------------------- */
-  --space-section: clamp(64px, 9vw, 112px);
-  --gutter:        clamp(20px, 5vw, 60px);
+  /* One section rhythm, one gutter, one container. Symmetry comes from
+     every section using the same three numbers. */
+  --space-section: clamp(88px, 12vw, 160px);
+  --gutter:        clamp(20px, 5vw, 64px);
   --rhythm:        clamp(14px, 1.6vw, 22px);
+  --container:     1200px;
+  --narrow:        760px;
+  --measure:       62ch;
+  --nav-h:         64px;
+  /* The solid phone bar that sits above the nav on every page. */
+  --topbar-h:      48px;
+
+  /* The section gutter grows to centre a 1200px column on wide screens,
+     so no wrapper div is needed to keep content aligned. */
+  --edge: max(var(--gutter), calc((100% - var(--container)) / 2));
+
+  /* ---- Shape --------------------------------------------------------- */
+  /* Subtle everywhere: buttons, cards, photos and panels share one small
+     radius. Structure stays straight -- hairlines, rules, section edges. */
+  --radius:   8px;
+  --radius-s: 6px;
 
   /* ---- Motion -------------------------------------------------------- */
   --ease: cubic-bezier(0.22, 0.61, 0.36, 1);
+}
+
+@media (min-width: 960px) {
+  :root { --nav-h: 76px; --topbar-h: 56px; }
 }
 
 @media (prefers-reduced-motion: reduce) {

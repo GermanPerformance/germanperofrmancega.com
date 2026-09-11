@@ -75,6 +75,7 @@
      page and then called". Derived from the link's own position rather
      than hand-tagged, so new phone links are categorised automatically. */
   function placement(link) {
+    if (link.closest('.topbar'))             return 'top_bar';
     if (link.closest('.call-bar, .cb-call')) return 'mobile_call_bar';
     if (link.closest('nav, #mobile-menu'))   return 'nav';
     if (link.closest('.hero, .hc, .hero-info')) return 'hero';
