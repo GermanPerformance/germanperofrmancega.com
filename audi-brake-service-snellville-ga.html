@@ -137,7 +137,7 @@ footer{background:var(--carbon);border-top:1px solid rgba(255,255,255,.07);paddi
 }
 </script>
 </head>
-<body>
+<body data-page-type="service">
 <nav>
   <a href="index.html" class="nav-logo"><img src="german-performance-logo.jpg" alt="German Performance" width="640" height="350"></a>
   <ul class="nav-links"><li><a href="index.html#services">Services</a></li><li><a href="index.html#about">About</a></li><li><a href="index.html#reviews">Reviews</a></li><li><a href="index.html#contact">Contact</a></li></ul>
@@ -244,4 +244,5 @@ function toggleFaq(btn){const fi=btn.closest('.fi'),open=fi.classList.contains('
 function toggleMenu(){document.getElementById('mobile-menu').classList.toggle('open');document.getElementById('hamburger').classList.toggle('open');document.body.style.overflow=document.getElementById('mobile-menu').classList.contains('open')?'hidden':''}
 function closeMenu(){document.getElementById('mobile-menu').classList.remove('open');document.getElementById('hamburger').classList.remove('open');document.body.style.overflow=''}
 </script>
+  <script defer src="assets/js/analytics.js?v=1"></script>
 </body></html>
