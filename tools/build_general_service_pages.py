@@ -15,8 +15,8 @@ existing tune-up and AC pages already do:
     german-car-transmission-repair  the money service with no general page
     german-car-oil-change           the most common job anyone books
 
-The skeleton, the template and the checklist come from
-tools/build_service_pages.py. The pages set "marque": None, so the eyebrow
+The template and the checklist come from tools/build_service_pages.py,
+the chrome from tools/page_chrome.py. The pages set "marque": None, so the eyebrow
 reads "German Car Specialists" while the hero checklist says "Genuine
 factory parts and fluids" and never names a make it might not fit. Every
 technical claim below is a documented characteristic of the marques, and
@@ -33,12 +33,11 @@ import sys
 TOOLS = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, TOOLS)
 
-from build_service_pages import build, skeleton  # noqa: E402
+from build_service_pages import build  # noqa: E402
 
 REPO_ROOT = os.path.dirname(TOOLS)
 
 # A general page: its NAP grid and footer name no marque.
-DONOR = "german-car-tune-up-snellville-ga.html"
 BRAND = "German Car"
 MAKES = "BMW, Mercedes-Benz, Audi, Porsche and Volkswagen"
 
@@ -47,7 +46,7 @@ MARQUE_RE = re.compile(r"BMW|Mercedes|Audi|Porsche|Volkswagen|\bVW\b")
 PAGES = [
 {
  "slug": "german-car-repair-snellville-ga.html",
- "donor": DONOR, "brand": BRAND, "marque": None,
+ "brand": BRAND, "marque": None,
  "h1": ("GERMAN AUTO", "REPAIR", "&amp; SERVICE"),
  "title": "German Auto Repair Snellville GA | German Performance",
  "desc": ("German auto repair in Snellville, GA for BMW, Mercedes, Audi, "
@@ -144,7 +143,7 @@ PAGES = [
 },
 {
  "slug": "german-car-transmission-repair-snellville-ga.html",
- "donor": DONOR, "brand": BRAND, "marque": None,
+ "brand": BRAND, "marque": None,
  "h1": ("GERMAN CAR", "TRANSMISSION", "REPAIR"),
  "title": "German Car Transmission Repair Snellville | German Performance",
  "desc": ("German car transmission repair in Snellville, GA: fluid and filter "
@@ -246,7 +245,7 @@ PAGES = [
 },
 {
  "slug": "german-car-oil-change-snellville-ga.html",
- "donor": DONOR, "brand": BRAND, "marque": None,
+ "brand": BRAND, "marque": None,
  "h1": ("GERMAN CAR", "OIL", "CHANGE"),
  "title": "German Car Oil Change Snellville GA | German Performance",
  "desc": ("German car oil change in Snellville, GA: approved oil, OEM filter "
@@ -352,10 +351,9 @@ def hero_checks(page_html):
 
 
 def main():
-    sk = skeleton(DONOR)
     written = []
     for page in PAGES:
-        page_html = build(page, sk)
+        page_html = build(page)
 
         # The inverse of build_service_pages' guard: a make-agnostic page
         # must say "factory" and must not name a marque it might not fit.

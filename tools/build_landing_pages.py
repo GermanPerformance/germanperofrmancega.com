@@ -32,7 +32,6 @@ Run from the repo root:  python3 tools/build_landing_pages.py
 Then tools/build_schema.py and tools/build_sitemap.py.
 """
 
-import datetime
 import os
 import re
 import sys
@@ -42,7 +41,7 @@ sys.path.insert(0, TOOLS)
 
 import apply_redesign as redesign  # noqa: E402
 from add_related_services import build_block as related_block  # noqa: E402
-from fix_footer_links import build_blocks as footer_blocks  # noqa: E402
+from page_chrome import footer  # noqa: E402
 from landing_pages import (AREA_LINE, DEFAULT_CTA_SUB, DEFAULT_STEPS,  # noqa: E402
                            PAGES)
 from reviews import REVIEWS  # noqa: E402
@@ -268,21 +267,6 @@ def band(page):
             f'<div class="cbs">{page.get("cta_sub", DEFAULT_CTA_SUB)}</div></div>'
             f'<div class="cta-col"><a href="{TEL}" class="bw">{redesign.CTA}</a>'
             f'{redesign.ASSURE}</div></div>')
-
-
-def footer(slug):
-    services_col, flinks = footer_blocks(slug)
-    year = datetime.date.today().year
-    return f'''<footer>
-  <div class="ft">
-    <div><div class="fb">{redesign.LOGO_FOOT}</div><div class="ftag">German auto specialists<br>BMW · Mercedes · Audi · Porsche · VW</div>{redesign.footer_seal_markup()}</div>
-    <div class="fc"><div class="fct">Contact</div><a href="{TEL}">(678) 395-7459</a><p>2144 Parkwood Rd NW</p><p>Snellville, GA 30078</p><a href="{MAPS}" target="_blank" rel="noopener">Get directions</a><p>Mon–Fri: 9:30 AM–6 PM</p></div>
-    {services_col}
-    <div class="fc"><div class="fct">Navigate</div><a href="index.html">Home</a><a href="about.html">About</a><a href="index.html#reviews">Reviews</a><a href="index.html#faq">FAQ</a><a href="contact.html">Contact</a><a href="dealer-vs-independent-german-car-repair.html">Dealer vs. Independent</a></div>
-  </div>
-  {flinks}
-  <div class="fcopy">© {year} German Performance — Snellville, GA 30078{redesign.PRIVACY_LINK}</div>
-</footer>'''
 
 
 def build(page):

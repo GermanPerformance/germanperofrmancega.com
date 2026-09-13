@@ -34,12 +34,11 @@ sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 # how this project has repeatedly ended up with the same helper fixed
 # in one file and stale in the others.
 from build_service_pages import checks_list  # noqa: E402
-from build_info_pages import neutral_footer  # noqa: E402
+from page_chrome import NAV, neutral_footer, scripts, stylesheets  # noqa: E402
 from service_catalog import GROUPS  # noqa: E402
 
 REPO_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SITE = "https://germanperformancega.com"
-TEMPLATE_PAGE = "bmw-oil-change-snellville-ga.html"
 
 BRANDS = [
 {
@@ -263,40 +262,13 @@ SERVICE_LINKS = {name: entries for name, entries in GROUPS
 UNIVERSAL = _BY_GROUP["All German Makes"]
 
 
-def skeleton():
-    """Nav, mobile menu, trust bar, call bar and footer from a live page."""
-    src = open(os.path.join(REPO_ROOT, TEMPLATE_PAGE), encoding="utf-8").read()
-    grab = lambda p: re.search(p, src, re.S).group(0)
-    return {
-        "nav": grab(r'<nav>.*?</nav>'),
-        "mob": grab(r'<div id="mobile-menu">.*?\n</div>'),
-        "callbar": "",  # the fixed bottom call bar was removed site-wide
-        # The donor is a BMW page; its Services column and cross-brand row
-        # would put BMW links on the Porsche hub. The hubs link each other.
-        "footer": neutral_footer(grab(r'<footer>.*?</footer>')),
-        # Every deferred script, in document order. Naming site.js
-        # specifically meant these five pages silently shipped without
-        # analytics.js the moment a second script existed -- caught by
-        # tools/check_analytics.py, not by anything visible on the page.
-        "scripts": "\n".join(
-            re.findall(r'<script defer src="assets/js/[^"]+"></script>', src)),
-        "fonts": grab(r'<link rel="stylesheet" href="assets/css/fonts\.css[^>]*>'),
-        # Every local stylesheet, in document order. The head used to
-        # hardcode three <link> tags at ?v=2 in the pre-redesign order
-        # (tokens -> site -> werkstatt), so regenerating a hub pinned it to
-        # a stale cache-busting version and the wrong cascade order.
-        "css": "\n".join(
-            re.findall(r'<link rel="stylesheet" href="assets/css/[^"]+"[^>]*>', src)),
-    }
-
-
 def cards(items):
     return "\n".join(
         f'    <div class="card"><div class="ct">{t}</div><div class="cd">{d}</div></div>'
         for t, d in items)
 
 
-def build(b, sk):
+def build(b):
     url = f"{SITE}/{b['slug']}"
     svc = SERVICE_LINKS[b["brand"]]
     line1, line2, line3 = b["h1"]
@@ -317,10 +289,6 @@ def build(b, sk):
         f'<span class="ficon">+</span></button><div class="fa"><p>{a}</p></div></div>'
         for q, a in b["faq"])
 
-    # The skeleton comes from a BMW page, so the trust bar names BMW. Re-brand
-    # it -- shipping "BMW-Approved" on the Porsche hub is the same copy-paste
-    # bug that was fixed across the service pages in Phase 1.
-
     return f'''<!DOCTYPE html>
 <html lang="en">
 <head>
@@ -329,13 +297,11 @@ def build(b, sk):
 <meta name="description" content="{b["desc"]}">
 <link rel="icon" type="image/png" href="assets/img/favicon-144.png">
 <link rel="canonical" href="{url}"/>
-{sk["fonts"]}
-{sk["css"]}
-{sk["scripts"]}
+{stylesheets()}
+{scripts()}
 </head>
 <body data-page-type="hub">
-{sk["nav"]}
-{sk["mob"]}
+{NAV}
 <main>
 <div class="breadcrumb"><a href="index.html">Home</a><span>/</span><span style="color:var(--silver)">{b["crumb"]}</span></div>
 <section class="hero"><div class="hbg"></div><div class="hgrid"></div>
@@ -410,17 +376,16 @@ def build(b, sk):
   </div>
 </section>
 </main>
-{sk["footer"]}
+{neutral_footer()}
 </body></html>
 '''
 
 
 def main():
-    sk = skeleton()
     for b in BRANDS:
         path = os.path.join(REPO_ROOT, b["slug"])
         with open(path, "w", encoding="utf-8") as fh:
-            fh.write(build(b, sk))
+            fh.write(build(b))
         print(f"wrote {b['slug']}")
     print(f"\n{len(BRANDS)} brand hubs built")
     return 0

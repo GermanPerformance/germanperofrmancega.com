@@ -53,7 +53,7 @@ sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 # fixed in one file and stale in the others.
 from build_service_pages import checks_list  # noqa: E402
 from build_landing_pages import photo_picture  # noqa: E402
-from service_catalog import hubs  # noqa: E402
+from page_chrome import neutral_blocks  # noqa: E402
 
 REPO_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SITE = "https://germanperformancega.com"
@@ -274,22 +274,15 @@ PAGES = [
 # on an About page AND re-copied whatever the donor happened to hold, so
 # the pipeline never settled. The hubs are the right links here anyway:
 # neutral, and stable because they do not participate in that ranking.
-HUB_LINKS = hubs()
-
-FOOTER_SERVICES = re.compile(
-    r'(<div class="fc"><div class="fct">Services</div>).*?(</div>)', re.S)
-FOOTER_FLINKS = re.compile(r'(<div class="flinks">).*?(</div>)', re.S)
+FOOTER_SERVICES = re.compile(r'<div class="fc"><div class="fct">Services</div>.*?</div>', re.S)
+FOOTER_FLINKS = re.compile(r'<div class="flinks">.*?</div>', re.S)
 
 
 def neutral_footer(footer):
     """Swap the marque-specific footer links for the five brand hubs."""
-    hubs = "".join(f'<a href="{h}">{n}</a>' for h, n in HUB_LINKS)
-    footer = FOOTER_SERVICES.sub(
-        lambda m: m.group(1) + '<a href="index.html#services">All Services</a>'
-        + hubs[:hubs.index('<a href="porsche')] + m.group(2), footer, count=1)
-    footer = FOOTER_FLINKS.sub(
-        lambda m: m.group(1) + hubs + m.group(2), footer, count=1)
-    return footer
+    column, flinks = neutral_blocks()
+    footer = FOOTER_SERVICES.sub(lambda _: column, footer, count=1)
+    return FOOTER_FLINKS.sub(lambda _: flinks, footer, count=1)
 
 
 def skeleton():
