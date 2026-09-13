@@ -18,82 +18,27 @@ import re
 import sys
 
 REPO_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+from service_catalog import (GROUPS, full_label, make_of, ranking_group,  # noqa: E402
+                             service_of, service_pages)
 
-# Canonical display names, harvested from the homepage footer so link text
-# stays consistent with what already ships.
-SERVICES = {
-    "bmw-oil-change-snellville-ga.html": "BMW Oil Change",
-    "bmw-transmission-repair-snellville-ga.html": "BMW Transmission Repair",
-    "bmw-suspension-repair-snellville-ga.html": "BMW Suspension Repair",
-    "bmw-cooling-system-repair-snellville-ga.html": "BMW Cooling System",
-    "bmw-battery-replacement-snellville-ga.html": "BMW Battery Replacement",
-    "bmw-spark-plug-replacement-snellville-ga.html": "BMW Spark Plugs",
-    "porsche-oil-change-snellville-ga.html": "Porsche Oil Change",
-    "porsche-suspension-repair-snellville-ga.html": "Porsche Suspension Repair",
-    "volkswagen-brake-service-snellville-ga.html": "Volkswagen Brake Service",
-    "mercedes-cooling-system-snellville-ga.html": "Mercedes Cooling System",
-    "mercedes-brake-service-snellville-ga.html": "Mercedes Brake Service",
-    "mercedes-engine-diagnostics-snellville-ga.html": "Mercedes Diagnostics",
-    "mercedes-oil-change-snellville-ga.html": "Mercedes Oil Change",
-    "mercedes-transmission-snellville-ga.html": "Mercedes Transmission",
-    "mercedes-suspension-snellville-ga.html": "Mercedes Suspension",
-    "mercedes-ac-repair-snellville-ga.html": "Mercedes AC Repair",
-    "audi-brake-service-snellville-ga.html": "Audi Brake Service",
-    "audi-oil-change-snellville-ga.html": "Audi Oil Change",
-    "audi-suspension-repair-snellville-ga.html": "Audi Suspension",
-    "porsche-inspection-snellville-ga.html": "Porsche Inspection",
-    "porsche-brake-service-snellville-ga.html": "Porsche Brake Service",
-    "volkswagen-engine-repair-snellville-ga.html": "VW Engine Repair",
-    "volkswagen-oil-change-snellville-ga.html": "VW Oil Change",
-    "german-car-ac-repair-snellville-ga.html": "German Car AC Repair",
-    "german-car-check-engine-light-snellville.html": "Check Engine Light",
-    "german-car-tune-up-snellville-ga.html": "German Car Tune-Up",
-    "pre-purchase-inspection-german-car-ga.html": "Pre-Purchase Inspection",
-    "german-car-repair-snellville-ga.html": "German Auto Repair",
-    "german-car-brake-repair-snellville-ga.html": "German Car Brake Repair",
-    "german-car-transmission-repair-snellville-ga.html": "German Car Transmission Repair",
-    "german-car-oil-change-snellville-ga.html": "German Car Oil Change",
-}
+# Every non-hub page and the name it carries in a mixed list, in catalog
+# order: each make's pages in the order its nav column shows them, then
+# the make-agnostic pages. The order matters -- within a ranking tier
+# related() keeps it, so the footer reads the way the menu does.
+SERVICES = {p: full_label(p) for p in service_pages()}
 
 # Pages that apply to every marque -- used as the fallback tier.
-UNIVERSAL = [
-    "german-car-repair-snellville-ga.html",
-    "german-car-brake-repair-snellville-ga.html",
-    "german-car-transmission-repair-snellville-ga.html",
-    "german-car-oil-change-snellville-ga.html",
-    "german-car-tune-up-snellville-ga.html",
-    "german-car-ac-repair-snellville-ga.html",
-    "german-car-check-engine-light-snellville.html",
-    "pre-purchase-inspection-german-car-ga.html",
-]
-
-BRANDS = ["bmw", "mercedes", "audi", "porsche", "volkswagen", "german-car", "pre-purchase"]
-
-# Normalise service names so the same job matches across brands, e.g.
-# "suspension-repair" (BMW) and "suspension" (Mercedes) are one category.
-CATEGORY_ALIASES = [
-    ("oil-change", "oil"),
-    ("brake", "brakes"),
-    ("suspension", "suspension"),
-    ("transmission", "transmission"),
-    ("ac-repair", "ac"),
-    ("engine-repair", "engine"),
-    ("engine-diagnostics", "engine"),
-    ("cooling-system", "cooling"),
-    ("battery", "battery"),
-    ("spark-plug", "ignition"),
-    ("inspection", "inspection"),
-    ("check-engine-light", "engine"),
-    ("tune-up", "ignition"),
-]
+UNIVERSAL = [h for h, _ in dict(GROUPS)["All German Makes"]]
 
 
 def brand_of(filename):
-    return next((b for b in BRANDS if filename.startswith(b)), "german-car")
+    """The make's key, or "german-car" for a make-agnostic page."""
+    return make_of(filename) or "german-car"
 
 
 def category_of(filename):
-    return next((cat for key, cat in CATEGORY_ALIASES if key in filename), "general")
+    return ranking_group(service_of(filename))
 
 
 def related(page, limit=8):

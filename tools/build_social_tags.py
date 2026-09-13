@@ -32,20 +32,22 @@ import sys
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from redirects import site_pages  # noqa: E402
+from service_catalog import PAGES  # noqa: E402
 
 REPO_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SITE = "https://germanperformancega.com"
 FALLBACK = "og-image.jpg"
+CATALOG = {p.slug: p for p in PAGES}
 
-# Ordered: the first slug fragment that matches decides. "repair" alone is
-# last so "brake-repair" and "ac-repair" are not swallowed by it.
-SERVICE_PHOTOS = (
-    ("oil-change", "assets/img/services/oil-change-1100.jpg"),
-    ("brake", "assets/img/services/brake-repair-1100.jpg"),
-    ("transmission", "assets/img/services/transmission-repair-1100.jpg"),
-    ("ac-repair", "assets/img/services/ac-repair-1100.jpg"),
-    ("tune-up", "assets/img/services/tune-up-1100.jpg"),
-)
+# By the catalog's job: a make's brake page and the brake category page
+# share the brake photograph. Jobs without a photograph use the fallback.
+SERVICE_PHOTOS = {
+    "oil": "assets/img/services/oil-change-1100.jpg",
+    "brakes": "assets/img/services/brake-repair-1100.jpg",
+    "transmission": "assets/img/services/transmission-repair-1100.jpg",
+    "ac": "assets/img/services/ac-repair-1100.jpg",
+    "tune-up": "assets/img/services/tune-up-1100.jpg",
+}
 BRAND_PHOTOS = {
     "bmw-repair": "assets/img/shop/bmw-m3-on-lift-1100.jpg",
     "mercedes-repair": "assets/img/shop/mercedes-amg-gt-1100.jpg",
@@ -73,9 +75,8 @@ def choose_image(name):
     for prefix, photo in BRAND_PHOTOS.items():
         if slug.startswith(prefix):
             return photo
-    for fragment, photo in SERVICE_PHOTOS:
-        if fragment in slug:
-            return photo
+    if name in CATALOG:
+        return SERVICE_PHOTOS.get(CATALOG[name].service, FALLBACK)
     return FALLBACK
 
 

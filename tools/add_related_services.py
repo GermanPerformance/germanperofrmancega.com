@@ -29,16 +29,11 @@ import sys
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from fix_footer_links import SERVICES, brand_of, related  # noqa: E402
+from service_catalog import MAKES  # noqa: E402
 
 REPO_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
-BRAND_TITLES = {
-    "bmw": ("MORE BMW", "SERVICES"),
-    "mercedes": ("MORE MERCEDES", "SERVICES"),
-    "audi": ("MORE AUDI", "SERVICES"),
-    "porsche": ("MORE PORSCHE", "SERVICES"),
-    "volkswagen": ("MORE VOLKSWAGEN", "SERVICES"),
-}
+BRAND_TITLES = {m.key: (f"MORE {m.short.upper()}", "SERVICES") for m in MAKES}
 DEFAULT_TITLE = ("RELATED", "SERVICES")
 
 

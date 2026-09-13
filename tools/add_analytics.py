@@ -15,20 +15,17 @@ import os
 import re
 import sys
 
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+from service_catalog import hubs  # noqa: E402
+
 REPO_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 VERSION = "3"
 INCLUDE = f'<script defer src="assets/js/analytics.js?v={VERSION}"></script>'
 
 # The five brand hubs share the -repair-snellville-ga suffix with service
-# pages like bmw-transmission-repair-…, so they are listed rather than
-# pattern-matched.
-HUBS = {
-    "bmw-repair-snellville-ga.html",
-    "mercedes-repair-snellville-ga.html",
-    "audi-repair-snellville-ga.html",
-    "porsche-repair-snellville-ga.html",
-    "volkswagen-repair-snellville-ga.html",
-}
+# pages like bmw-transmission-repair-…, so they come from the catalog
+# rather than a pattern.
+HUBS = {slug for slug, _ in hubs()}
 
 EXISTING_SCRIPT = re.compile(
     r'(<script defer src="assets/js/(?:home|site)\.js\?v=\d+"></script>)')

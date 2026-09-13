@@ -53,6 +53,7 @@ sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 # fixed in one file and stale in the others.
 from build_service_pages import checks_list  # noqa: E402
 from build_landing_pages import photo_picture  # noqa: E402
+from service_catalog import hubs  # noqa: E402
 
 REPO_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SITE = "https://germanperformancega.com"
@@ -273,13 +274,7 @@ PAGES = [
 # on an About page AND re-copied whatever the donor happened to hold, so
 # the pipeline never settled. The hubs are the right links here anyway:
 # neutral, and stable because they do not participate in that ranking.
-HUB_LINKS = [
-    ("bmw-repair-snellville-ga.html", "BMW Repair"),
-    ("mercedes-repair-snellville-ga.html", "Mercedes Repair"),
-    ("audi-repair-snellville-ga.html", "Audi Repair"),
-    ("porsche-repair-snellville-ga.html", "Porsche Repair"),
-    ("volkswagen-repair-snellville-ga.html", "Volkswagen Repair"),
-]
+HUB_LINKS = hubs()
 
 FOOTER_SERVICES = re.compile(
     r'(<div class="fc"><div class="fct">Services</div>).*?(</div>)', re.S)
