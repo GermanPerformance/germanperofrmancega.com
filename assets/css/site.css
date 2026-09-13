@@ -117,3 +117,51 @@ section .flinks a, .link-row a {
 }
 section .flinks a:hover, .link-row a:hover { color: var(--gold); border-color: var(--gold); }
 
+/* --------------------------------------------------------------------------
+   Service landing pages (tools/build_landing_pages.py).
+   The hero H1 is "{service} in" over "Snellville, GA", and its first line
+   must never wrap. The generator writes that line's width in em, measured
+   at width-axis 100, as --h1-em on the h1; --h1-k is the width-axis factor
+   at each breakpoint, mirroring the --wdth-display steps at the end of
+   werkstatt.css (118 / 104 / 90 / 82 measure 1.189 / 1.042 / 0.907 / 0.833
+   of width 100). The size is the display h1 whenever the line fits the
+   hero column and shrinks no further than --step-3; a browser without
+   container units keeps werkstatt's h1 size.
+   -------------------------------------------------------------------------- */
+.hero-svc .hc { max-width: var(--container); container-type: inline-size; }
+.hero-svc h1 {
+  --h1-k: 1.189;
+  font-size: clamp(var(--step-3), calc(100cqi / (var(--h1-em) * var(--h1-k))), var(--step-5));
+}
+@media (max-width: 900px) { .hero-svc h1 { --h1-k: 1.042; } }
+@media (max-width: 700px) { .hero-svc h1 { --h1-k: 0.907; } }
+@media (max-width: 420px) { .hero-svc h1 { --h1-k: 0.833; } }
+
+/* The service photo beside the "What's included" copy: 4:5, the column's
+   full width, cropped rather than letterboxed. */
+.svc-figure { margin: 0; border-radius: var(--radius); overflow: hidden; }
+.svc-figure img { display: block; width: 100%; height: auto; aspect-ratio: 4 / 5; object-fit: cover; }
+.two + .g3 { margin-top: clamp(40px, 5vw, 64px); }
+@media (min-width: 960px) {
+  .svc-figure img { aspect-ratio: 4 / 3; }
+}
+
+/* Four steps fill the rail the homepage's five were laid out for. */
+@media (min-width: 960px) {
+  .steps.steps-4 { grid-template-columns: repeat(4, 1fr); }
+}
+
+/* Two reviews side by side at one height: a pair, not the homepage's wall. */
+.gr-pair { column-count: auto; display: grid; gap: 24px; }
+.gr-pair .gr-card { margin: 0; }
+@media (min-width: 700px) {
+  .gr-pair { grid-template-columns: 1fr 1fr; }
+}
+
+/* The contact page's map sits in the same frame as a photograph: same
+   crop, no border, so the pair reads as one row. Lazy, so it costs
+   nothing until scrolled to. */
+.svc-figure iframe { display: block; width: 100%; height: auto; aspect-ratio: 4 / 5; border: 0; }
+@media (min-width: 960px) {
+  .svc-figure iframe { aspect-ratio: 4 / 3; }
+}

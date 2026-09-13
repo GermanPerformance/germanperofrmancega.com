@@ -27,9 +27,7 @@ SERVICES = {
     "bmw-suspension-repair-snellville-ga.html": "BMW Suspension Repair",
     "bmw-cooling-system-repair-snellville-ga.html": "BMW Cooling System",
     "bmw-battery-replacement-snellville-ga.html": "BMW Battery Replacement",
-    "bmw-wheel-alignment-snellville-ga.html": "BMW Wheel Alignment",
     "bmw-spark-plug-replacement-snellville-ga.html": "BMW Spark Plugs",
-    "bmw-differential-service-snellville-ga.html": "BMW Differential",
     "porsche-oil-change-snellville-ga.html": "Porsche Oil Change",
     "porsche-suspension-repair-snellville-ga.html": "Porsche Suspension Repair",
     "volkswagen-brake-service-snellville-ga.html": "Volkswagen Brake Service",
@@ -40,32 +38,33 @@ SERVICES = {
     "mercedes-transmission-snellville-ga.html": "Mercedes Transmission",
     "mercedes-suspension-snellville-ga.html": "Mercedes Suspension",
     "mercedes-ac-repair-snellville-ga.html": "Mercedes AC Repair",
-    "audi-timing-belt-snellville-ga.html": "Audi Timing Belt",
-    "audi-quattro-service-snellville-ga.html": "Audi Quattro Service",
     "audi-brake-service-snellville-ga.html": "Audi Brake Service",
     "audi-oil-change-snellville-ga.html": "Audi Oil Change",
     "audi-suspension-repair-snellville-ga.html": "Audi Suspension",
     "porsche-inspection-snellville-ga.html": "Porsche Inspection",
     "porsche-brake-service-snellville-ga.html": "Porsche Brake Service",
     "volkswagen-engine-repair-snellville-ga.html": "VW Engine Repair",
-    "volkswagen-timing-chain-snellville-ga.html": "VW Timing Chain",
     "volkswagen-oil-change-snellville-ga.html": "VW Oil Change",
     "german-car-ac-repair-snellville-ga.html": "German Car AC Repair",
     "german-car-check-engine-light-snellville.html": "Check Engine Light",
     "german-car-tune-up-snellville-ga.html": "German Car Tune-Up",
-    "german-car-emissions-repair-snellville-ga.html": "Emissions Repair",
-    "german-car-fleet-service-snellville-ga.html": "Fleet Service",
     "pre-purchase-inspection-german-car-ga.html": "Pre-Purchase Inspection",
+    "german-car-repair-snellville-ga.html": "German Auto Repair",
+    "german-car-brake-repair-snellville-ga.html": "German Car Brake Repair",
+    "german-car-transmission-repair-snellville-ga.html": "German Car Transmission Repair",
+    "german-car-oil-change-snellville-ga.html": "German Car Oil Change",
 }
 
 # Pages that apply to every marque -- used as the fallback tier.
 UNIVERSAL = [
-    "german-car-check-engine-light-snellville.html",
+    "german-car-repair-snellville-ga.html",
+    "german-car-brake-repair-snellville-ga.html",
+    "german-car-transmission-repair-snellville-ga.html",
+    "german-car-oil-change-snellville-ga.html",
     "german-car-tune-up-snellville-ga.html",
     "german-car-ac-repair-snellville-ga.html",
-    "german-car-emissions-repair-snellville-ga.html",
+    "german-car-check-engine-light-snellville.html",
     "pre-purchase-inspection-german-car-ga.html",
-    "german-car-fleet-service-snellville-ga.html",
 ]
 
 BRANDS = ["bmw", "mercedes", "audi", "porsche", "volkswagen", "german-car", "pre-purchase"]
@@ -74,25 +73,18 @@ BRANDS = ["bmw", "mercedes", "audi", "porsche", "volkswagen", "german-car", "pre
 # "suspension-repair" (BMW) and "suspension" (Mercedes) are one category.
 CATEGORY_ALIASES = [
     ("oil-change", "oil"),
-    ("brake-service", "brakes"),
+    ("brake", "brakes"),
     ("suspension", "suspension"),
     ("transmission", "transmission"),
     ("ac-repair", "ac"),
-    ("timing-belt", "timing"),
-    ("timing-chain", "timing"),
     ("engine-repair", "engine"),
     ("engine-diagnostics", "engine"),
     ("cooling-system", "cooling"),
     ("battery", "battery"),
     ("spark-plug", "ignition"),
-    ("wheel-alignment", "alignment"),
-    ("differential", "driveline"),
-    ("quattro", "driveline"),
     ("inspection", "inspection"),
     ("check-engine-light", "engine"),
     ("tune-up", "ignition"),
-    ("emissions", "emissions"),
-    ("fleet", "fleet"),
 ]
 
 
@@ -105,7 +97,13 @@ def category_of(filename):
 
 
 def related(page, limit=8):
-    """Related services for one page, ranked by topical proximity."""
+    """Related services for one page, ranked by topical proximity.
+
+    A make's page leads with that make's other jobs. A make-agnostic page
+    leads with the same job on each make -- the brake page's nearest
+    neighbours are the Mercedes, Audi, Porsche and VW brake pages, not the
+    other general pages.
+    """
     brand, category = brand_of(page), category_of(page)
     others = [p for p in SERVICES if p != page]
 
@@ -113,8 +111,10 @@ def related(page, limit=8):
     same_service = [p for p in others if category_of(p) == category and p not in same_brand]
     universal = [p for p in UNIVERSAL if p != page]
 
+    generic = brand == "german-car"
+    tiers = ((same_service, same_brand) if generic else (same_brand, same_service))
     ranked, seen = [], {page}
-    for tier in (same_brand, same_service, universal, others):
+    for tier in (*tiers, universal, others):
         for p in tier:
             if p not in seen:
                 seen.add(p)

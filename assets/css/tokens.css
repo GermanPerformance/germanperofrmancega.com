@@ -64,14 +64,23 @@
   --step-3:   clamp(2rem,    1.6rem  + 2vw,    3rem);
   --step-4:   clamp(2.4rem,  1.7rem  + 3.2vw,  4.2rem);
   --step-5:   clamp(2.7rem,  1.6rem  + 5.4vw,  6.2rem);
-  /* Homepage hero only: sized so its 23-character first line stays on one
-     line inside the container from 960px up (measured 17.2em wide). */
+  /* Homepage hero only. From 900px the headline breaks after "Repair" and
+     narrows to wdth 100, so three lines of near-equal width sit inside the
+     container instead of one line stretched across it. */
   --step-hero: clamp(2.4rem, 5vw, 4.2rem);
+  /* Editorial prose (Who We Are, the letter): one thought per line, read
+     from arm's length, so it runs a step above body copy at every width. */
+  --step-ed:   clamp(1.15rem, 1rem + 0.7vw, 1.55rem);
+  /* Services title only. At 55 characters it is three times the length of
+     the other section titles, so at step-4 it ran five lines on a phone and
+     on a wide desktop. This tier holds it to three lines at every width
+     from 360px up: two white lines, then the red location line. */
+  --step-4-long: clamp(1.9rem, 1rem + 4vw, 3.8rem);
 
   /* ---- Space --------------------------------------------------------- */
   /* One section rhythm, one gutter, one container. Symmetry comes from
      every section using the same three numbers. */
-  --space-section: clamp(88px, 12vw, 160px);
+  --space-section: clamp(80px, 10.8vw, 144px);
   --gutter:        clamp(20px, 5vw, 64px);
   --rhythm:        clamp(14px, 1.6vw, 22px);
   --container:     1200px;

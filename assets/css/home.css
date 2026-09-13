@@ -11,11 +11,32 @@
 
 /* Three lines on desktop: two white lines, then the count. The number is
    the focal point -- red and a step larger -- and its label matches the
-   headline, so no red block dominates the hero. */
-.hero-home h1 { font-size: var(--step-hero); }
-.hero-home .count-line { display: block; margin-top: 0.12em; }
+   headline, so no red block dominates the hero. The count is a paragraph
+   after the <h1>, not part of it, so the heading search engines index is
+   "German Auto Repair Shop in Snellville, GA" and nothing else; it is set
+   in the heading's own type so the three lines still read as one poster.
+   The h1's bottom margin moves onto the count line, which is now last. */
+.hero-home h1 { font-size: var(--step-hero); margin-bottom: 0; }
+.hero-home .count-line {
+  display: block; max-width: none; margin: 0.12em 0 22px;
+  font-family: var(--font-display);
+  font-variation-settings: 'wdth' var(--wdth-display);
+  font-weight: 800; font-size: var(--step-hero);
+  letter-spacing: -0.03em; line-height: 0.96;
+  color: var(--white); text-transform: uppercase;
+}
 .hero-home .count { color: var(--red); font-size: calc(var(--step-hero) * 1.12); }
 .hero-home .count-label { white-space: nowrap; }
+
+/* The break after "Repair" exists only on wide screens; a phone keeps its
+   natural wrap. From 900px, where the width axis would otherwise jump to
+   118, the headline holds at 100 instead, so the three lines read as a
+   poster rather than a banner stretched across the container. */
+.h1-br { display: none; }
+@media (min-width: 900px) {
+  .h1-br { display: inline; }
+  .hero-home h1, .hero-home .count-line { font-variation-settings: 'wdth' 100; }
+}
 
 .hero-media {
   position: relative;
@@ -62,7 +83,6 @@
   .car-strip figure { aspect-ratio: 3 / 4; }
 }
 @media (min-width: 960px) { .car-strip figure { aspect-ratio: 4 / 5; } }
-
 
 /* --------------------------------------------------------------------------
    Marque row -- the makes we service, as white marks in a steady loop
@@ -115,78 +135,45 @@
 }
 
 /* --------------------------------------------------------------------------
-   Feature grid -- one photograph as a cell of the card grid
+   Manifesto -- the shop's own words, with the lift photo under the headline
    --------------------------------------------------------------------------
-   Phone: the photo is a 4:3 tile above the stacked cards. Tablet: a 2:1
-   band above a 2x2. Desktop: the photo takes half the frame and spans both
-   card rows; --flip puts it on the right so About and Performance mirror.
-   -------------------------------------------------------------------------- */
+   One narrow column at every width, left-aligned like the reference
+   copywriting: headline, the photo at its own proportion, then the copy.
+   The column itself stays centred on the page; only the text inside reads
+   from the left, one thought per line. The proof rows go 2x2 from 640px.
 
-.feature-grid {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 1px;
-  background: var(--line);
-  border: 1px solid var(--line);
-  border-radius: var(--radius);
-  overflow: hidden;
-  max-width: var(--container);
-  margin: 0 auto;
-}
-.feature-grid > * { background: var(--carbon); min-width: 0; }
-.feature-photo {
-  position: relative;
-  aspect-ratio: 4 / 3;
-  overflow: hidden;
-}
-.feature-photo picture { position: absolute; inset: 0; }
-.feature-photo img {
-  width: 100%; height: 100%;
-  object-fit: cover;
-  object-position: 50% 45%;
-}
-.feature-grid--flip .feature-photo img { object-position: 50% 55%; }
-@media (min-width: 640px) {
-  .feature-grid { grid-template-columns: 1fr 1fr; }
-  .feature-photo { grid-column: 1 / -1; aspect-ratio: 2 / 1; }
-}
-/* The tall photo column waits for 1200px. Below that, three columns
-   squeeze a card to 225px and the upgrade names break in two; the 2:1
-   band above a 2x2 keeps them on one line. */
-@media (min-width: 1200px) {
-  .feature-grid { grid-template-columns: repeat(3, 1fr); }
-  .feature-photo { grid-column: 1 / 2; grid-row: 1 / 3; aspect-ratio: auto; }
-  .feature-grid--flip .feature-photo { grid-column: 3 / 4; }
-}
-
-/* --------------------------------------------------------------------------
-   Manifesto -- the lift photo beside the shop's own words
-   --------------------------------------------------------------------------
-   Phone: photo, then the text. Desktop: photo in the left five columns,
-   stretched to the height of the text, editorial copy in the right seven.
-   -------------------------------------------------------------------------- */
+   No eyebrow above this section -- the headline carries the label instead
+   -- so the section's own top padding closes to match, the same treatment
+   #process gets below for the same reason. */
+#about { padding-top: clamp(50px, 6.3vw, 80px); }
 
 .mani {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: clamp(32px, 5vw, 56px);
-  max-width: var(--container);
+  max-width: var(--narrow);
   margin: 0 auto;
 }
+/* The headline runs "German car shop" on its own line from 700px, the
+   narrowest width the column is wide enough that "We built the kind of
+   German car shop" itself still fits on one line -- below that the break
+   would force a third line instead of the intended two, so balance finds
+   its own line breaks there. */
+.mani-h-br { display: none; }
+@media (min-width: 700px) { .mani-h-br { display: inline; } }
 .mani-photo {
   position: relative;
-  aspect-ratio: 4 / 3;
+  aspect-ratio: 4 / 5;
+  margin: clamp(28px, 4vw, 40px) 0 clamp(32px, 5vw, 48px);
   overflow: hidden;
   border-radius: var(--radius);
   background: var(--carbon);
 }
 .mani-photo picture { position: absolute; inset: 0; }
-.mani-photo img { width: 100%; height: 100%; object-fit: cover; object-position: 50% 45%; }
-.ed .acts { margin-left: 0; margin-top: clamp(32px, 4vw, 44px); justify-content: flex-start; }
-@media (min-width: 960px) {
-  .mani { grid-template-columns: 5fr 7fr; align-items: stretch; gap: clamp(48px, 5vw, 72px); }
-  .mani-photo { aspect-ratio: auto; min-height: 520px; }
-  .mani .ed { max-width: 620px; padding-top: 8px; }
+.mani-photo img { width: 100%; height: 100%; object-fit: cover; object-position: 50% 58%; }
+/* Editorial CTAs (Who We Are, the letter) sit left with the text they
+   close, rather than the centred button every other section uses. */
+.ed .cta-col { margin-left: 0; margin-top: clamp(32px, 4vw, 44px); }
+@media (min-width: 640px) {
+  .mani-photo { aspect-ratio: 5 / 4; }
+  .mani .proof { grid-template-columns: 1fr 1fr; }
 }
 
 /* --------------------------------------------------------------------------
@@ -196,139 +183,112 @@
 .letter {
   max-width: var(--narrow);
   margin: 0 auto;
-  padding: clamp(32px, 6vw, 72px);
+  padding: clamp(34px, 6.5vw, 80px);
   background: var(--carbon);
   border: 1px solid var(--line);
   border-radius: var(--radius);
 }
 
 /* --------------------------------------------------------------------------
-   Services
+   Services -- six category cards: a photo, a title, a blurb, one outlined link
+   --------------------------------------------------------------------------
+   Separate rounded cards with gaps rather than the hairline grid, because
+   each photo needs its own frame. One column on a phone, two from 640px,
+   three from 960px, so six cards always fill their rows. Each card is a
+   column with the link pushed to the bottom, and the grid stretches every
+   card in a row to one height, so the links sit on one line per row. The
+   photo is a fixed 4:3 frame: a plain steel panel until the owner's
+   photographs arrive, and a <picture> dropped inside fills it unchanged.
    -------------------------------------------------------------------------- */
 
-.service-list {
-  margin-top: 14px;
-  padding-top: 14px;
-  border-top: 1px solid var(--line);
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-}
-.service-list li {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  color: var(--silver);
-  font-size: var(--step--1);
-  line-height: 1.5;
-}
-.service-list li::before {
-  content: '';
-  flex: none;
-  width: 10px; height: 1px;
-  background: var(--gold);
-  opacity: 0.8;
-}
+/* The title is long enough to need its own tier; see --step-4-long. */
+#services .sh h2 { font-size: var(--step-4-long); }
 
-.svc-index {
-  max-width: var(--container);
-  margin: clamp(48px, 7vw, 80px) auto 0;
-  padding-top: clamp(40px, 6vw, 56px);
-  border-top: 1px solid var(--line);
-}
-.svc-index-head { text-align: center; margin-bottom: 8px; }
-.svc-index-grid {
+.svc-cards {
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 32px 20px;
+  grid-template-columns: 1fr;
+  gap: clamp(16px, 2vw, 24px);
+  max-width: var(--container);
+  margin: 0 auto;
 }
-.svc-group-name {
-  margin-bottom: 12px;
-  padding-bottom: 10px;
-  border-bottom: 1px solid var(--line);
-}
-.svc-group-name a {
-  color: var(--white);
-  text-decoration: none;
-  display: flex;
-  justify-content: space-between;
-  align-items: baseline;
-  gap: 8px;
-  transition: color .18s var(--ease);
-}
-.svc-group-name a:hover { color: var(--gold); }
-.svc-hub-go { color: var(--red-b); font-family: var(--font-mono); font-size: var(--step--1); }
-.svc-group > a {
-  display: block;
-  color: var(--silver);
-  text-decoration: none;
-  font-size: var(--step--1);
-  line-height: 1.5;
-  padding: 5px 0;
-  transition: color .18s var(--ease);
-}
-.svc-group > a:hover { color: var(--white); }
-@media (min-width: 640px)  { .svc-index-grid { grid-template-columns: repeat(3, 1fr); } }
-@media (min-width: 1100px) { .svc-index-grid { grid-template-columns: repeat(6, 1fr); gap: 0 24px; } }
-
-/* --------------------------------------------------------------------------
-   Performance
-   -------------------------------------------------------------------------- */
-
-/* One line each, at the size a name deserves when nothing labels it.
-   The width axis narrows just enough that "Suspension Builds" clears a
-   third-of-container card at every width; the weight and case are the
-   same as every other card title. */
-.perf-name {
-  margin-bottom: 12px;
-  font-size: calc(var(--step-1) * 1.10);
-  font-variation-settings: 'wdth' 104;
-  letter-spacing: -0.005em;
-}
-
-/* --------------------------------------------------------------------------
-   Reviews
-   -------------------------------------------------------------------------- */
-
-.review-summary {
+.svc-card {
   display: flex;
   flex-direction: column;
-  align-items: center;
-  gap: 12px;
-  margin-top: 22px;
-  color: var(--gold);
-  font-family: var(--font-mono);
-  font-size: var(--step--2);
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
+  min-width: 0;
+  background: var(--carbon);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  overflow: hidden;
+  transition: border-color .2s var(--ease);
 }
-.rs-item { display: inline-flex; align-items: center; gap: 12px; }
-.review-summary .stars { font-size: var(--step-0); }
-@media (min-width: 640px) {
-  .review-summary { flex-direction: row; justify-content: center; gap: 12px 40px; }
+.svc-card:hover { border-color: var(--line-strong); }
+.svc-photo {
+  position: relative;
+  margin: 0;
+  aspect-ratio: 4 / 3;
+  overflow: hidden;
+  background: var(--steel);
 }
-.review-card .stars { margin-bottom: 18px; }
-.review-text {
-  color: var(--light);
-  font-size: var(--step-0);
-  line-height: 1.7;
-  margin-bottom: 22px;
-}
-.review-meta {
-  padding-top: 16px;
-  border-top: 1px solid var(--line);
+.svc-photo picture { position: absolute; inset: 0; }
+.svc-photo img { width: 100%; height: 100%; object-fit: cover; }
+.svc-body {
   display: flex;
   flex-direction: column;
-  gap: 2px;
+  flex: 1;
+  padding: clamp(22px, 2.6vw, 30px);
 }
-.review-name { color: var(--white); font-size: var(--step--2); letter-spacing: 0.12em; }
-.review-car  { color: var(--silver); font-size: var(--step--1); }
+.svc-body .ct { margin-bottom: 10px; }
+.svc-body .cd { margin-bottom: 22px; }
+.svc-body .bg { margin-top: auto; align-self: flex-start; min-height: 44px; padding: 0 20px; }
+@media (min-width: 640px) { .svc-cards { grid-template-columns: repeat(2, 1fr); } }
+@media (min-width: 960px) { .svc-cards { grid-template-columns: repeat(3, 1fr); } }
+
+/* The eyebrow above this section is gone, so the space above it closes. */
+#process { padding-top: clamp(50px, 6.3vw, 80px); }
+
+/* --------------------------------------------------------------------------
+   About the shop -- the two technicians beside the copy
+   --------------------------------------------------------------------------
+   One column up to 1199px: the photo at its own 4:5, then the copy, in the
+   same narrow column the manifesto uses. From 1200px the photo and the copy
+   are two equal columns, the copy centred on the photo's height. Two
+   columns at 960px leave a 408px photo beside a 1200px column of copy, so
+   the split waits for 1200px. In the
+   split the copy steps down from --step-ed to --step-1: at half the
+   container the editorial size wraps to forty characters a line and runs
+   400px past the photo; at --step-1 the two columns end within 90px of
+   each other at 1440px. */
+.story {
+  max-width: var(--narrow);
+  margin: 0 auto;
+}
+.story-photo {
+  position: relative;
+  aspect-ratio: 4 / 5;
+  margin: 0 0 clamp(32px, 5vw, 48px);
+  overflow: hidden;
+  border-radius: var(--radius);
+  background: var(--carbon);
+}
+.story-photo picture { position: absolute; inset: 0; }
+.story-photo img { width: 100%; height: 100%; object-fit: cover; object-position: 50% 35%; }
+@media (min-width: 1200px) {
+  .story {
+    max-width: var(--container);
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: clamp(48px, 5vw, 72px);
+    align-items: center;
+  }
+  .story-photo { margin: 0; }
+  .story .ed p { font-size: var(--step-1); }
+}
 
 /* --------------------------------------------------------------------------
    Contact
    -------------------------------------------------------------------------- */
 
-#contact .acts { margin-bottom: clamp(40px, 6vw, 56px); }
+#contact .cta-col { margin-bottom: clamp(40px, 6vw, 56px); }
 .contact-cell {
   padding: clamp(22px, 3vw, 30px);
   text-align: center;

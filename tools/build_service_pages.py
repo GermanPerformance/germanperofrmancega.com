@@ -337,7 +337,7 @@ PAGES = [
  "donor": "mercedes-oil-change-snellville-ga.html",
  "brand": "Mercedes-Benz",
  "h1": ("MERCEDES", "COOLING", "SYSTEM"),
- "title": "Mercedes Cooling System Repair Snellville GA | German Performance",
+ "title": "Mercedes Cooling System Repair Snellville | German Performance",
  "desc": ("Mercedes-Benz cooling system repair in Snellville, GA. Thermostats, "
           "water pumps, auxiliary pumps, radiators and MB-spec coolant. "
           "Call (678) 395-7459."),
@@ -453,6 +453,8 @@ def checks_list(marque=None):
     Replaces the old four-cell trust strip. The fourth line names the
     marque when the page has one, so a Porsche page never claims to fit
     BMW parts -- the guarantee the old strip's donor copy kept breaking.
+    A page may set "marque": None to keep its brand in the eyebrow while
+    the checklist says "factory" (tools/build_general_service_pages.py).
     """
     parts = "Genuine %s parts and fluids" % marque if marque else \
         "Genuine factory parts and fluids"
@@ -480,8 +482,7 @@ def skeleton(donor):
         "callbar": "",  # the fixed bottom call bar was removed site-wide
         "nap": grab(r'<div class="ic-grid">.*?\n      </div>'),
         "footer": grab(r"<footer>.*?</footer>"),
-        "fonts": grab(r'<link rel="preconnect"[^>]*>\s*<link rel="preconnect"'
-                      r'[^>]*>\s*<link href="https://fonts\.googleapis[^>]*>'),
+        "fonts": grab(r'<link rel="stylesheet" href="assets/css/fonts\.css[^>]*>'),
         # Every local stylesheet, in document order. This used to be a
         # range regex from tokens.css to werkstatt.css, which captured all
         # three sheets only while the order was tokens -> site -> werkstatt.
@@ -525,7 +526,7 @@ def build(page, sk):
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>{page['title']}</title>
 <meta name="description" content="{page['desc']}">
-<link rel="icon" type="image/png" href="assets/img/logo-144.png">
+<link rel="icon" type="image/png" href="assets/img/favicon-144.png">
 <link rel="canonical" href="{SITE}/{page['slug']}"/>
 {sk['fonts']}
 {sk['css']}
@@ -542,7 +543,7 @@ def build(page, sk):
     <h1 class="fu">{line1}<br><span class="outline">{line2}</span><br><span class="accent">{line3}</span></h1>
     <p class="sub fu">{page['sub']}</p>
     <div class="acts fu"><a href="tel:+16783957459" class="bp"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M6.6 2.5a1.6 1.6 0 0 1 1.5 1l1 2.4a1.6 1.6 0 0 1-.4 1.8L7.4 8.9a11.6 11.6 0 0 0 5.7 5.7l1.2-1.3a1.6 1.6 0 0 1 1.8-.4l2.4 1a1.6 1.6 0 0 1 1 1.5v2.3a2.3 2.3 0 0 1-2.5 2.3 A18.4 18.4 0 0 1 2.2 5a2.3 2.3 0 0 1 2.3-2.5z"/></svg><span>Service My Car</span></a><a href="index.html#services" class="bg">All Services {ARROW}</a></div>
-{checks_list(page['brand'])}
+{checks_list(page.get('marque', page['brand']))}
   </div>
 </section>
 

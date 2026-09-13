@@ -34,6 +34,8 @@ sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 # how this project has repeatedly ended up with the same helper fixed
 # in one file and stale in the others.
 from build_service_pages import checks_list  # noqa: E402
+from build_info_pages import neutral_footer  # noqa: E402
+from service_catalog import GROUPS  # noqa: E402
 
 REPO_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SITE = "https://germanperformancega.com"
@@ -45,7 +47,7 @@ BRANDS = [
  "brand": "BMW",
  "possessive": "BMW",
  "h1": ('BMW', 'REPAIR', '&amp; SERVICE'),
- "title": "BMW Repair Snellville GA | BMW Specialists | German Performance",
+ "title": "BMW Repair & Service Snellville GA | German Performance",
  "desc": "Independent BMW repair and service in Snellville, GA. Factory ISTA diagnostics, OEM parts, 12-month warranty. Serving Gwinnett County. Call (678) 395-7459.",
  "crumb": "BMW Repair — Snellville, GA",
  "sub": "Most people find us because something on their BMW is behaving oddly and the last shop wanted to start replacing parts to find out why. We diagnose first, using the same software the dealer runs, and tell you what we actually found.",
@@ -87,7 +89,7 @@ BRANDS = [
  "brand": "Mercedes-Benz",
  "possessive": "Mercedes",
  "h1": ('MERCEDES-BENZ', 'REPAIR', '&amp; SERVICE'),
- "title": "Mercedes Repair Snellville GA | Mercedes-Benz Specialists | German Performance",
+ "title": "Mercedes-Benz Repair Snellville GA | German Performance",
  "desc": "Independent Mercedes-Benz repair and service in Snellville, GA. XENTRY diagnostics, OEM parts, 12-month warranty. Serving Gwinnett County. Call (678) 395-7459.",
  "crumb": "Mercedes-Benz Repair — Snellville, GA",
  "sub": "A Mercedes rarely fails loudly. It sags a little at one corner, or shifts less smoothly than it did, or shows a message with no obvious cause. We find out which system is actually responsible before anything gets replaced.",
@@ -129,7 +131,7 @@ BRANDS = [
  "brand": "Audi",
  "possessive": "Audi",
  "h1": ('AUDI', 'REPAIR', '&amp; SERVICE'),
- "title": "Audi Repair Snellville GA | Audi Specialists | German Performance",
+ "title": "Audi Repair & Service Snellville GA | German Performance",
  "desc": "Independent Audi repair and service in Snellville, GA. ODIS and VCDS diagnostics, OEM parts, 12-month warranty. Serving Gwinnett County. Call (678) 395-7459.",
  "crumb": "Audi Repair — Snellville, GA",
  "sub": "Audi shares a great deal of engineering with Volkswagen, which means the failure patterns are well understood by anyone who works on both. We do, and we confirm what your car actually has by VIN before quoting anything.",
@@ -171,8 +173,8 @@ BRANDS = [
  "brand": "Porsche",
  "possessive": "Porsche",
  "h1": ('PORSCHE', 'REPAIR', '&amp; SERVICE'),
- "title": "Porsche Repair Snellville GA | Porsche Specialists | German Performance",
- "desc": "Independent Porsche repair, service and inspection in Snellville, GA. PIWIS diagnostics, OEM parts, 12-month warranty. Serving Gwinnett County. Call (678) 395-7459.",
+ "title": "Porsche Repair & Service Snellville GA | German Performance",
+ "desc": "Independent Porsche repair, service and inspection in Snellville, GA. PIWIS diagnostics, OEM parts, 12-month warranty. Call (678) 395-7459.",
  "crumb": "Porsche Repair — Snellville, GA",
  "sub": "Porsche owners tend to arrive with a specific worry rather than a vague one, and usually a well-founded one. We are equipped to answer it properly, whether that is a pre-purchase inspection or a noise you would rather not ignore.",
  "tool": "PIWIS",
@@ -213,8 +215,8 @@ BRANDS = [
  "brand": "Volkswagen",
  "possessive": "VW",
  "h1": ('VOLKSWAGEN', 'REPAIR', '&amp; SERVICE'),
- "title": "Volkswagen Repair Snellville GA | VW Specialists | German Performance",
- "desc": "Independent Volkswagen repair and service in Snellville, GA. ODIS and VCDS diagnostics, OEM parts, 12-month warranty. Serving Gwinnett County. Call (678) 395-7459.",
+ "title": "Volkswagen (VW) Repair Snellville GA | German Performance",
+ "desc": "Independent Volkswagen repair and service in Snellville, GA. ODIS and VCDS diagnostics, OEM parts, 12-month warranty. Call (678) 395-7459.",
  "crumb": "Volkswagen Repair — Snellville, GA",
  "sub": "Volkswagen engines share their design with Audi, and so do their failure patterns. The advantage of a shop that works on both every week is that we have usually seen your specific problem before.",
  "tool": "ODIS and VCDS",
@@ -252,39 +254,13 @@ BRANDS = [
 },
 ]
 
-# Which existing service pages belong to each hub.
-SERVICE_LINKS = {
- "BMW": [("bmw-oil-change-snellville-ga.html","Oil Change"),
-   ("bmw-suspension-repair-snellville-ga.html","Suspension Repair"),
-   ("bmw-transmission-repair-snellville-ga.html","Transmission Repair"),
-   ("bmw-cooling-system-repair-snellville-ga.html","Cooling System Repair"),
-   ("bmw-battery-replacement-snellville-ga.html","Battery Replacement"),
-   ("bmw-spark-plug-replacement-snellville-ga.html","Spark Plugs"),
-   ("bmw-wheel-alignment-snellville-ga.html","Wheel Alignment"),
-   ("bmw-differential-service-snellville-ga.html","Differential Service")],
- "Mercedes-Benz": [("mercedes-oil-change-snellville-ga.html","Oil Change"),
-   ("mercedes-brake-service-snellville-ga.html","Brake Service"),
-   ("mercedes-suspension-snellville-ga.html","Suspension Repair"),
-   ("mercedes-transmission-snellville-ga.html","Transmission Service"),
-   ("mercedes-ac-repair-snellville-ga.html","AC Repair"),
-   ("mercedes-engine-diagnostics-snellville-ga.html","Engine Diagnostics")],
- "Audi": [("audi-oil-change-snellville-ga.html","Oil Change"),
-   ("audi-brake-service-snellville-ga.html","Brake Service"),
-   ("audi-suspension-repair-snellville-ga.html","Suspension Repair"),
-   ("audi-timing-belt-snellville-ga.html","Timing Belt"),
-   ("audi-quattro-service-snellville-ga.html","Quattro AWD Service")],
- "Porsche": [("porsche-brake-service-snellville-ga.html","Brake Service"),
-   ("porsche-inspection-snellville-ga.html","Full Inspection"),
-   ("pre-purchase-inspection-german-car-ga.html","Pre-Purchase Inspection")],
- "Volkswagen": [("volkswagen-oil-change-snellville-ga.html","Oil Change"),
-   ("volkswagen-engine-repair-snellville-ga.html","Engine Repair"),
-   ("volkswagen-timing-chain-snellville-ga.html","Timing Chain")],
-}
-
-UNIVERSAL = [("german-car-check-engine-light-snellville.html","Check Engine Light"),
-             ("german-car-ac-repair-snellville-ga.html","AC Repair"),
-             ("german-car-tune-up-snellville-ga.html","Tune-Up"),
-             ("german-car-emissions-repair-snellville-ga.html","Emissions Repair")]
+# Which service pages belong to each hub, and which apply to any make.
+# Both come from the catalog, so a page added there reaches the hubs on
+# the next build; the hand-copied lists this replaces had drifted from it.
+_BY_GROUP = dict(GROUPS)
+SERVICE_LINKS = {name: entries for name, entries in GROUPS
+                 if name != "All German Makes"}
+UNIVERSAL = _BY_GROUP["All German Makes"]
 
 
 def skeleton():
@@ -295,14 +271,16 @@ def skeleton():
         "nav": grab(r'<nav>.*?</nav>'),
         "mob": grab(r'<div id="mobile-menu">.*?\n</div>'),
         "callbar": "",  # the fixed bottom call bar was removed site-wide
-        "footer": grab(r'<footer>.*?</footer>'),
+        # The donor is a BMW page; its Services column and cross-brand row
+        # would put BMW links on the Porsche hub. The hubs link each other.
+        "footer": neutral_footer(grab(r'<footer>.*?</footer>')),
         # Every deferred script, in document order. Naming site.js
         # specifically meant these five pages silently shipped without
         # analytics.js the moment a second script existed -- caught by
         # tools/check_analytics.py, not by anything visible on the page.
         "scripts": "\n".join(
             re.findall(r'<script defer src="assets/js/[^"]+"></script>', src)),
-        "fonts": grab(r'<link rel="preconnect"[^>]*>\s*<link rel="preconnect"[^>]*>\s*<link href="https://fonts\.googleapis[^>]*>'),
+        "fonts": grab(r'<link rel="stylesheet" href="assets/css/fonts\.css[^>]*>'),
         # Every local stylesheet, in document order. The head used to
         # hardcode three <link> tags at ?v=2 in the pre-redesign order
         # (tokens -> site -> werkstatt), so regenerating a hub pinned it to
@@ -349,7 +327,7 @@ def build(b, sk):
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>{b["title"]}</title>
 <meta name="description" content="{b["desc"]}">
-<link rel="icon" type="image/png" href="assets/img/logo-144.png">
+<link rel="icon" type="image/png" href="assets/img/favicon-144.png">
 <link rel="canonical" href="{url}"/>
 {sk["fonts"]}
 {sk["css"]}

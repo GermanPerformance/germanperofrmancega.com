@@ -6,7 +6,7 @@ all, so none of it could be shown to have moved a single phone call. This
 checks that the tracking is present, that it is defined in exactly one
 place, and that every phone link it depends on is dialable.
 
-Four assertions:
+Six assertions:
 
   1. Every page loads assets/js/analytics.js. A page without it is a hole
      in the funnel that shows up as a missing session, not as an error.
@@ -22,6 +22,19 @@ Four assertions:
      in analytics.js only; a second definition in a page would double-count
      or silently shadow the first.
 
+  5. analytics.js declares the Google Ads ids (ADS_ID, CALL_LABEL,
+     CLICK_LABEL) next to the GA4 id. Ads is the one place a paid click
+     turns into a counted call; a file that has lost those constants can
+     no longer report a conversion, and the failure is silent.
+
+  6. Every page links the privacy policy, and the policy names Google
+     Analytics and Google Ads. Google's ads policies require a reachable
+     privacy page on any site that runs its conversion tags; a page whose
+     footer lost the link is the kind of thing a regenerated footer does.
+
+Placeholder ids are a NOTE, not a failure: the file is inert but correct
+until the real ids are pasted in.
+
 Run from the repo root:  python3 tools/check_analytics.py
 Exit code 0 = clean, 1 = at least one violation.
 """
@@ -30,6 +43,9 @@ import os
 import re
 import sys
 
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+from redirects import site_pages  # noqa: E402
+
 REPO_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 ANALYTICS_JS = os.path.join(REPO_ROOT, "assets", "js", "analytics.js")
 
@@ -37,10 +53,21 @@ INCLUDE = re.compile(r'src="assets/js/analytics\.js')
 TEL = re.compile(r'href="tel:([^"]*)"')
 E164 = re.compile(r"^\+1\d{10}$")
 INLINE_TAG = re.compile(r"gtag\(|dataLayer\.push|googletagmanager\.com")
+PRIVACY_PAGE = "privacy-policy.html"
+PRIVACY_LINK = re.compile(r'href="privacy-policy\.html"')
+# Each id, its placeholder, and the shape of a real one. The placeholders
+# satisfy the shapes on purpose (X is a letter), so they are excluded by
+# name rather than by pattern.
+IDS = (
+    ("MEASUREMENT_ID", "G-XXXXXXXXXX", r"^G-[A-Z0-9]{6,}$"),
+    ("ADS_ID", "AW-XXXXXXXXXX", r"^AW-\d{9,}$"),
+    ("CALL_LABEL", "XXXXXXXXXXX", r"^[A-Za-z0-9_-]{8,}$"),
+    ("CLICK_LABEL", "XXXXXXXXXXX", r"^[A-Za-z0-9_-]{8,}$"),
+)
 
 
 def pages():
-    return sorted(f for f in os.listdir(REPO_ROOT) if f.endswith(".html"))
+    return site_pages(os.listdir(REPO_ROOT))
 
 
 def read(name):
@@ -82,6 +109,31 @@ def check_no_inline():
     return hits
 
 
+def check_ads_ids(source):
+    """Return (missing, notes): ids the file no longer declares, and ids
+    still on their placeholder."""
+    missing, notes = [], []
+    for name, placeholder, shape in IDS:
+        match = re.search(name + r'\s*=\s*[\'"]([^\'"]*)[\'"]', source)
+        if not match:
+            missing.append(name)
+        elif match.group(1) == placeholder or not re.match(shape, match.group(1)):
+            notes.append((name, match.group(1)))
+    return missing, notes
+
+
+def check_privacy():
+    rows = [name for name in pages() if not PRIVACY_LINK.search(read(name))]
+    if PRIVACY_PAGE not in pages():
+        rows.append(f"{PRIVACY_PAGE} does not exist")
+    else:
+        policy = read(PRIVACY_PAGE)
+        for vendor in ("Google Analytics", "Google Ads"):
+            if vendor not in policy:
+                rows.append(f"{PRIVACY_PAGE} never mentions {vendor}")
+    return rows
+
+
 def report(title, rows, formatter):
     print(f"\n{title}")
     print("-" * 74)
@@ -112,16 +164,14 @@ def main():
         return 1
 
     source = open(ANALYTICS_JS, encoding="utf-8").read()
-    match = re.search(r'MEASUREMENT_ID\s*=\s*[\'"]([^\'"]*)[\'"]', source)
-    if not match:
-        print("analytics.js defines no MEASUREMENT_ID")
-        total += 1
-    elif (match.group(1) == "G-XXXXXXXXXX"
-          or not re.match(r"^G-[A-Z0-9]{6,}$", match.group(1))):
+    missing, notes = check_ads_ids(source)
+    total += report("5. Ids analytics.js no longer declares", missing, lambda r: r)
+    total += report("6. Pages without the privacy policy link, or a policy "
+                    "that omits a vendor", check_privacy(), lambda r: r)
+    for name, value in notes:
         # Not a failure: the tracking is inert but correct until the real
-        # property id is pasted in. Say so loudly rather than passing quietly.
-        print(f"NOTE: MEASUREMENT_ID is {match.group(1)!r} -- tracking is "
-              "inert until the real GA4 id is set.")
+        # id is pasted in. Say so loudly rather than passing quietly.
+        print(f"NOTE: {name} is {value!r} -- inert until the real id is set.")
 
     if total:
         print(f"{total} analytics violation(s)")

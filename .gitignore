@@ -1,0 +1,14 @@
+# Audit output and tooling scratch -- not site content.
+*-audit/
+tools/__pycache__/
+__pycache__/
+.DS_Store
+
+# Screenshots taken while working. The owner's source photographs
+# (photo*.webp, *_replace.png, the HERO image, the badge source) are
+# deliberately not listed: they are inputs to tools/build_shop_photos.py
+# and tools/build_badge.py, so whether they are committed is a decision,
+# not an accident.
+/Screenshot *.png
+/titletag image.png
+/new-titeltag image.png

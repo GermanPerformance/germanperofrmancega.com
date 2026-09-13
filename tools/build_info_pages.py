@@ -29,6 +29,17 @@ Every fact here already appears on the site or in its schema: trading since
 12-month/12,000-mile warranty, no appointment needed, extended warranties
 accepted. Nothing about staff, certifications or capacity is invented.
 
+The "people" section on /about is the E-E-A-T piece the page lacked: the
+homepage names Sam and Zayd beside their photograph and says they answer
+the phone and work on the cars, but the About page -- the one a reader or
+a search engine opens to find out who is behind a business -- said nothing
+about anyone. It now shows the same photograph and repeats exactly those
+facts. Their surnames, titles and any certifications are not on the site,
+so they are not here either; add them to PEOPLE_POINTS when the owner
+supplies them. /contact gains the map the homepage already embeds, so the
+page that answers "where" shows it, and the same photograph so the
+building is recognisable from the road.
+
 Run from the repo root:  python3 tools/build_info_pages.py
 """
 
@@ -41,11 +52,25 @@ sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 # is how this project has repeatedly ended up with the same helper
 # fixed in one file and stale in the others.
 from build_service_pages import checks_list  # noqa: E402
+from build_landing_pages import photo_picture  # noqa: E402
 
 REPO_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SITE = "https://germanperformancega.com"
 DONOR = "porsche-oil-change-snellville-ga.html"
 MAPS = ("https://maps.google.com/?q=2144+Parkwood+Rd+NW+Snellville+GA+30078")
+# The keyless embed form: Google geocodes the address itself, so the pin
+# lands on the shop without a place ID or an API key.
+MAP_EMBED = ("https://www.google.com/maps?q=2144+Parkwood+Rd+NW,+Snellville,"
+             "+GA+30078&output=embed")
+
+# The photograph the homepage runs beside its story block, at the sizes
+# tools/build_shop_photos.py writes.
+PEOPLE_PHOTO = {
+    "base": "assets/img/shop/sam-and-zayd",
+    "alt": ("Sam and Zayd, wrenches in hand, standing in front of the open "
+            "service bays at German Performance in Snellville"),
+    "width": 1100, "height": 1375,
+}
 
 ARROW = ('<svg width="16" height="16" viewBox="0 0 16 16" fill="none">'
          '<path d="M3 8H13M9 4L13 8L9 12" stroke="currentColor" '
@@ -56,15 +81,29 @@ PAGES = [
  "slug": "about.html",
  "type": "AboutPage",
  "h1": ("ABOUT", "GERMAN", "PERFORMANCE"),
- "title": "About German Performance | German Auto Specialists in Snellville, GA",
+ "title": "About German Performance | German Auto Repair, Snellville GA",
  "desc": ("Independent German auto specialists in Snellville, GA since 2010. "
-          "BMW, Mercedes-Benz, Audi, Porsche and Volkswagen only, on factory "
-          "diagnostic software. Call (678) 395-7459."),
+          "BMW, Mercedes, Audi, Porsche and VW only, on factory diagnostic "
+          "software. Call (678) 395-7459."),
  "crumb": "About",
  "eyebrow": "Since 2010 &nbsp;·&nbsp; Snellville, GA",
  "sub": ("An independent German specialist in Snellville, Georgia. BMW, "
          "Mercedes-Benz, Audi, Porsche and Volkswagen — and nothing else, "
          "which is the whole point."),
+ "people_head": ("WHO YOU", "ACTUALLY TALK TO"),
+ "people_lead": ("German Performance is a family-owned shop, in Snellville "
+                 "since 2010. That is Sam and Zayd in the photo. They are the "
+                 "people you speak to when you call, and the people who work "
+                 "on your car. What they find is what you are told, in "
+                 "writing, with photos."),
+ "people_points": [
+   "Family-owned, working on German cars in Snellville since 2010",
+   "The people who answer the phone are the people who do the work",
+   "Every car diagnosed on the factory software for its marque — ISTA, XENTRY, ODIS, PIWIS",
+   "A written estimate before a single part is ordered",
+   "12-month, 12,000-mile warranty on every repair",
+   "CARFAX 2025 Top-Rated Service Center; 4.8 stars on CARFAX, 180+ Google reviews",
+ ],
  "cards_head": ("THE SOFTWARE", "WE ACTUALLY RUN"),
  "cards_sub": ("A German car reports symptoms, not causes. The difference "
                "between a diagnosis and a guess is whether the shop can talk "
@@ -112,8 +151,9 @@ PAGES = [
  "faqs": [
    ("How long has German Performance been in business?",
     "Since 2010, in Snellville serving Gwinnett County — Snellville, "
-    "Loganville, Grayson, Lawrenceville and Stone Mountain. The shop holds a "
-    "4.5-star rating from 185 Google reviews and is a CARFAX Top-Rated shop."),
+    "Loganville, Grayson, Lawrenceville and Stone Mountain. The shop is rated "
+    "4.8 stars on CARFAX and 4.5 stars across 180+ Google reviews, and CARFAX "
+    "named it a 2025 Top-Rated Service Center."),
    ("Why only German cars?",
     "Because the tooling and the failure modes are specific enough that "
     "splitting attention costs you accuracy. Running ISTA, XENTRY, ODIS and "
@@ -144,8 +184,8 @@ PAGES = [
  "h1": ("CONTACT", "GERMAN", "PERFORMANCE"),
  "title": "Contact German Performance | Snellville, GA | (678) 395-7459",
  "desc": ("Call German Performance in Snellville, GA at (678) 395-7459. "
-          "2144 Parkwood Rd NW, Mon–Fri 9:30 AM–6 PM. German auto repair for "
-          "BMW, Mercedes, Audi, Porsche and VW."),
+          "2144 Parkwood Rd NW, Mon–Fri 9:30 AM–6 PM. BMW, Mercedes, Audi, "
+          "Porsche and VW repair."),
  "crumb": "Contact",
  "eyebrow": "Mon &ndash; Fri &nbsp;·&nbsp; Snellville, GA",
  "sub": ("One phone number, Monday to Friday, answered by the people who work "
@@ -179,6 +219,7 @@ PAGES = [
     "Interval-based work and wear items both depend on it, and it tells us "
     "whether what you are describing is early, on time, or overdue."),
  ],
+ "map": True,
  "why_head": ("FINDING", "THE SHOP"),
  "why_lead": ("We are at 2144 Parkwood Rd NW in Snellville, Georgia 30078, "
               "open Monday to Friday from 9:30 AM to 6:00 PM and closed at "
@@ -270,8 +311,7 @@ def skeleton():
         "mob": grab(r'<div id="mobile-menu".*?\n</div>'),
         "callbar": "",  # the fixed bottom call bar was removed site-wide
         "footer": neutral_footer(grab(r"<footer>.*?</footer>")),
-        "fonts": grab(r'<link rel="preconnect"[^>]*>\s*<link rel="preconnect"'
-                      r'[^>]*>\s*<link href="https://fonts\.googleapis[^>]*>'),
+        "fonts": grab(r'<link rel="stylesheet" href="assets/css/fonts\.css[^>]*>'),
         # Every local stylesheet, in document order -- never a range regex.
         "css": "\n".join(
             re.findall(r'<link rel="stylesheet" href="assets/css/[^"]+"[^>]*>', src)),
@@ -295,6 +335,42 @@ def faq_html(items):
         for q, a in items)
 
 
+def people_section(page):
+    """The photograph and the facts the homepage already states about the
+    people, on the page a reader opens to find out who they are."""
+    h1, h2 = page["people_head"]
+    points = "\n".join(f"        <li>{p}</li>" for p in page["people_points"])
+    return f"""
+<section>
+  <div class="sh fu"><div class="sl">The People</div><h2>{h1}<br><span class="accent">{h2}</span></h2></div>
+  <div class="two fu">
+    <figure class="svc-figure">{photo_picture(PEOPLE_PHOTO)}</figure>
+    <div>
+      <p class="sd">{page['people_lead']}</p>
+      <ul class="cl">
+{points}
+      </ul>
+    </div>
+  </div>
+</section>
+"""
+
+
+def map_section():
+    """The map beside the photograph of the bays: where it is, and what to
+    look for when you get there. The frame is lazy, so it costs nothing
+    until the reader scrolls to it."""
+    return f"""
+<section>
+  <div class="sh fu"><div class="sl">Where We Are</div><h2>THE SHOP<br><span class="accent">ON THE MAP</span></h2></div>
+  <div class="two fu">
+    <figure class="svc-figure"><iframe src="{MAP_EMBED}" title="Map showing German Performance at 2144 Parkwood Rd NW, Snellville, GA 30078" width="600" height="450" loading="lazy" allowfullscreen referrerpolicy="no-referrer-when-downgrade"></iframe></figure>
+    <figure class="svc-figure">{photo_picture(PEOPLE_PHOTO)}</figure>
+  </div>
+</section>
+"""
+
+
 def build(page, sk):
     l1, l2, l3 = page["h1"]
     ch1, ch2 = page["cards_head"]
@@ -308,6 +384,8 @@ def build(page, sk):
         f'      <p class="acts"><a href="{MAPS}" target="_blank" '
         f'rel="noopener" class="bg">Get directions {ARROW}</a></p>'
         if page["slug"] == "contact.html" else "")
+    people = people_section(page) if "people_head" in page else ""
+    where = map_section() if page.get("map") else ""
 
     return f"""<!DOCTYPE html>
 <html lang="en">
@@ -316,7 +394,7 @@ def build(page, sk):
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>{page['title']}</title>
 <meta name="description" content="{page['desc']}">
-<link rel="icon" type="image/png" href="assets/img/logo-144.png">
+<link rel="icon" type="image/png" href="assets/img/favicon-144.png">
 <link rel="canonical" href="{SITE}/{page['slug']}"/>
 {sk['fonts']}
 {sk['css']}
@@ -336,7 +414,7 @@ def build(page, sk):
 {checks_list()}
   </div>
 </section>
-
+{people}
 <section>
   <div class="fu"><div class="sl">{'What We Run' if page['slug'] == 'about.html' else 'Have This Ready'}</div><h2>{ch1}<br><span class="accent">{ch2}</span></h2><p class="sd">{page['cards_sub']}</p></div>
   <div class="g3 fu">
@@ -359,7 +437,7 @@ def build(page, sk):
     </div>
   </div>
 </section>
-
+{where}
 <section>
   <div class="fu"><div class="sl">Common Questions</div><h2>{fh1}<br><span class="accent">{fh2}</span></h2></div>
     <div class="faq-list">

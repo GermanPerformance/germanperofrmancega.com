@@ -67,4 +67,3 @@ strong { color: var(--white); font-weight: 600; }
 }
 .cta-block h2 { border: 0; padding: 0; margin: 0; }
 .cta-block p { color: var(--silver); margin: 0 0 8px; }
-.cta-sub { color: var(--muted); font-size: var(--step--2); margin-top: 8px; }

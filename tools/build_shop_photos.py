@@ -1,10 +1,12 @@
 #!/usr/bin/env python3
-"""Turn the six shop photos into responsive web assets.
+"""Turn the shop photos into responsive web assets.
 
 photo1.webp .. photo6.webp in the repo root are the owner's own photographs
 of customer cars in the bay, all portrait and roughly 800 x 1020;
 photo2_replace.png is a sharper 1122 x 1402 take of the lift scene and
-supersedes photo2.webp. The widest rendition never exceeds the source:
+supersedes photo2.webp; "Zayd & Sam HERO Image.png" is the 1122 x 1402
+portrait of the two technicians in front of the bays, used by the homepage
+About section. The widest rendition never exceeds the source:
 nothing is upscaled.
 
 Each photo gets a descriptive slug and three widths in WebP plus a JPEG
@@ -31,6 +33,7 @@ PHOTOS = {
     "photo4.webp": "mercedes-amg-gt",
     "photo5.webp": "mercedes-amg-gle",
     "photo6.webp": "porsche-cayenne-gts",
+    "Zayd & Sam HERO Image.png": "sam-and-zayd",
 }
 WIDTHS = (420, 640, 800, 1100)
 

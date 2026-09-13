@@ -22,11 +22,12 @@ Deliberately omitted:
     self-serving, produces no stars, and risks a manual action. The 4.5/185
     figures stay as on-page text and the Google Business Profile carries the
     rating.
-  * geo -- the Maps embed contains a placeholder place ID
-    (0x88f5b3e3e3e3e3e3) so its coordinates cannot be trusted, and the
-    address does not resolve in OpenStreetMap. Wrong coordinates would
-    misplace the map pin, which is worse than omitting the property. Supply
-    the real values from the Google Business Profile to enable it.
+  * aggregateRating on the Service entities, for the same reason.
+
+geo was omitted while the only coordinates to hand came from a Maps embed
+with a placeholder place ID. It is now emitted from GEO below, which two
+independent sources agree on to within 200 m (see the note on GEO). If the
+Google Business Profile shows a different pin, GEO is the value to correct.
 
 Run from the repo root:  python3 tools/build_schema.py
 """
@@ -36,6 +37,9 @@ import json
 import os
 import re
 import sys
+
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+from redirects import site_pages  # noqa: E402
 
 REPO_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SITE = "https://germanperformancega.com"
@@ -55,10 +59,33 @@ REGION = "GA"
 POSTAL = "30078"
 FOUNDED = "2010"
 INSTAGRAM = "https://www.instagram.com/germanperformance.auto"
+CARFAX = "https://www.carfax.com/Reviews-German-Performance-Snellville-GA_IY4SR7AEBP"
+FACEBOOK = "https://www.facebook.com/GermanPerformance1/"
+YELP = "https://www.yelp.com/biz/german-performance-snellville-2"
+# The Google Business Profile share link (Maps -> Share -> "Copy link",
+# or the g.page short link). None until the owner pastes it; the entity
+# then lists it first, since it is the profile the reviews live on.
+GOOGLE_BUSINESS_PROFILE = None
+MAP = "https://maps.google.com/?q=2144+Parkwood+Rd+NW+Snellville+GA+30078"
+
+# Where the pin goes. BimmerShops' listing for this shop (name and phone
+# match) publishes 33.845661, -84.055626; the US Census geocoder resolves
+# the street address to 33.847265, -84.056955, about 200 m away on the
+# same road. The directory value is used because it is attached to the
+# business rather than interpolated along the street. Six decimals is
+# ~10 cm, more than a pin needs.
+GEO = {"latitude": 33.845661, "longitude": -84.055626}
 
 AREA_SERVED = ["Snellville", "Loganville", "Grayson", "Lawrenceville",
                "Stone Mountain", "Gwinnett County"]
-MAKES = ["BMW", "Mercedes-Benz", "Audi", "Porsche", "Volkswagen", "MINI"]
+AREA_TYPES = {"Gwinnett County": "AdministrativeArea"}
+
+
+def area_served():
+    return [{"@type": AREA_TYPES.get(a, "City"), "name": a} for a in AREA_SERVED]
+# The five marques with a hub page. MINI is worked on (it runs on ISTA,
+# see About) but has no page of its own, so it is not offered here.
+MAKES = ["BMW", "Mercedes-Benz", "Audi", "Porsche", "Volkswagen"]
 
 
 def business():
@@ -86,13 +113,21 @@ def business():
             "opens": "09:30",
             "closes": "18:00",
         }],
-        "areaServed": [{"@type": "City", "name": a} for a in AREA_SERVED],
+        "geo": {"@type": "GeoCoordinates", **GEO},
+        "areaServed": area_served(),
+        "hasMap": MAP,
         "makesOffer": [
             {"@type": "Offer", "itemOffered": {"@type": "Service",
              "name": f"{m} repair and service"}} for m in MAKES
         ],
-        "sameAs": [INSTAGRAM],
+        "sameAs": same_as(),
     }
+
+
+def same_as():
+    """Every profile the shop controls, the Google one first when known."""
+    profiles = [GOOGLE_BUSINESS_PROFILE, INSTAGRAM, FACEBOOK, YELP, CARFAX]
+    return [p for p in profiles if p]
 
 
 def website():
@@ -105,8 +140,8 @@ def website():
     }
 
 
-def webpage(url, title, description):
-    return {
+def webpage(url, title, description, image=None):
+    node = {
         "@type": "WebPage",
         "@id": f"{url}#webpage",
         "url": url,
@@ -115,11 +150,15 @@ def webpage(url, title, description):
         "isPartOf": {"@id": WEBSITE_ID},
         "about": {"@id": BUSINESS_ID},
     }
+    if image:
+        node["primaryImageOfPage"] = {"@type": "ImageObject", "url": image}
+    return node
 
 
 def breadcrumbs(items):
     return {
         "@type": "BreadcrumbList",
+        "@id": f"{items[-1][1]}#breadcrumb",
         "itemListElement": [
             {"@type": "ListItem", "position": i, "name": name, "item": url}
             for i, (name, url) in enumerate(items, 1)
@@ -188,7 +227,7 @@ def visible_faq(content):
     }
 
 
-def service_entity(url, title, description, crumb):
+def service_entity(url, title, description, crumb, image=None):
     # The breadcrumb label carries a location suffix ("BMW Oil Change --
     # Snellville, GA") because that is what the page renders. The service
     # itself is just the service; its area is expressed by areaServed.
@@ -201,15 +240,23 @@ def service_entity(url, title, description, crumb):
         "description": description,
         "url": url,
         "provider": {"@id": BUSINESS_ID},
-        "areaServed": [{"@type": "City", "name": a} for a in AREA_SERVED],
+        "areaServed": area_served(),
+        "mainEntityOfPage": {"@id": f"{url}#webpage"},
+        **({"image": image} if image else {}),
     }
+
+
+def headline(title):
+    """The article's own title: Google wants the headline without the site
+    name that the <title> carries for the browser tab."""
+    return re.sub(r"\s*\|\s*" + re.escape(NAME) + r"\s*$", "", title)
 
 
 def blog_entity(url, title, description):
     return {
         "@type": "BlogPosting",
         "@id": f"{url}#article",
-        "headline": title,
+        "headline": headline(title),
         "description": description,
         "url": url,
         "mainEntityOfPage": {"@id": f"{url}#webpage"},
@@ -219,6 +266,12 @@ def blog_entity(url, title, description):
         "datePublished": "2026-07-28",
         "dateModified": "2026-09-09",
     }
+
+
+def social_image(content):
+    """The page's og:image, if it declares one -- the service pages do."""
+    m = re.search(r'<meta property="og:image" content="([^"]*)"', content)
+    return m.group(1).strip() if m else None
 
 
 def visible_crumb(content):
@@ -232,11 +285,12 @@ LD_RE = re.compile(r'\s*<script type="application/ld\+json">.*?</script>', re.S)
 
 # Pages that describe the business rather than a job it performs. They get
 # the matching WebPage subtype instead of a Service entity.
-INFO_PAGES = {"about.html": "AboutPage", "contact.html": "ContactPage"}
+INFO_PAGES = {"about.html": "AboutPage", "contact.html": "ContactPage",
+              "privacy-policy.html": "WebPage"}
 
 
 def main():
-    pages = sorted(f for f in os.listdir(REPO_ROOT) if f.endswith(".html"))
+    pages = site_pages(os.listdir(REPO_ROOT))
     counts = {"service": 0, "home": 0, "post": 0}
 
     for name in pages:
@@ -246,7 +300,8 @@ def main():
             print(f"  skip {name}: no canonical")
             continue
 
-        graph = [business(), website(), webpage(url, title, description)]
+        image = social_image(content)
+        graph = [business(), website(), webpage(url, title, description, image)]
 
         if name == HOME:
             faq = visible_faq(content)
@@ -261,7 +316,9 @@ def main():
             graph.append(breadcrumbs([("Home", f"{SITE}/"), (crumb, url)]))
             counts["post"] += 1
         elif name in INFO_PAGES:
-            crumb = visible_crumb(content)
+            # The policy uses the post layout, which has no breadcrumb;
+            # its title's first segment is the label a crumb would carry.
+            crumb = visible_crumb(content) or title.split("|")[0].strip()
             # The WebPage node is already in the graph; narrow its type
             # rather than adding a second page entity for the same URL.
             graph[2]["@type"] = INFO_PAGES[name]
@@ -272,8 +329,10 @@ def main():
             counts["info"] = counts.get("info", 0) + 1
         else:
             crumb = visible_crumb(content)
-            graph.append(service_entity(url, title, description, crumb))
-            graph.append(breadcrumbs([("Home", f"{SITE}/"), (crumb, url)]))
+            graph.append(service_entity(url, title, description, crumb, image))
+            trail = breadcrumbs([("Home", f"{SITE}/"), (crumb, url)])
+            graph[2]["breadcrumb"] = {"@id": trail["@id"]}
+            graph.append(trail)
             faq = visible_faq(content)
             if faq:
                 graph.append(faq)

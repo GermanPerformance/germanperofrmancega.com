@@ -16,6 +16,9 @@ import os
 import re
 import sys
 
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+from redirects import site_pages  # noqa: E402
+
 REPO_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 JSONLD_RE = re.compile(
@@ -91,7 +94,7 @@ def check_page(page, content):
 
 
 def main():
-    pages = sorted(f for f in os.listdir(REPO_ROOT) if f.endswith(".html"))
+    pages = site_pages(os.listdir(REPO_ROOT))
     problems = []
 
     for page in pages:

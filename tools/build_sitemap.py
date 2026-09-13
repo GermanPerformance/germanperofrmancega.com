@@ -8,7 +8,10 @@ sync with the real page set.
 <priority> and <changefreq> are deliberately omitted: Google has ignored both
 for years, so they add noise rather than signal.
 
-Pages marked noindex (404.html) are excluded.
+Pages marked noindex (404.html) are excluded, and so is any page whose
+canonical names a different URL: a redirect stub (tools/redirects.py) or
+a page canonicalised elsewhere must not be listed, or the sitemap would
+contradict the page and repeat the target.
 
 Run from the repo root:  python3 tools/build_sitemap.py
 """
@@ -23,13 +26,35 @@ REPO_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SITE = "https://germanperformancega.com"
 
 
+def choose_date(commit_date, dirty, today):
+    """The page's last commit date, unless it has changed since: a page
+    edited in the working tree will be committed when the site deploys, so
+    its date is today. A page git has never seen is dated today too."""
+    if dirty or not commit_date:
+        return today.isoformat()
+    return commit_date
+
+
+def git(*args):
+    result = subprocess.run(["git", *args], cwd=REPO_ROOT,
+                            capture_output=True, text=True)
+    return result.stdout.strip()
+
+
 def last_modified(name):
-    """Date of the file's last commit, or today if uncommitted."""
-    result = subprocess.run(
-        ["git", "log", "-1", "--format=%cs", "--", name],
-        cwd=REPO_ROOT, capture_output=True, text=True)
-    date = result.stdout.strip()
-    return date or datetime.date.today().isoformat()
+    """Date of the file's last real change, see choose_date."""
+    commit_date = git("log", "-1", "--format=%cs", "--", name)
+    dirty = bool(git("status", "--porcelain", "--", name))
+    return choose_date(commit_date, dirty, datetime.date.today())
+
+
+def own_url(name):
+    return f"{SITE}/" if name == "index.html" else f"{SITE}/{name}"
+
+
+def is_own_canonical(name, canonical):
+    """True when the page's canonical is its own URL."""
+    return canonical == own_url(name)
 
 
 def is_indexable(path):
@@ -42,9 +67,7 @@ def canonical(path, name):
     """Prefer the page's own canonical so the sitemap cannot contradict it."""
     with open(path, encoding="utf-8") as fh:
         m = re.search(r'<link rel="canonical" href="([^"]*)"', fh.read())
-    if m:
-        return m.group(1)
-    return f"{SITE}/" if name == "index.html" else f"{SITE}/{name}"
+    return m.group(1) if m else own_url(name)
 
 
 def main():
@@ -56,7 +79,11 @@ def main():
         if not is_indexable(path):
             print(f"  excluded (noindex): {name}")
             continue
-        urls.append((canonical(path, name), last_modified(name)))
+        url = canonical(path, name)
+        if not is_own_canonical(name, url):
+            print(f"  excluded (canonical elsewhere): {name}")
+            continue
+        urls.append((url, last_modified(name)))
 
     # Homepage first, then the rest alphabetically.
     urls.sort(key=lambda u: (u[0] != f"{SITE}/", u[0]))

@@ -1,17 +1,21 @@
 #!/usr/bin/env python3
 """Apply the balanced redesign to every page except index.html.
 
-index.html is hand-built. The 33 service and hub pages, the 404 page and
-the blog post share one markup pattern, so the redesign reaches them by
-transformation rather than by hand. Every rule below maps one piece of the
-old markup onto the new system:
+index.html is hand-built; the one thing this tool writes to it is the nav
+block (phone bar, nav, phone menu), so the Services menu stays in step on
+all 49 pages. Its stylesheet and script versions are hand-edited. The
+service, hub and info pages, the 404 page and the blog post share one
+markup pattern, so the redesign reaches them by transformation rather
+than by hand. Every rule below maps one piece of the old markup onto the
+new system:
 
   * stylesheets load tokens -> werkstatt (base) -> page sheet, so the base
     no longer has to out-specify the page sheet it used to load after
   * a fixed phone bar above one nav and one mobile menu on every page,
     with the call button and hamburger grouped so the bar reads
     logo | links | call; About and Contact point at their own pages, so
-    tools/link_info_pages.py is a no-op after this runs in either order
+    tools/link_info_pages.py is a no-op after this runs in either order;
+    Services is a disclosure listing every page in tools/service_catalog.py
   * the fixed bottom call bar is removed; the phone bar and the nav
     button are the call paths on every screen
   * the hero grid overlay goes; the hero is centred by the base sheet
@@ -22,18 +26,45 @@ old markup onto the new system:
   * FAQ items become native <details>/<summary>, one open at a time
   * the footer wordmark becomes the logo, and the copyright line moves
     below the link row
+  * the CARFAX Top-Rated shield sits beside every hero checklist (not the
+    404's) and, linked to the CARFAX page, under the footer tagline
+  * the review copy leads with the CARFAX rating and the years in
+    business; Google keeps the review count, never the other way round
 
 Idempotent: running it twice changes nothing the second time.
 
 Run from the repo root:  python3 tools/apply_redesign.py
 """
 
+import functools
 import os
 import re
+import struct
 import sys
 
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+from service_catalog import GROUPS, HUBS  # noqa: E402
+from redirects import site_pages  # noqa: E402
+
 REPO_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-VERSION = "9"
+VERSION = "28"
+
+# The typefaces are served from assets/fonts/ (see tools/build_fonts.py):
+# the @font-face rules are the first stylesheet, so the browser asks for
+# the headline face as soon as it has parsed the CSS. The Google Fonts
+# block this replaces cost two hosts in series -- the CSS, then the file
+# URLs read out of it -- before a heading could paint. Deliberately no
+# <link rel="preload"> for the font: measured on an emulated slow 4G
+# phone, three runs each, the 88 KB preload competed with the render-
+# blocking CSS and put first paint 120 ms later and LCP 50 ms later than
+# letting the stylesheet request it.
+def fonts_markup():
+    return f'<link rel="stylesheet" href="assets/css/fonts.css?v={VERSION}">'
+
+
+GOOGLE_FONTS_RE = (r'<link rel="preconnect" href="https://fonts\.googleapis\.com">\n'
+                   r'<link rel="preconnect" href="https://fonts\.gstatic\.com" crossorigin>\n'
+                   r'<link href="https://fonts\.googleapis\.com/css2\?[^"]*" rel="stylesheet">')
 
 LOGO_NAV = (
     '<picture class="logo-pic"><source type="image/webp" '
@@ -42,6 +73,46 @@ LOGO_NAV = (
     'height="44" decoding="async" fetchpriority="high"></picture>'
 )
 LOGO_FOOT = LOGO_NAV.replace(' fetchpriority="high"', ' loading="lazy"')
+
+# The CARFAX Top-Rated shield, built by tools/build_badge.py at 128, 256
+# and 384px tall. The markup carries the real dimensions of the 128px file
+# so a rebuilt badge reaches every page on the next run.
+BADGE = "assets/img/carfax-top-rated-2025"
+BADGE_ALT = "CARFAX 2025 Top-Rated Service Center: German Performance"
+CARFAX_URL = "https://www.carfax.com/Reviews-German-Performance-Snellville-GA_IY4SR7AEBP"
+
+
+@functools.lru_cache(maxsize=None)
+def badge_size():
+    """Width and height of the 128px badge, read from its PNG header."""
+    path = os.path.join(REPO_ROOT, f"{BADGE}-128.png")
+    try:
+        with open(path, "rb") as fh:
+            head = fh.read(24)
+    except FileNotFoundError:
+        raise SystemExit(f"missing {BADGE}-128.png: run python3.13 "
+                         "tools/build_badge.py first")
+    if head[:8] != b"\x89PNG\r\n\x1a\n":
+        raise SystemExit(f"{path}: not a PNG")
+    return struct.unpack(">II", head[16:24])
+
+
+def badge_picture(lazy=False):
+    width, height = badge_size()
+    loading = ' loading="lazy"' if lazy else ''
+    return (f'<picture><source type="image/webp" srcset="{BADGE}-128.webp 1x, '
+            f'{BADGE}-256.webp 2x, {BADGE}-384.webp 3x"><img src="{BADGE}-128.png" '
+            f'srcset="{BADGE}-128.png 1x, {BADGE}-256.png 2x, {BADGE}-384.png 3x" alt="{BADGE_ALT}" '
+            f'width="{width}" height="{height}"{loading} decoding="async"></picture>')
+
+
+def hero_seal_markup():
+    return f'<div class="seal">{badge_picture()}</div>'
+
+
+def footer_seal_markup():
+    return (f'<a class="fseal" href="{CARFAX_URL}" target="_blank" rel="noopener">'
+            f'{badge_picture(lazy=True)}</a>')
 
 PHONE_ICO = (
     '<svg class="tb-ico" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">'
@@ -57,21 +128,53 @@ TOPBAR = ('<div class="topbar"><a href="tel:+16783957459">'
 BTN_ICO = PHONE_ICO.replace(' class="tb-ico"', '')
 CTA = f'{BTN_ICO}<span>Service My Car</span>'
 
+# Two trust facts under every call button except the hero's, which has
+# the checklist: the CARFAX rating with the years in business between
+# laurels, and the warranty behind the site's shield-with-check. One laurel
+# branch, mirrored in CSS for the right side. Kept on one line so the band
+# rules, which match within a line, still see the band's closing div.
+LAUREL = (
+    '<svg class="laurel" viewBox="0 0 18 26" fill="currentColor" aria-hidden="true">'
+    '<path d="M13.5 25.5Q-1.0 15.0 8.0 0.8" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/>'
+    '<ellipse cx="6.0" cy="21.3" rx="1.35" ry="3.60" transform="rotate(-85 6.0 21.3)"/>'
+    '<ellipse cx="9.0" cy="18.5" rx="1.35" ry="3.60" transform="rotate(-1 9.0 18.5)"/>'
+    '<ellipse cx="3.8" cy="17.1" rx="1.23" ry="3.15" transform="rotate(-71 3.8 17.1)"/>'
+    '<ellipse cx="7.0" cy="15.3" rx="1.23" ry="3.15" transform="rotate(13 7.0 15.3)"/>'
+    '<ellipse cx="3.0" cy="12.7" rx="1.11" ry="2.70" transform="rotate(-55 3.0 12.7)"/>'
+    '<ellipse cx="6.0" cy="12.1" rx="1.11" ry="2.70" transform="rotate(29 6.0 12.1)"/>'
+    '<ellipse cx="3.4" cy="8.5" rx="0.99" ry="2.25" transform="rotate(-38 3.4 8.5)"/>'
+    '<ellipse cx="6.0" cy="8.7" rx="0.99" ry="2.25" transform="rotate(46 6.0 8.7)"/>'
+    '<ellipse cx="4.9" cy="4.4" rx="0.87" ry="1.80" transform="rotate(-23 4.9 4.4)"/>'
+    '<ellipse cx="6.9" cy="5.1" rx="0.87" ry="1.80" transform="rotate(61 6.9 5.1)"/>'
+    '<ellipse cx="8.1" cy="0.5" rx="0.9" ry="2.2" transform="rotate(30 8.1 0.5)"/>'
+    '</svg>'
+)
+SHIELD = ('<svg class="shield" viewBox="0 0 24 24" fill="none" stroke="currentColor" '
+          'stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">'
+          '<path d="M12 3 4.5 6v6c0 4.5 3.2 7.6 7.5 9 4.3-1.4 7.5-4.5 7.5-9V6z"/>'
+          '<path d="m9 12 2 2 4-4"/></svg>')
+ASSURE = ('<div class="assure">'
+          f'<span class="as">{LAUREL}<span class="as-t"><b>4.8-Star</b> on CARFAX<br>'
+          f'<b>15+ Years</b> in business</span>{LAUREL}</span>'
+          f'<span class="as">{SHIELD}<span class="as-t"><b>1-Year</b> service<br>'
+          'warranties</span></span></div>')
+
 CHECK_SVG = ('<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" '
              'stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" '
              'aria-hidden="true"><path d="M5 12.5 10 17.5 19 7"/></svg>')
 
 # The four trust facts the old strip carried, as a checklist under the
-# hero button. The marque is read out of the strip being replaced, so a
-# Porsche page keeps saying Porsche.
-MARQUES = {"BMW": "BMW", "Mercedes": "Mercedes-Benz", "Audi": "Audi",
+# hero button: the CARFAX rating, Google's review count, the years, the
+# parts. The marque is read out of the strip being replaced, so a Porsche
+# page keeps saying Porsche.
+MARQUES = {"BMW": "BMW", "Mercedes": "Mercedes", "Audi": "Audi",
            "Porsche": "Porsche", "VW": "Volkswagen"}
 
 
 def checks_list(marque=None):
     parts = f"Genuine {marque} parts and fluids" if marque else \
         "Genuine factory parts and fluids"
-    items = ["4.5-star Google rating", "Top-rated CARFAX shop",
+    items = ["4.8-star CARFAX rating", "180+ Google reviews",
              "15+ years in business", parts]
     rows = "".join(f'      <li>{CHECK_SVG}<span>{t}</span></li>\n' for t in items)
     return f'    <ul class="checks fu">\n{rows}    </ul>'
@@ -105,23 +208,202 @@ def hero_checklist(html):
     at = hero.start() + acts.end()
     return html[:at] + "\n" + checks_list(marque) + html[at:]
 
-NAV = f'''{TOPBAR}
+
+# An earlier pass put the shield on its own above the list, and one wrapped
+# the pair as .proof, a class the homepage's About section already owned.
+# Either is unwound before wrapping.
+SEAL_RE = re.compile(r'\n[ \t]*<div class="seal">.*?</div>', re.S)
+PROOF_RE = re.compile(
+    r'<div class="(?:hero-proof|proof)">\s*<div class="seal">.*?</div>\s*(<ul class="checks.*?</ul>)\s*</div>', re.S)
+FOOTER_SEAL_RE = re.compile(r'<a class="fseal".*?</a>', re.S)
+
+
+def hero_seal(html):
+    """Put the CARFAX shield beside the hero checklist, in one .hero-proof row.
+
+    The 404 keeps its list alone; a page without a hero (the blog post) is
+    left alone. Any badge already there is replaced rather than kept, so a
+    rebuilt image's dimensions reach every page.
+    """
+    if '<div class="fu link-row">' in html:
+        return html
+    html = PROOF_RE.sub(lambda m: m.group(1), html)
+    html = SEAL_RE.sub("", html)
+    hero = re.search(r'<section class="hero[^"]*"[^>]*>.*?</section>', html, re.S)
+    if not hero:
+        return html
+    checks = re.search(r'<ul class="checks[^>]*>.*?</ul>', hero.group(0), re.S)
+    if not checks:
+        return html
+    start, end = hero.start() + checks.start(), hero.start() + checks.end()
+    return (html[:start] + '<div class="hero-proof">\n    ' + hero_seal_markup() + '\n    '
+            + html[start:end] + '\n    </div>' + html[end:])
+
+
+def footer_seal(html):
+    """Put the shield, linked to the CARFAX page, under the footer tagline."""
+    html = FOOTER_SEAL_RE.sub("", html)
+    return re.sub(r'(<div class="ftag">(?:(?!</div>).)*</div>)',
+                  lambda m: m.group(1) + footer_seal_markup(), html, count=1, flags=re.S)
+
+
+PRIVACY_LINK = ' · <a href="privacy-policy.html">Privacy Policy</a>'
+FCOPY_RE = re.compile(r'(<div class="fcopy">© \d{4} German Performance — Snellville, GA 30078)'
+                      r'(?:' + re.escape(PRIVACY_LINK) + r')?(</div>)')
+
+
+def footer_privacy(html):
+    """Link the privacy policy from the copyright line of every page.
+
+    Google's advertising policies require the policy to be reachable from
+    every page that carries its tags. The copyright line is the one footer
+    element that is byte-identical across the site and that no other tool
+    rewrites, so the link survives fix_footer_links.py regenerating the
+    Services column. Any earlier link is stripped and re-added, so a copy
+    change here reaches every page.
+    """
+    return FCOPY_RE.sub(lambda m: m.group(1) + PRIVACY_LINK + m.group(2), html, count=1)
+
+
+ASSURE_RE = r'[ \t]*<div class="assure">(?:(?!</div>).)*?</div>\n?'
+CTA_COL_RE = (r'<div class="cta-col">\s*((?:<div class="acts">(?:(?!</div>).)*?</div>)'
+              r'|(?:<a [^>]*>(?:(?!</a>).)*?</a>))\s*</div>')
+
+
+def indent_block(block, indent):
+    """Re-indent a div whose inner lines are one level deeper than its tags."""
+    lines = [line.strip() for line in block.split("\n")]
+    return "\n".join(indent + ("  " if 0 < i < len(lines) - 1 else "") + line
+                     for i, line in enumerate(lines))
+
+
+def trust_badges(html):
+    """Put the two trust badges under every call button except the hero's.
+
+    The button row and the badge row share a `.cta-col` so the button can
+    be as wide as the badges. Any earlier row or column is stripped first
+    and the column rebuilt, so the pass is idempotent and a copy change in
+    ASSURE reaches every page. The hero's row is never matched because
+    each pattern is scoped to its own container.
+    """
+    html = re.sub(ASSURE_RE, '', html, flags=re.S)
+    html = re.sub(CTA_COL_RE, r'\1', html, flags=re.S)
+    # Closing section: the pair of buttons, then the badges.
+    html = re.sub(
+        r'(<section class="cta-final">(?:(?!</section>).)*?)'
+        r'^([ \t]*)(<div class="acts">(?:(?!</div>).)*?</div>)\n',
+        lambda m: (m.group(1) + m.group(2) + '<div class="cta-col">\n'
+                   + indent_block(m.group(3), m.group(2) + '  ') + '\n'
+                   + m.group(2) + '  ' + ASSURE + '\n'
+                   + m.group(2) + '</div>\n'),
+        html, flags=re.S | re.M)
+    # Red band: one line, the button then the badges before the band's
+    # closing div.
+    html = re.sub(
+        r'^(<div class="cta-band fu">[^\n]*?)(<a href="tel:\+16783957459" class="bw">'
+        r'(?:(?!</a>).)*?</a>)(</div>)$',
+        lambda m: m.group(1) + '<div class="cta-col">' + m.group(2) + ASSURE + '</div>' + m.group(3),
+        html, flags=re.M)
+    # The blog post: its hours line under the button gave way to the badges.
+    html = re.sub(
+        r'^([ \t]*)(<a href="tel:\+16783957459" class="btn-primary">(?:(?!</a>).)*?</a>)\n'
+        r'(?:[ \t]*<div class="cta-sub">[^<]*</div>\n)?',
+        lambda m: (m.group(1) + '<div class="cta-col">\n'
+                   + m.group(1) + '  ' + m.group(2) + '\n'
+                   + m.group(1) + '  ' + ASSURE + '\n'
+                   + m.group(1) + '</div>\n'),
+        html, flags=re.S | re.M)
+    return html
+
+# The homepage links down its own document; every other page links into it
+# or to the info pages. Panel links are page files on both.
+HOME_HREFS = {
+    "index.html#reviews": "#reviews",
+    "index.html#services": "#services",
+    "about.html": "#story",
+    "index.html#faq": "#faq",
+    "contact.html": "#contact",
+}
+
+CHEVRON = ('<svg class="nav-chev" viewBox="0 0 10 10" fill="none" aria-hidden="true">'
+           '<path d="M2 3.5 5 6.5 8 3.5" stroke="currentColor" stroke-width="1.5" '
+           'stroke-linecap="round" stroke-linejoin="round"/></svg>')
+
+
+def href(target, home):
+    return HOME_HREFS.get(target, target) if home else target
+
+
+def service_columns(home, indent):
+    """One <li class="svc-group"> per catalog group: the hub link as its
+    heading, then one link per page. Each column is a single line, so no
+    closing tag ever lands at column 0 -- the generators grab the phone menu
+    from a donor page with a pattern that ends at a newline and </div>."""
+    rows = []
+    for name, entries in GROUPS:
+        head = (f'<span class="svc-group-name">'
+                f'<a href="{href(HUBS[name], home)}">{name}</a></span>')
+        links = "".join(f'<a href="{href(h, home)}">{label}</a>'
+                        for h, label in entries)
+        rows.append(f"{indent}<li class=\"svc-group\">{head}{links}</li>")
+    return "\n".join(rows)
+
+
+def nav_markup(home=False):
+    """Phone bar, nav and phone menu.
+
+    Services is a disclosure: on a desktop a button opens a full-width panel
+    of the catalog under the bar; on a phone a <details> inside the menu.
+    Only details, summary, ul, li, span and a go inside #mobile-menu: the
+    nav rule below and every generator's donor grab end the menu at its
+    first </div>. The homepage's button carries the section it stands for,
+    so the active-link spy can light it.
+    """
+    h = lambda target: href(target, home)  # noqa: E731
+    spy = ' data-section="#services"' if home else ""
+    return f'''{TOPBAR}
 <nav>
   <a href="index.html" class="nav-logo">{LOGO_NAV}</a>
-  <ul class="nav-links"><li><a href="index.html#services">Services</a></li><li><a href="about.html">About</a></li><li><a href="index.html#reviews">Reviews</a></li><li><a href="index.html#faq">FAQ</a></li><li><a href="contact.html">Contact</a></li></ul>
+  <ul class="nav-links">
+    <li><a href="{h('index.html#reviews')}">Reviews</a></li>
+    <li class="nav-dd">
+      <button type="button" class="nav-dd-btn" aria-expanded="false" aria-controls="nav-services"{spy}>Services{CHEVRON}</button>
+      <div class="nav-panel" id="nav-services">
+        <ul class="nav-panel-grid">
+{service_columns(home, "          ")}
+        </ul>
+      </div>
+    </li>
+    <li><a href="{h('about.html')}">About</a></li>
+    <li><a href="{h('index.html#faq')}">FAQ</a></li>
+    <li><a href="{h('contact.html')}">Contact</a></li>
+  </ul>
   <div class="nav-right">
     <a href="tel:+16783957459" class="nav-cta">{CTA}</a>
     <button id="hamburger" onclick="toggleMenu()" aria-label="Menu" aria-expanded="false" aria-controls="mobile-menu"><span></span><span></span><span></span></button>
   </div>
 </nav>
 <div id="mobile-menu">
-  <a href="index.html#services" onclick="closeMenu()">Services</a>
-  <a href="about.html" onclick="closeMenu()">About</a>
-  <a href="index.html#reviews" onclick="closeMenu()">Reviews</a>
-  <a href="index.html#faq" onclick="closeMenu()">FAQ</a>
-  <a href="contact.html" onclick="closeMenu()">Contact</a>
+  <a href="{h('index.html#reviews')}" onclick="closeMenu()">Reviews</a>
+  <details class="mm-dd">
+    <summary>Services{CHEVRON}</summary>
+    <ul class="mm-groups">
+{service_columns(home, "      ")}
+    </ul>
+  </details>
+  <a href="{h('about.html')}" onclick="closeMenu()">About</a>
+  <a href="{h('index.html#faq')}" onclick="closeMenu()">FAQ</a>
+  <a href="{h('contact.html')}" onclick="closeMenu()">Contact</a>
   <a href="tel:+16783957459" class="mcta" onclick="closeMenu()">{CTA}</a>
 </div>'''
+
+
+NAV = nav_markup(home=False)
+# The phone bar (if present), the nav and the phone menu (if present). The
+# menu match is lazy to the first </div>, which is why nothing inside the
+# menu may be a div.
+NAV_RE = re.compile(r'(?:<div class="topbar">.*?</div>\s*)?<nav>.*?</nav>'
+                    r'(?:\s*<div id="mobile-menu">.*?</div>)?', re.S)
 
 FOOTER_COLUMNS = f'''  <div class="ft">
     <div><div class="fb">{LOGO_FOOT}</div><div class="ftag">German auto specialists<br>BMW · Mercedes · Audi · Porsche · VW</div></div>
@@ -132,7 +414,10 @@ FOOTER_COLUMNS = f'''  <div class="ft">
 
 # (pattern, replacement) pairs applied in order to every page.
 RULES = [
-    # -- head: base sheet before page sheet, one script for every page ----
+    # -- head: fonts from this host, base sheet before page sheet, one
+    #    script for every page -----------------------------------------------
+    (GOOGLE_FONTS_RE, fonts_markup()),
+    (r'<link rel="preload" href="assets/fonts/[^"]*" as="font"[^>]*>\n', ''),
     (r'<link rel="stylesheet" href="assets/css/tokens\.css\?v=\d+">\n'
      r'<link rel="stylesheet" href="assets/css/(site|post)\.css\?v=\d+">\n'
      r'<link rel="stylesheet" href="assets/css/werkstatt\.css\?v=\d+">',
@@ -149,15 +434,26 @@ RULES = [
      f'<script defer src="assets/js/analytics.js?v={VERSION}"></script>'),
 
     # -- phone bar, nav and mobile menu ---------------------------------------
-    (r'(?:<div class="topbar">.*?</div>\s*)?<nav>.*?</nav>(?:\s*<div id="mobile-menu">.*?</div>)?', NAV),
+    (NAV_RE.pattern, NAV),
 
     # -- hero -----------------------------------------------------------------
     (r'<div class="hgrid"></div>', ''),
-    # The trust strip under the hero carries the rating; the eyebrow need not.
-    (r' &nbsp;·&nbsp;<span class="eyebrow-highlight">4\.5★ Rated</span>', ''),
+    # The checklist under the hero carries the rating; the eyebrow need not.
+    # The hub generator writes a space before the span, the service one none.
+    (r' &nbsp;·&nbsp; ?<span class="eyebrow-highlight">4\.5★ Rated</span>', ''),
     # Eyebrow text goes in a span so its two rules stay centred when it wraps.
     (r'<div class="eyebrow( fu)?">(?!<span>)(.*?)</div>', r'<div class="eyebrow\1"><span>\2</span></div>'),
     (r'<section class="hero" style="min-height:60vh;padding-top:150px">', '<section class="hero">'),
+
+    # -- review copy: the CARFAX rating leads, Google keeps the count -------
+    (r'<span>4\.5-star Google rating</span>', '<span>4.8-star CARFAX rating</span>'),
+    (r'<span>Top-rated CARFAX shop</span>', '<span>180+ Google reviews</span>'),
+    # -- the parts line says Mercedes, as the hub, eyebrow and footer do: the
+    #    long form is the one hero fact that wraps beside the shield at 360px --
+    (r'<span>Genuine Mercedes-Benz parts and fluids</span>', '<span>Genuine Mercedes parts and fluids</span>'),
+    (r'<b>4\.5-Star</b> rated by<br><b>180\+</b> customers',
+     '<b>4.8-Star</b> on CARFAX<br><b>15+ Years</b> in business'),
+    (r'CARFAX Top-Rated and Google 4\.5★', 'CARFAX Top-Rated at 4.8★, 4.5★ on Google'),
 
     # -- trust strip: four cells, not five ---------------------------------
     (r'\s*<div class="ti"><div class="tv">Same</div><div class="tl">Week Appointments<br>Available</div></div>', ''),
@@ -225,6 +521,10 @@ def transform(html):
     html = LINK_ROW_BUTTONS.sub(
         lambda m: m.group(1) + m.group(2).replace(' class="bg"', '') + m.group(3), html)
     html = hero_checklist(html)
+    html = hero_seal(html)
+    html = trust_badges(html)
+    html = footer_seal(html)
+    html = footer_privacy(html)
     # The blog post had no site.js; every page needs the menu script.
     if 'assets/js/site.js' not in html:
         html = html.replace(
@@ -235,8 +535,7 @@ def transform(html):
 
 
 def main():
-    pages = sorted(f for f in os.listdir(REPO_ROOT)
-                   if f.endswith(".html") and f != "index.html")
+    pages = [f for f in site_pages(os.listdir(REPO_ROOT)) if f != "index.html"]
     changed = 0
     for name in pages:
         path = os.path.join(REPO_ROOT, name)
@@ -248,6 +547,21 @@ def main():
                 fh.write(updated)
             changed += 1
     print(f"{changed} of {len(pages)} pages updated")
+
+    # The homepage is hand-built, but its chrome must match every other
+    # page's: apply the nav rule alone, with in-page anchors, and never the
+    # version stamps (those five refs are hand-edited).
+    index = os.path.join(REPO_ROOT, "index.html")
+    with open(index, encoding="utf-8") as fh:
+        original = fh.read()
+    updated, n = NAV_RE.subn(lambda m: nav_markup(home=True), original, count=1)
+    if n != 1:
+        print("index.html: nav block not found")
+        return 1
+    if updated != original:
+        with open(index, "w", encoding="utf-8") as fh:
+            fh.write(updated)
+    print("index.html nav " + ("updated" if updated != original else "current"))
 
     leftovers = []
     for name in pages:

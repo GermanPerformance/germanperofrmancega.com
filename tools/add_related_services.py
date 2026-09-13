@@ -46,11 +46,14 @@ DEFAULT_TITLE = ("RELATED", "SERVICES")
 # closing quote never matched and every run appended another copy. Three
 # blocks had accumulated on 30 pages before it was noticed.
 MARKER = 'class="rel-grid'
+# The block and the closing section it sits above, as tools/apply_redesign.py
+# leaves them. The pre-redesign forms (inline styles) went unmatched for a
+# while, so this tool silently rewrote nothing on any page.
 BLOCK = re.compile(
-    r'<section style="background:var\(--carbon\)">\s*\n'
-    r'  <div class="fu"><div class="sl">Keep Your Car Right</div>.*?</section>\n',
+    r'<section>\s*\n'
+    r'  <div class="sh fu"><div class="sl">Keep Your Car Right</div>.*?</section>\n',
     re.S)
-ANCHOR = '<section style="background:var(--black);padding:80px 60px;text-align:center">'
+ANCHOR = '<section class="cta-final">'
 
 
 def build_block(page):
@@ -63,9 +66,9 @@ def build_block(page):
         for p in picks
     )
     return (
-        '<section style="background:var(--carbon)">\n'
-        '  <div class="fu"><div class="sl">Keep Your Car Right</div>\n'
-        f'  <h2>{lead}<br><span style="color:var(--red)">{accent}</span></h2></div>\n'
+        '<section>\n'
+        '  <div class="sh fu"><div class="sl">Keep Your Car Right</div>\n'
+        f'  <h2>{lead}<br><span class="accent">{accent}</span></h2></div>\n'
         '  <div class="rel-grid fu">\n'
         f'{cards}'
         '  </div>\n'
