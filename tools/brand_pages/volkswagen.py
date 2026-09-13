@@ -112,9 +112,9 @@ PAGES = (
 {
  "slug": "volkswagen-brake-service-snellville-ga.html",
  "brand": "Volkswagen",
- "h1": ("VOLKSWAGEN", "BRAKE", "SERVICE"),
- "title": "Volkswagen Brake Service Snellville GA | German Performance",
- "desc": ("Volkswagen brake service in Snellville, GA. Pads, rotors, electronic "
+ "h1": ("VOLKSWAGEN", "BRAKE", "REPAIR"),
+ "title": "Volkswagen Brake Repair Snellville GA | German Performance",
+ "desc": ("Volkswagen brake repair in Snellville, GA. Pads, rotors, electronic "
           "parking brake service mode, wear sensors and fluid flush. "
           "Call (678) 395-7459."),
  "sub": ("Volkswagen brake service in Snellville, GA — for the Golf, GTI, Golf R, "

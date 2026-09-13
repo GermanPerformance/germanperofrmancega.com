@@ -226,7 +226,7 @@ PAGES = (
 {
  "slug": "mercedes-cooling-system-snellville-ga.html",
  "brand": "Mercedes-Benz",
- "h1": ("MERCEDES", "COOLING", "SYSTEM"),
+ "h1": ("MERCEDES COOLING", "SYSTEM", "REPAIR"),
  "title": "Mercedes Cooling System Repair Snellville | German Performance",
  "desc": ("Mercedes-Benz cooling system repair in Snellville, GA. Thermostats, "
           "water pumps, auxiliary pumps, radiators and MB-spec coolant. "

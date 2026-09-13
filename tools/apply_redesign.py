@@ -36,6 +36,7 @@ Idempotent: running it twice changes nothing the second time.
 Run from the repo root:  python3 tools/apply_redesign.py
 """
 
+import datetime
 import functools
 import os
 import re
@@ -405,11 +406,42 @@ NAV = nav_markup(home=False)
 NAV_RE = re.compile(r'(?:<div class="topbar">.*?</div>\s*)?<nav>.*?</nav>'
                     r'(?:\s*<div id="mobile-menu">.*?</div>)?', re.S)
 
+# The footer's two fixed columns, the same on every page. The Services
+# column and the link row are the page's own (tools/fix_footer_links.py).
+MAPS_URL = "https://maps.google.com/?q=2144+Parkwood+Rd+NW+Snellville+GA+30078"
+FOOTER_CONTACT = ('<div class="fc"><div class="fct">Contact</div>'
+                  '<a href="tel:+16783957459">(678) 395-7459</a>'
+                  '<p>2144 Parkwood Rd NW</p><p>Snellville, GA 30078</p>'
+                  f'<a href="{MAPS_URL}" target="_blank" rel="noopener">Get directions</a>'
+                  '<p>Mon–Fri: 9:30 AM–6 PM</p></div>')
+FOOTER_NAVIGATE = ('<div class="fc"><div class="fct">Navigate</div>'
+                   '<a href="index.html">Home</a><a href="about.html">About</a>'
+                   '<a href="index.html#reviews">Reviews</a><a href="index.html#faq">FAQ</a>'
+                   '<a href="contact.html">Contact</a>'
+                   '<a href="dealer-vs-independent-german-car-repair.html">Dealer vs. Independent</a></div>')
+FOOTER_CONTACT_RE = re.compile(r'<div class="fc"><div class="fct">Contact</div>.*?</div>', re.S)
+FOOTER_NAVIGATE_RE = re.compile(r'<div class="fc"><div class="fct">Navigate</div>.*?</div>', re.S)
+FOOTER_YEAR_RE = re.compile(r'(<div class="fcopy">© )\d{4}( German Performance)')
+
+
+def footer_chrome(html, home=False):
+    """One Contact column, one Navigate column and this year's copyright
+    on every page. The pages no generator builds had kept whatever footer
+    they were uploaded with -- a 2025 date, no directions link -- beside
+    generated pages that had moved on. The homepage keeps its own Navigate
+    column, which links down its own document."""
+    html = FOOTER_CONTACT_RE.sub(lambda _: FOOTER_CONTACT, html, count=1)
+    if not home:
+        html = FOOTER_NAVIGATE_RE.sub(lambda _: FOOTER_NAVIGATE, html, count=1)
+    year = datetime.date.today().year
+    return FOOTER_YEAR_RE.sub(lambda m: f"{m.group(1)}{year}{m.group(2)}", html, count=1)
+
+
 FOOTER_COLUMNS = f'''  <div class="ft">
     <div><div class="fb">{LOGO_FOOT}</div><div class="ftag">German auto specialists<br>BMW · Mercedes · Audi · Porsche · VW</div></div>
-    <div class="fc"><div class="fct">Contact</div><a href="tel:+16783957459">(678) 395-7459</a><p>2144 Parkwood Rd NW</p><p>Snellville, GA 30078</p><p>Mon–Fri: 9:30 AM–6 PM</p></div>
+    {FOOTER_CONTACT}
     <div class="fc"><div class="fct">Services</div><a href="bmw-repair-snellville-ga.html">BMW Repair</a><a href="mercedes-repair-snellville-ga.html">Mercedes-Benz Repair</a><a href="audi-repair-snellville-ga.html">Audi Repair</a><a href="porsche-repair-snellville-ga.html">Porsche Repair</a><a href="volkswagen-repair-snellville-ga.html">Volkswagen Repair</a></div>
-    <div class="fc"><div class="fct">Navigate</div><a href="index.html">Home</a><a href="about.html">About</a><a href="index.html#reviews">Reviews</a><a href="index.html#faq">FAQ</a><a href="dealer-vs-independent-german-car-repair.html">Dealer vs. Independent</a></div>
+    {FOOTER_NAVIGATE}
   </div>'''
 
 # (pattern, replacement) pairs applied in order to every page.
@@ -525,6 +557,7 @@ def transform(html):
     html = trust_badges(html)
     html = footer_seal(html)
     html = footer_privacy(html)
+    html = footer_chrome(html)
     # The blog post had no site.js; every page needs the menu script.
     if 'assets/js/site.js' not in html:
         html = html.replace(
@@ -558,6 +591,7 @@ def main():
     if n != 1:
         print("index.html: nav block not found")
         return 1
+    updated = footer_chrome(updated, home=True)
     if updated != original:
         with open(index, "w", encoding="utf-8") as fh:
             fh.write(updated)

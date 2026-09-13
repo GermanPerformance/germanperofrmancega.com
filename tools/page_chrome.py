@@ -25,8 +25,6 @@ from fix_footer_links import build_blocks  # noqa: E402
 from service_catalog import hubs  # noqa: E402
 
 SITE = "https://germanperformancega.com"
-TEL = "tel:+16783957459"
-MAPS = "https://maps.google.com/?q=2144+Parkwood+Rd+NW+Snellville+GA+30078"
 FAVICON = '<link rel="icon" type="image/png" href="assets/img/favicon-144.png">'
 SHEETS = ("tokens", "werkstatt", "site")
 SCRIPTS = ("site", "analytics")
@@ -64,9 +62,9 @@ def footer_with(services_col, flinks):
     return f'''<footer>
   <div class="ft">
     <div><div class="fb">{redesign.LOGO_FOOT}</div><div class="ftag">German auto specialists<br>BMW · Mercedes · Audi · Porsche · VW</div>{redesign.footer_seal_markup()}</div>
-    <div class="fc"><div class="fct">Contact</div><a href="{TEL}">(678) 395-7459</a><p>2144 Parkwood Rd NW</p><p>Snellville, GA 30078</p><a href="{MAPS}" target="_blank" rel="noopener">Get directions</a><p>Mon–Fri: 9:30 AM–6 PM</p></div>
+    {redesign.FOOTER_CONTACT}
     {services_col}
-    <div class="fc"><div class="fct">Navigate</div><a href="index.html">Home</a><a href="about.html">About</a><a href="index.html#reviews">Reviews</a><a href="index.html#faq">FAQ</a><a href="contact.html">Contact</a><a href="dealer-vs-independent-german-car-repair.html">Dealer vs. Independent</a></div>
+    {redesign.FOOTER_NAVIGATE}
   </div>
   {flinks}
   <div class="fcopy">© {year} German Performance — Snellville, GA 30078{redesign.PRIVACY_LINK}</div>
