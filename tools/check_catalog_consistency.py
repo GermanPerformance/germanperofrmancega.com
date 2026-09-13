@@ -68,7 +68,7 @@ def name_pattern(slug):
 
 
 def h1_text(fragment):
-    text = re.sub(r"<br\s*/?>", " ", fragment)
+    text = re.sub(r"<br\b[^>]*>", " ", fragment)
     text = html.unescape(re.sub(r"<[^>]+>", "", text))
     return re.sub(r"\s+", " ", text).strip()
 

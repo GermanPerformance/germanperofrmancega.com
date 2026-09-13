@@ -66,8 +66,10 @@ h1, h2, h3,
   overflow-wrap: break-word;
 }
 
-/* Three display tiers and no more. */
-h1                          { font-size: var(--step-5); letter-spacing: -0.03em; line-height: 0.96; }
+/* Three display tiers and no more. The h1 tier is the hero headline: the
+   homepage set its scale, and every hero holds two lines inside the
+   container at that size (see .h1-br below). */
+h1                          { font-size: var(--step-hero); letter-spacing: -0.03em; line-height: 0.96; }
 h2                          { font-size: var(--step-4); text-wrap: balance; }
 .cbt                        { font-size: var(--step-3); }
 h3, .ct, .iv,
@@ -80,7 +82,9 @@ h3, .ct, .iv,
 #mobile-menu > a,
 #mobile-menu summary        { font-size: var(--step-2); }
 
-/* The hero stack is white / white / red. */
+/* The hero stack is white, then red. .outline is retired -- the generators'
+   three-line h1 is merged by apply_redesign.hero_h1() -- and goes with the
+   generator follow-up that stops emitting it. */
 .outline, h1 .outline { color: var(--white); -webkit-text-stroke: 0; }
 .accent, h1 .accent, h2 .accent { color: var(--red); }
 
@@ -557,7 +561,7 @@ nav.nav-up { transform: translateY(-100%); }
 
 .hc {
   position: relative;
-  max-width: 900px;
+  max-width: var(--container);
   margin: 0 auto;
   display: flex;
   flex-direction: column;
@@ -588,6 +592,17 @@ nav.nav-up { transform: translateY(-100%); }
 .eyebrow-highlight { color: var(--gold); font-weight: 600; }
 
 .hero h1 { margin-bottom: 22px; }
+
+/* Two lines on a wide screen: the white line, then the red one. The break
+   exists only from 900px, where the headline also holds the width axis at
+   100 rather than 118, so two lines of near-equal width sit inside the
+   container instead of one line stretched across it. A phone keeps its
+   natural wrap. index.html and apply_redesign.hero_h1() write the break. */
+.h1-br { display: none; }
+@media (min-width: 900px) {
+  .h1-br { display: inline; }
+  .hero h1 { font-variation-settings: 'wdth' 100; }
+}
 
 .sub {
   color: var(--light);

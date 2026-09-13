@@ -63,10 +63,12 @@
   --step-2:   clamp(1.5rem,  1.3rem  + 1vw,    2rem);
   --step-3:   clamp(2rem,    1.6rem  + 2vw,    3rem);
   --step-4:   clamp(2.4rem,  1.7rem  + 3.2vw,  4.2rem);
+  /* The steps rail's numerals from 960px (.step-n); no longer an h1 tier. */
   --step-5:   clamp(2.7rem,  1.6rem  + 5.4vw,  6.2rem);
-  /* Homepage hero only. From 900px the headline breaks after "Repair" and
-     narrows to wdth 100, so three lines of near-equal width sit inside the
-     container instead of one line stretched across it. */
+  /* Every hero h1 (werkstatt's h1 tier). The homepage set it: from 900px
+     the headline breaks once (.h1-br) and narrows to wdth 100, so two lines
+     of near-equal width sit inside the container instead of one line
+     stretched across it. */
   --step-hero: clamp(2.4rem, 5vw, 4.2rem);
   /* Editorial prose (Who We Are, the letter): one thought per line, read
      from arm's length, so it runs a step above body copy at every width. */

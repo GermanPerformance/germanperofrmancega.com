@@ -7,16 +7,17 @@
    -------------------------------------------------------------------------- */
 
 .hero-home { padding-bottom: 0; }
-.hero-home .hc { max-width: var(--container); }
 
-/* Three lines on desktop: two white lines, then the count. The number is
-   the focal point -- red and a step larger -- and its label matches the
-   headline, so no red block dominates the hero. The count is a paragraph
-   after the <h1>, not part of it, so the heading search engines index is
-   "German Auto Repair Shop in Snellville, GA" and nothing else; it is set
-   in the heading's own type so the three lines still read as one poster.
-   The h1's bottom margin moves onto the count line, which is now last. */
-.hero-home h1 { font-size: var(--step-hero); margin-bottom: 0; }
+/* Three lines on desktop: the h1's two white lines, then the count. The
+   number is the focal point -- red and a step larger -- and its label
+   matches the headline, so no red block dominates the hero. The count is
+   a paragraph after the <h1>, not part of it, so the heading search
+   engines index is "German Auto Repair Shop in Snellville, GA" and nothing
+   else; it is set in the heading's own type (the h1 tier and the .h1-br
+   break are werkstatt's now, shared by every hero) so the three lines
+   still read as one poster. The h1's bottom margin moves onto the count
+   line, which is now last. */
+.hero-home h1 { margin-bottom: 0; }
 .hero-home .count-line {
   display: block; max-width: none; margin: 0.12em 0 22px;
   font-family: var(--font-display);
@@ -28,14 +29,9 @@
 .hero-home .count { color: var(--red); font-size: calc(var(--step-hero) * 1.12); }
 .hero-home .count-label { white-space: nowrap; }
 
-/* The break after "Repair" exists only on wide screens; a phone keeps its
-   natural wrap. From 900px, where the width axis would otherwise jump to
-   118, the headline holds at 100 instead, so the three lines read as a
-   poster rather than a banner stretched across the container. */
-.h1-br { display: none; }
+/* The count line follows the h1 onto width 100 from 900px. */
 @media (min-width: 900px) {
-  .h1-br { display: inline; }
-  .hero-home h1, .hero-home .count-line { font-variation-settings: 'wdth' 100; }
+  .hero-home .count-line { font-variation-settings: 'wdth' 100; }
 }
 
 .hero-media {

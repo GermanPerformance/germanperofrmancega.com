@@ -29,9 +29,6 @@
   max-width: var(--container);
   margin: 0 auto;
 }
-.two h2 { margin-bottom: 18px; }
-.two .sl::after { display: none; }
-.two .sl::before { margin-left: 0; }
 .two .sd { margin-left: 0; }
 @media (min-width: 960px) {
   .two { grid-template-columns: 1fr 1fr; gap: 64px; align-items: center; }
@@ -125,16 +122,20 @@ section .rel-grid + .flinks { margin-top: 28px; }
    The hero H1 is "{service} in" over "Snellville, GA", and its first line
    must never wrap. The generator writes that line's width in em, measured
    at width-axis 100, as --h1-em on the h1; --h1-k is the width-axis factor
-   at each breakpoint, mirroring the --wdth-display steps at the end of
-   werkstatt.css (118 / 104 / 90 / 82 measure 1.189 / 1.042 / 0.907 / 0.833
-   of width 100). The size is the display h1 whenever the line fits the
-   hero column and shrinks no further than --step-3; a browser without
-   container units keeps werkstatt's h1 size.
+   at each breakpoint. From 900px every hero h1 holds width 100 (werkstatt's
+   .hero h1 rule), so the factor is 1 there; below, it mirrors the
+   --wdth-display steps at the end of werkstatt.css (104 / 90 / 82 measure
+   1.042 / 0.907 / 0.833 of width 100). The size is the hero h1 tier
+   whenever the line fits the hero column and shrinks no further than
+   --step-3 (or the tier itself, which is the smaller of the two between
+   about 700 and 900px); a browser without container units keeps
+   werkstatt's h1 size.
    -------------------------------------------------------------------------- */
-.hero-svc .hc { max-width: var(--container); container-type: inline-size; }
+.hero-svc .hc { container-type: inline-size; }
 .hero-svc h1 {
-  --h1-k: 1.189;
-  font-size: clamp(var(--step-3), calc(100cqi / (var(--h1-em) * var(--h1-k))), var(--step-5));
+  --h1-k: 1;
+  font-size: clamp(min(var(--step-3), var(--step-hero)),
+                   calc(100cqi / (var(--h1-em) * var(--h1-k))), var(--step-hero));
 }
 @media (max-width: 900px) { .hero-svc h1 { --h1-k: 1.042; } }
 @media (max-width: 700px) { .hero-svc h1 { --h1-k: 0.907; } }

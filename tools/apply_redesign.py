@@ -30,6 +30,10 @@ new system:
     404's) and, linked to the CARFAX page, under the footer tagline
   * the review copy leads with the CARFAX rating and the years in
     business; Google keeps the review count, never the other way round
+  * the hero headline runs two lines at the homepage's size -- the
+    generators' three stacked words merge into a white line and a red one
+    -- and the "Why German Performance" header leaves the half-width .two
+    column for a centred .sh above the grid, like the landing pages
 
 Idempotent: running it twice changes nothing the second time.
 
@@ -48,7 +52,7 @@ from service_catalog import GROUPS, HUBS  # noqa: E402
 from redirects import site_pages  # noqa: E402
 
 REPO_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-VERSION = "29"
+VERSION = "30"
 
 # The typefaces are served from assets/fonts/ (see tools/build_fonts.py):
 # the @font-face rules are the first stylesheet, so the browser asks for
@@ -239,6 +243,78 @@ def hero_seal(html):
     start, end = hero.start() + checks.start(), hero.start() + checks.end()
     return (html[:start] + '<div class="hero-proof">\n    ' + hero_seal_markup() + '\n    '
             + html[start:end] + '\n    </div>' + html[end:])
+
+
+# The generators write the hero headline as three stacked lines, white /
+# white / red. The homepage sets the tier: two lines, the red one last,
+# broken only from 900px (.h1-br) and wrapping naturally below. The first
+# two lines merge and the third stays red. The words never change: the
+# consistency checker compares the h1's text with the catalog name.
+H1_RE = re.compile(
+    r'<h1 class="fu">([^<]+)<br><span class="outline">([^<]+)</span>'
+    r'(?:<br><span class="accent">([^<]+)</span>)?</h1>')
+
+# Hand-chosen splits where the mechanical "A B / C" merge would leave a
+# one-word red line under a long white one. Keyed by the three lines as
+# written in the markup (entities included); the value is (white, red).
+H1_SPLITS = {
+    ("GERMAN CAR", "TUNE-UP", "SERVICE"): ("GERMAN CAR", "TUNE-UP SERVICE"),
+    ("GERMAN CAR", "TRANSMISSION", "REPAIR"): ("GERMAN CAR", "TRANSMISSION REPAIR"),
+}
+
+
+# The space after the break is the phone's word space: below 900px the
+# break is display:none and the two lines run together without it; from
+# 900px a space at the start of a line collapses. index.html does the same.
+H1_BR = '<br class="h1-br"> '
+H1_BR_RE = re.compile(r'(<h1 class="fu">[^<]+<br class="h1-br">)(?=\S)')
+
+
+def h1_markup(white, red=None):
+    """The two-line hero headline; a red second line when there is one.
+
+    An ampersand opening the red line stays with its word ("& SERVICE"),
+    or a tablet wraps the line as "REPAIR &" / "SERVICE".
+    """
+    tail = f'<span class="accent">{red.replace("&amp; ", "&amp;&nbsp;")}</span>' if red else ""
+    return f'<h1 class="fu">{white}{H1_BR}{tail}</h1>'
+
+
+def hero_h1(html):
+    """Merge the three-line hero headline into the homepage's two-line form.
+
+    The 404's two-line "WRONG / TURN" keeps both words white and takes the
+    responsive break. A page already in the two-line form (the landing
+    pages, or a page this has run on) has no .outline span and is left
+    alone, so the pass is idempotent.
+    """
+    def merge(m):
+        a, b, c = m.groups()
+        if c is None:
+            return f'<h1 class="fu">{a}{H1_BR}{b}</h1>'
+        white, red = H1_SPLITS.get((a, b, c), (f"{a} {b}", c))
+        return h1_markup(white, red)
+    html = H1_RE.sub(merge, html, count=1)
+    return H1_BR_RE.sub(r'\1 ', html, count=1)
+
+
+# The service pages set the "Why German Performance" label and title inside
+# the left column of the .two grid, where an eleven-letter word in the wide
+# display face is wider than the 400-568px column from 960px and breaks
+# mid-word. The landing pages put that header in a centred .sh above the
+# grid; every page now does. Figure-first and .sh-first blocks don't match.
+TWO_HEAD_RE = re.compile(
+    r'^([ \t]*)<div class="two fu">\n[ \t]*<div>\n'
+    r'[ \t]*<div class="sl">([^\n]*?)</div>\n[ \t]*(<h2>[^\n]*?</h2>)\n', re.M)
+
+
+def two_heading(html):
+    """Lift the .two column's label and title into a .sh above the grid."""
+    def lift(m):
+        indent, label, h2 = m.groups()
+        return (f'{indent}<div class="sh fu"><div class="sl">{label}</div>{h2}</div>\n'
+                f'{indent}<div class="two fu">\n{indent}  <div>\n')
+    return TWO_HEAD_RE.sub(lift, html)
 
 
 def footer_seal(html):
@@ -554,6 +630,8 @@ def transform(html):
         lambda m: m.group(1) + m.group(2).replace(' class="bg"', '') + m.group(3), html)
     html = hero_checklist(html)
     html = hero_seal(html)
+    html = hero_h1(html)
+    html = two_heading(html)
     html = trust_badges(html)
     html = footer_seal(html)
     html = footer_privacy(html)

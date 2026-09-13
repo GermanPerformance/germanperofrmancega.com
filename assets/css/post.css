@@ -3,7 +3,7 @@
    reading measure, and a manual's ruled headings.
    ========================================================================== */
 
-main { padding-top: calc(var(--nav-h) + clamp(40px, 6vw, 72px)); }
+main { padding-top: calc(var(--topbar-h) + var(--nav-h) + clamp(40px, 6vw, 72px)); }
 .wrap { max-width: 720px; margin: 0 auto; padding: 0 var(--gutter); }
 
 .wrap > .eyebrow { display: block; text-align: center; }
