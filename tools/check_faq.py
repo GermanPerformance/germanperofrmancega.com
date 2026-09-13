@@ -31,8 +31,11 @@ QUESTION_BTN_RE = re.compile(
 # Marques, so we can flag a page describing a brand it does not serve.
 BRANDS = {"bmw": "BMW", "mercedes": "Mercedes", "audi": "Audi",
           "porsche": "Porsche", "volkswagen": "VW"}
+# "VW 502 00", "VW 504 00", "VW 507 00" and "VW 508 00" are the names of the
+# oil standards every Volkswagen Group engine is approved for, so an Audi
+# page has to say them; that is the standard's name, not another marque.
 BRAND_PATTERNS = {"BMW": r"\bBMW\b", "Mercedes": r"Mercedes", "Audi": r"\bAudi\b",
-                  "Porsche": r"Porsche", "VW": r"\bVW\b|Volkswagen"}
+                  "Porsche": r"Porsche", "VW": r"\bVW\b(?!\s*50[2478]\s*00)|Volkswagen"}
 
 
 def visible_questions(content):
