@@ -2,11 +2,12 @@
    Service, hub and 404 pages -- loads after werkstatt.css.
    ========================================================================== */
 
-/* Breadcrumb sits in the band under the nav; the hero follows it. */
+/* Breadcrumb sits in the band under the phone bar and the nav, both
+   fixed; the hero follows it. */
 .breadcrumb {
   position: relative;
   z-index: 1;
-  padding: calc(var(--nav-h) + 20px) var(--edge) 0;
+  padding: calc(var(--topbar-h) + var(--nav-h) + 20px) var(--edge) 0;
   display: flex;
   justify-content: center;
   flex-wrap: wrap;
@@ -116,6 +117,8 @@ section .flinks a, .link-row a {
   transition: color .18s var(--ease), border-color .18s var(--ease);
 }
 section .flinks a:hover, .link-row a:hover { color: var(--gold); border-color: var(--gold); }
+/* Under a card grid (a make page's parents row) the row needs air. */
+section .rel-grid + .flinks { margin-top: 28px; }
 
 /* --------------------------------------------------------------------------
    Service landing pages (tools/build_landing_pages.py).

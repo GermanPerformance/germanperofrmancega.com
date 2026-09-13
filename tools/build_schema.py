@@ -274,11 +274,38 @@ def social_image(content):
     return m.group(1).strip() if m else None
 
 
+CRUMB_BLOCK_RE = re.compile(r'<div class="breadcrumb">(.*?)</div>', re.S)
+CRUMB_STEP_RE = re.compile(r'<a href="([^"]+)">([^<]+)</a>|<span[^>]*>([^<]+)</span>\s*$')
+
+
+def visible_trail(content):
+    """The page's own breadcrumb, so schema matches what it renders:
+    ((label, href), ...) with the page itself last and without an href.
+    Home / BMW Repair / BMW Oil Change on a make's page, two steps on a
+    hub or a make-agnostic page, nothing on a page with no crumb."""
+    block = CRUMB_BLOCK_RE.search(content)
+    if not block:
+        return ()
+    steps = []
+    for href, linked, here in CRUMB_STEP_RE.findall(block.group(1)):
+        label = html.unescape((linked or here).strip())
+        steps.append((label, href or None))
+    return tuple(steps)
+
+
 def visible_crumb(content):
-    """The service page's own breadcrumb label, so schema matches the page."""
-    m = re.search(r'<div class="breadcrumb">.*?<span[^>]*>([^<]+)</span>\s*</div>',
-                  content, re.S)
-    return html.unescape(m.group(1).strip()) if m else ""
+    """The page's own label: the last step of its trail."""
+    trail = visible_trail(content)
+    return trail[-1][0] if trail else ""
+
+
+def trail_items(content, url):
+    """BreadcrumbList items for the page: every linked step at its own URL,
+    then the page itself."""
+    steps = visible_trail(content) or (("Home", "index.html"), ("", None))
+    linked = [(label, f"{SITE}/" if href == "index.html" else f"{SITE}/{href}")
+              for label, href in steps[:-1]]
+    return linked + [(steps[-1][0], url)]
 
 
 LD_RE = re.compile(r'\s*<script type="application/ld\+json">.*?</script>', re.S)
@@ -330,7 +357,7 @@ def main():
         else:
             crumb = visible_crumb(content)
             graph.append(service_entity(url, title, description, crumb, image))
-            trail = breadcrumbs([("Home", f"{SITE}/"), (crumb, url)])
+            trail = breadcrumbs(trail_items(content, url))
             graph[2]["breadcrumb"] = {"@id": trail["@id"]}
             graph.append(trail)
             faq = visible_faq(content)

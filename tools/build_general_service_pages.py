@@ -53,7 +53,6 @@ PAGES = [
  "desc": ("German auto repair in Snellville, GA for BMW, Mercedes, Audi, "
           "Porsche and VW: factory diagnostics, engine, electrical and "
           "suspension. Call (678) 395-7459."),
- "crumb": "German Auto Repair — Snellville, GA",
  "sub": (f"Repair and service for {MAKES} in Snellville, GA. Diagnosis on the "
          "factory software for your make, a written estimate before any part "
          "is ordered, and the work done to the specification the car was "
@@ -151,7 +150,6 @@ PAGES = [
  "desc": ("German car transmission repair in Snellville, GA: fluid and filter "
           "service, mechatronic and valve body faults, DSG and PDK work. "
           "Call (678) 395-7459."),
- "crumb": "German Car Transmission Repair — Snellville, GA",
  "sub": (f"Transmission service and repair for {MAKES} in Snellville, GA. "
          "Fluid and filter at the real interval, the electronic faults that "
          "cause most complaints, and the adaptations that make a repair feel "
@@ -254,7 +252,6 @@ PAGES = [
  "desc": ("German car oil change in Snellville, GA: approved oil, OEM filter "
           "and a service reset for BMW, Mercedes, Audi, Porsche and VW. "
           "Call (678) 395-7459."),
- "crumb": "German Car Oil Change — Snellville, GA",
  "sub": (f"Oil service for {MAKES} in Snellville, GA. The oil carrying the "
          "approval your engine lists, an OEM filter with new seals, the level "
          "checked the way the car requires, and the reminder reset through "

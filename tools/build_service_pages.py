@@ -31,6 +31,9 @@ import os
 import re
 import sys
 
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+from fix_breadcrumbs import breadcrumb  # noqa: E402
+
 REPO_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SITE = "https://germanperformancega.com"
 
@@ -48,7 +51,6 @@ PAGES = [
  "desc": ("Porsche oil change in Snellville, GA. A40 and C-spec approved oil, "
           "correct dry-sump fill, cartridge filter and PIWIS service reset. "
           "Call (678) 395-7459."),
- "crumb": "Porsche Oil Change — Snellville, GA",
  "sub": ("Porsche oil service in Snellville, GA — for the 911, Boxster, Cayman, "
          "Macan, Cayenne and Panamera. Approved oil for your exact model and "
          "year, the correct fill for a dry-sump engine, and a service reset "
@@ -148,7 +150,6 @@ PAGES = [
  "desc": ("Porsche suspension repair in Snellville, GA. Cayenne and Panamera air "
           "suspension, PASM dampers, control arms and alignment to factory spec. "
           "Call (678) 395-7459."),
- "crumb": "Porsche Suspension Repair — Snellville, GA",
  "sub": ("Porsche suspension work in Snellville, GA — air suspension on the "
          "Cayenne and Panamera, PASM dampers, control arms and bushings, and "
          "alignment to Porsche's own specification rather than a generic "
@@ -246,7 +247,6 @@ PAGES = [
  "desc": ("Volkswagen brake service in Snellville, GA. Pads, rotors, electronic "
           "parking brake service mode, wear sensors and fluid flush. "
           "Call (678) 395-7459."),
- "crumb": "Volkswagen Brake Service — Snellville, GA",
  "sub": ("Volkswagen brake service in Snellville, GA — for the Golf, GTI, Golf R, "
          "Jetta, Passat, Tiguan, Atlas and Arteon. Including the electronic "
          "parking brake procedure that rear brakes on most modern VWs cannot be "
@@ -341,7 +341,6 @@ PAGES = [
  "desc": ("Mercedes-Benz cooling system repair in Snellville, GA. Thermostats, "
           "water pumps, auxiliary pumps, radiators and MB-spec coolant. "
           "Call (678) 395-7459."),
- "crumb": "Mercedes Cooling System — Snellville, GA",
  "sub": ("Mercedes-Benz cooling system diagnosis and repair in Snellville, GA — "
          "for the C-Class, E-Class, S-Class, GLC, GLE, GLS and Sprinter. "
          "Pressure-tested first, so the part we replace is the one that "
@@ -536,7 +535,7 @@ def build(page, sk):
 {sk['nav']}
 {sk['mob']}
 <main>
-<div class="breadcrumb"><a href="index.html">Home</a><span>/</span><span style="color:var(--silver)">{page['crumb']}</span></div>
+{breadcrumb(page['slug'])}
 <section class="hero"><div class="hbg"></div><div class="hgrid"></div>
   <div class="hc">
     <div class="eyebrow fu">{page['brand']} Specialists &nbsp;·&nbsp; Snellville, GA &nbsp;·&nbsp;<span class="eyebrow-highlight">4.5★ Rated</span></div>

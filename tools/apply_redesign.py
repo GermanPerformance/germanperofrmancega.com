@@ -47,7 +47,7 @@ from service_catalog import GROUPS, HUBS  # noqa: E402
 from redirects import site_pages  # noqa: E402
 
 REPO_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-VERSION = "28"
+VERSION = "29"
 
 # The typefaces are served from assets/fonts/ (see tools/build_fonts.py):
 # the @font-face rules are the first stylesheet, so the browser asks for

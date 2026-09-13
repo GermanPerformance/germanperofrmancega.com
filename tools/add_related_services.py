@@ -29,12 +29,35 @@ import sys
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from fix_footer_links import SERVICES, brand_of, related  # noqa: E402
-from service_catalog import MAKES  # noqa: E402
+from service_catalog import (MAKES, full_label, hub_for, hubs, make_of,  # noqa: E402
+                             service_of, service_pages)
 
 REPO_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 BRAND_TITLES = {m.key: (f"MORE {m.short.upper()}", "SERVICES") for m in MAKES}
 DEFAULT_TITLE = ("RELATED", "SERVICES")
+_SHORT = {m.key: m.short for m in MAKES}
+_HUB_LABELS = dict(hubs())
+
+
+def generic_page_for(service):
+    """The make-agnostic page for a job, if the site has one."""
+    return next((p for p in service_pages()
+                 if make_of(p) is None and service_of(p) == service), None)
+
+
+def parents_row(page):
+    """On a make's page, the two places it belongs: every job the shop does
+    on that make, and the same job for every make. Reuses the footer's
+    link-row class, as the hubs do for their sister makes."""
+    hub = hub_for(page)
+    if hub is None:
+        return ""
+    links = [f'<a href="{hub}">All {_SHORT[make_of(page)]} services</a>']
+    generic = generic_page_for(service_of(page))
+    if generic:
+        links.append(f'<a href="{generic}">{full_label(generic)}</a>')
+    return '  <div class="flinks fu">' + "".join(links) + "</div>\n"
 
 
 # The block this writes carries class="rel-grid fu", so a marker with the
@@ -67,6 +90,7 @@ def build_block(page):
         '  <div class="rel-grid fu">\n'
         f'{cards}'
         '  </div>\n'
+        f'{parents_row(page)}'
         '</section>\n'
     )
 
