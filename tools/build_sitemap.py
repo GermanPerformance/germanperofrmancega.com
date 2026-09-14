@@ -18,6 +18,9 @@ is listed as an image-sitemap entry so Google Images can associate the
 shop's service photos with the page they illustrate. The site-wide fallback
 card is skipped: it says nothing about any one page.
 
+sitemap.xsl (hand-written, at the repo root) styles the file when a person
+opens it in a browser; search engines ignore the stylesheet instruction.
+
 Run from the repo root:  python3 tools/build_sitemap.py
 """
 
@@ -92,6 +95,15 @@ def page_image(html):
     return m.group(1)
 
 
+def header():
+    """XML declaration, the browser-only stylesheet hint, and the root
+    element with both namespaces."""
+    return ['<?xml version="1.0" encoding="UTF-8"?>',
+            '<?xml-stylesheet type="text/xsl" href="/sitemap.xsl"?>',
+            '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"',
+            '        xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">']
+
+
 def url_entry(url, date, image):
     """The <url> block for one page, XML-escaped."""
     lines = ["  <url>", f"    <loc>{escape(url)}</loc>",
@@ -123,9 +135,7 @@ def main():
     # Homepage first, then the rest alphabetically.
     urls.sort(key=lambda u: (u[0] != f"{SITE}/", u[0]))
 
-    lines = ['<?xml version="1.0" encoding="UTF-8"?>',
-             '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"',
-             '        xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">']
+    lines = header()
     for url, date, image in urls:
         lines += url_entry(url, date, image)
     lines.append("</urlset>")

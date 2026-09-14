@@ -69,5 +69,21 @@ class UrlEntry(unittest.TestCase):
         self.assertIn("    <loc>https://germanperformancega.com/a&amp;b.html</loc>", lines)
 
 
+class Header(unittest.TestCase):
+    """A browser opening sitemap.xml renders it through sitemap.xsl, so the
+    owner sees a readable table instead of a raw tree. Crawlers ignore the
+    processing instruction and read the same XML."""
+
+    def test_stylesheet_instruction_follows_the_xml_declaration(self):
+        lines = build_sitemap.header()
+        self.assertEqual(lines[0], '<?xml version="1.0" encoding="UTF-8"?>')
+        self.assertEqual(lines[1],
+                         '<?xml-stylesheet type="text/xsl" href="/sitemap.xsl"?>')
+
+    def test_image_namespace_is_declared(self):
+        self.assertTrue(any('xmlns:image="http://www.google.com/schemas/sitemap-image/1.1"'
+                            in l for l in build_sitemap.header()))
+
+
 if __name__ == "__main__":
     unittest.main()
