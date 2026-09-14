@@ -33,5 +33,41 @@ class ChooseDate(unittest.TestCase):
                          "2026-09-12")
 
 
+class PageImage(unittest.TestCase):
+    """A page's og:image is listed in the image sitemap, unless it is the
+    site-wide fallback card, which says nothing about the page."""
+
+    def test_page_specific_image_is_listed(self):
+        html = '<meta property="og:image" content="https://germanperformancega.com/assets/img/services/brake-repair-1100.jpg">'
+        self.assertEqual(build_sitemap.page_image(html),
+                         "https://germanperformancega.com/assets/img/services/brake-repair-1100.jpg")
+
+    def test_site_fallback_card_is_not_listed(self):
+        html = '<meta property="og:image" content="https://germanperformancega.com/og-image.jpg">'
+        self.assertIsNone(build_sitemap.page_image(html))
+
+    def test_page_without_image_lists_none(self):
+        self.assertIsNone(build_sitemap.page_image("<html></html>"))
+
+
+class UrlEntry(unittest.TestCase):
+    def test_entry_with_image_carries_image_extension(self):
+        lines = build_sitemap.url_entry("https://germanperformancega.com/x.html",
+                                        "2026-09-14",
+                                        "https://germanperformancega.com/a.jpg")
+        self.assertIn("    <image:image>", lines)
+        self.assertIn("      <image:loc>https://germanperformancega.com/a.jpg</image:loc>", lines)
+
+    def test_entry_without_image_has_no_image_block(self):
+        lines = build_sitemap.url_entry("https://germanperformancega.com/x.html",
+                                        "2026-09-14", None)
+        self.assertFalse(any("image" in l for l in lines))
+
+    def test_ampersand_in_url_is_escaped(self):
+        lines = build_sitemap.url_entry("https://germanperformancega.com/a&b.html",
+                                        "2026-09-14", None)
+        self.assertIn("    <loc>https://germanperformancega.com/a&amp;b.html</loc>", lines)
+
+
 if __name__ == "__main__":
     unittest.main()

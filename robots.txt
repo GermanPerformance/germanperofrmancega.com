@@ -1,23 +1,27 @@
 # German Performance -- germanperformancega.com
+#
+# Everything a visitor can reach is crawlable: the pages, the photographs
+# under /assets/img/ and /images/, the fonts and stylesheets a renderer
+# needs, llms.txt, and the seven redirect stubs (a crawler must fetch a
+# stub to see where it now points). Only build tooling and internal
+# working notes are held back; they are not site content.
+#
+# AI answer engines are listed by name because a local shop wants to be
+# citable in AI results and llms.txt depends on them being able to crawl.
+# A named group replaces the wildcard for that crawler, so each named
+# crawler shares the wildcard's rules rather than inheriting them.
 
 User-agent: *
-Allow: /
-
-# Build tooling and source images are not content.
-Disallow: /tools/
-Disallow: /images/
-
-# AI answer engines: a local shop wants to be citable in AI results.
 User-agent: GPTBot
-Allow: /
-
 User-agent: OAI-SearchBot
-Allow: /
-
+User-agent: ChatGPT-User
 User-agent: ClaudeBot
-Allow: /
-
+User-agent: Claude-SearchBot
 User-agent: PerplexityBot
+User-agent: Google-Extended
+User-agent: Applebot
 Allow: /
+Disallow: /tools/
+Disallow: /german-performance-gbp-categories-services.md
 
 Sitemap: https://germanperformancega.com/sitemap.xml
