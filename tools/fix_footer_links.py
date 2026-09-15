@@ -19,8 +19,9 @@ import sys
 
 REPO_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
-from service_catalog import (GROUPS, full_label, make_of, ranking_group,  # noqa: E402
-                             service_of, service_pages)
+from service_catalog import (GENERIC_GROUP, GROUPS, HOME, HOME_LABEL,  # noqa: E402
+                             full_label, make_of, ranking_group, service_of,
+                             service_pages)
 from urls import href_for  # noqa: E402
 
 # Every non-hub page and the name it carries in a mixed list, in catalog
@@ -29,16 +30,24 @@ from urls import href_for  # noqa: E402
 # related() keeps it, so the footer reads the way the menu does.
 SERVICES = {p: full_label(p) for p in service_pages()}
 
+# Every page a block may link to: the service pages, and the homepage as
+# the general repair page. Only SERVICES get a block written.
+TARGETS = {HOME: HOME_LABEL, **SERVICES}
+
 # Pages that apply to every marque -- used as the fallback tier.
-UNIVERSAL = [h for h, _ in dict(GROUPS)["All German Makes"]]
+UNIVERSAL = [HOME] + [h for h, _ in dict(GROUPS)[GENERIC_GROUP]]
 
 
 def brand_of(filename):
     """The make's key, or "german-car" for a make-agnostic page."""
+    if filename == HOME:
+        return "german-car"
     return make_of(filename) or "german-car"
 
 
 def category_of(filename):
+    if filename == HOME:
+        return ranking_group("repair")
     return ranking_group(service_of(filename))
 
 
@@ -51,7 +60,7 @@ def related(page, limit=8):
     other general pages.
     """
     brand, category = brand_of(page), category_of(page)
-    others = [p for p in SERVICES if p != page]
+    others = [p for p in TARGETS if p != page]
 
     same_brand = [p for p in others if brand_of(p) == brand]
     same_service = [p for p in others if category_of(p) == category and p not in same_brand]
@@ -71,14 +80,14 @@ def related(page, limit=8):
 def build_blocks(page):
     """Return the replacement footer 'Services' column and .flinks row."""
     picks = related(page)
-    column = "".join(f'<a href="{href_for(p)}">{SERVICES[p]}</a>' for p in picks[:3])
+    column = "".join(f'<a href="{href_for(p)}">{TARGETS[p]}</a>' for p in picks[:3])
     services_col = (
         '<div class="fc"><div class="fct">Services</div>'
         '<a href="/#services">All Services</a>'
         f"{column}</div>"
     )
     flinks = '<div class="flinks">' + "".join(
-        f'<a href="{href_for(p)}">{SERVICES[p]}</a>' for p in picks[3:8]
+        f'<a href="{href_for(p)}">{TARGETS[p]}</a>' for p in picks[3:8]
     ) + "</div>"
     return services_col, flinks
 

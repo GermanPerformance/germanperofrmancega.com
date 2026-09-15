@@ -16,10 +16,11 @@ count as services: the "Brake shop" category is answered by the brake page.
 # Hand-written pages, until each is rebuilt on the framework. An entry
 # here and in landing_pages.PAGES for the same file is an error.
 LEGACY = {
-    # make-agnostic pages
-    "german-car-repair-snellville-ga.html": (
+    # the homepage: the profile's primary category and the shop's own trade
+    "index.html": (
         "Auto repair shop", "Mechanic", "Car repair and maintenance service",
         "German auto repair", "German car mechanic", "German car speciaist"),
+    # make-agnostic pages
     "german-car-transmission-repair-snellville-ga.html": (
         "Transmission shop", "Transmission", "Transmission repair",
         "Transmission replacement"),

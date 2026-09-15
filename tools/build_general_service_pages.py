@@ -1,17 +1,18 @@
 #!/usr/bin/env python3
-"""Build three of the make-agnostic category pages the homepage cards link to.
+"""Build two of the make-agnostic category pages the homepage cards link to.
 
 The brake page moved to tools/build_landing_pages.py, the framework every
-category page will migrate to; the three here follow it in turn.
+category page will migrate to; the two here follow it in turn.
 
 The Google Business Profile lists the shop under auto repair, brake shop,
 transmission shop and oil change service, and until now the site had a
 page for each of those only per make (bmw-transmission-repair, and so on).
-These four cover the job for every make the shop works on, the way the
-existing tune-up and AC pages already do:
+These cover the job for every make the shop works on, the way the
+existing tune-up and AC pages already do. The primary category, auto
+repair, is the homepage: the general repair page was deleted on
+2026-09-15 (its "What We Repair" grid and two FAQs moved there), and the
+pages that linked to it link to / instead.
 
-    german-car-repair               the primary category, and the page a
-                                    search for the shop's own trade lands on
     german-car-transmission-repair  the money service with no general page
     german-car-oil-change           the most common job anyone books
 
@@ -44,103 +45,6 @@ MAKES = "BMW, Mercedes-Benz, Audi, Porsche and Volkswagen"
 MARQUE_RE = re.compile(r"BMW|Mercedes|Audi|Porsche|Volkswagen|\bVW\b")
 
 PAGES = [
-{
- "slug": "german-car-repair-snellville-ga.html",
- "brand": BRAND, "marque": None,
- "h1": ("GERMAN AUTO", "REPAIR", "&amp; SERVICE"),
- "title": "German Auto Repair Snellville GA | German Performance",
- "desc": ("German auto repair in Snellville, GA for BMW, Mercedes, Audi, "
-          "Porsche and VW: factory diagnostics, engine, electrical and "
-          "suspension. Call (678) 395-7459."),
- "sub": (f"Repair and service for {MAKES} in Snellville, GA. Diagnosis on the "
-         "factory software for your make, a written estimate before any part "
-         "is ordered, and the work done to the specification the car was "
-         "built to."),
- "cards_head": ("WHAT WE", "REPAIR"),
- "cards_sub": ("A German car tells you what is wrong in more detail than most, "
-               "if the tools can read it. Every repair here starts by reading "
-               "the car properly, and ends with the fault gone rather than the "
-               "light off."),
- "cards": [
-   ("Factory-Level Diagnostics",
-    "ISTA for BMW, XENTRY for Mercedes-Benz, ODIS for Audi and Volkswagen, "
-    "PIWIS for Porsche. A generic scanner reads the engine module and little "
-    "else; the factory software reads every control unit on the car, with the "
-    "live data and the guided tests that come with it."),
-   ("Engine Repair",
-    "Oil leaks from valve cover, oil filter housing and timing cover gaskets, "
-    "timing chain guides, PCV valves, water pumps, high-pressure fuel pumps "
-    "and injectors. The failures on each engine family are well documented, "
-    "and so are the right parts to fix them."),
-   ("Electrical and Module Faults",
-    "Battery and charging faults, wiring and connector damage, failed control "
-    "modules and the coding and programming that follow a replacement. A new "
-    "module on a modern German car is not working until it is coded to the "
-    "vehicle."),
-   ("Cooling System",
-    "Plastic radiators, expansion tanks, thermostats and electric water pumps "
-    "age on a schedule. We pressure-test the system, find the leak rather than "
-    "guess at it, and replace what has failed with OEM or OEM-equivalent "
-    "parts."),
-   ("Suspension and Steering",
-    "Control arm bushings, ball joints, tie rods, shocks, struts and air "
-    "suspension components, then a four-wheel alignment to the factory "
-    "specification once the parts are in. Worn bushings are the most common "
-    "cause of the clunks and wander owners report."),
-   ("Drivetrain and Differential",
-    "Driveshaft center bearings and flex discs, CV axles and boots, "
-    "differential and transfer case fluid services and seals. Fluids the "
-    "manufacturer once called lifetime still wear, and the units they protect "
-    "are expensive to replace."),
- ],
- "why_head": ("REPAIRED THE WAY", "IT WAS BUILT"),
- "why_lead": ("Most bad experiences with German car repair come from a shop "
-              "treating the car like any other. It is not. The tools, the "
-              "specifications and the parts are specific, and following them "
-              "is the difference between a repair that holds and one that "
-              "comes back."),
- "why_points": [
-   f"Factory diagnostic software for {MAKES}",
-   "OEM or OEM-equivalent parts, matched to the chassis and build date",
-   "A written estimate before work starts, and a call before anything changes",
-   "Torque specifications and one-time-use fasteners followed as the manufacturer publishes them",
-   "Fluids to the approval the manufacturer lists, never a generic equivalent",
-   "A one-year service warranty on the work we perform",
- ],
- "faq_head": ("GERMAN AUTO REPAIR", "FAQ"),
- "faqs": [
-   ("Do you work on all German makes?",
-    "Yes. BMW and MINI, Mercedes-Benz, Audi, Porsche and Volkswagen are what "
-    "the shop is set up for, with the factory-level diagnostic software for "
-    "each. If you drive something else German, call and ask; we will tell you "
-    "honestly whether we are the right shop for it."),
-   ("Will an independent shop void my warranty?",
-    "No. Federal law protects your right to have maintenance and repairs "
-    "performed by an independent shop without voiding a manufacturer warranty, "
-    "as long as the correct parts and fluids are used and the work is "
-    "documented. You leave with a written record of what was done."),
-   ("Do you use genuine parts?",
-    "We use genuine or OEM-equivalent parts, which means parts made by the "
-    "supplier that builds them for the factory, or by a manufacturer that "
-    "meets the same specification. Where a genuine part is the only right "
-    "choice, that is what goes on the car, and the estimate says so."),
-   ("Can you read the same fault codes the dealer can?",
-    "Yes. We run the factory diagnostic platforms rather than a generic "
-    "scanner, so we see every control unit the dealer sees, with the same live "
-    "data, guided tests and coding functions. That is what makes the "
-    "difference on an intermittent electrical fault."),
-   ("How do you estimate a repair?",
-    "Diagnosis first, then a written estimate that lists the parts and the "
-    "labor before anything is ordered. If something changes once the car is "
-    "apart, you get a call and a choice, not a surprise on the invoice."),
-   ("Do you offer a warranty on repairs?",
-    "Yes. The work we perform carries a one-year service warranty. Keep the "
-    "invoice: it is the record the warranty runs on, and the one a future "
-    "buyer will ask to see."),
- ],
- "cta": ("SOMETHING NOT RIGHT", "WITH YOUR CAR?"),
- "cta_sub": "Call and tell us what it is doing. We will tell you what the diagnosis involves and what happens next.",
-},
 {
  "slug": "german-car-transmission-repair-snellville-ga.html",
  "brand": BRAND, "marque": None,

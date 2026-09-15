@@ -25,8 +25,8 @@ class RankingTests(unittest.TestCase):
                         "porsche-brake-service-snellville-ga.html",
                         "volkswagen-brake-service-snellville-ga.html"}
         self.assertEqual(set(picks[:4]), brand_brakes, picks)
-        self.assertTrue(all(p.startswith("german-car") or p.startswith("pre-purchase")
-                            for p in picks[4:]), picks)
+        generic = {"index.html"} | {p for p in ffl.SERVICES if ffl.brand_of(p) == "german-car"}
+        self.assertTrue(all(p in generic for p in picks[4:]), picks)
 
     def test_ranking_never_includes_the_page_itself(self):
         for page in ffl.SERVICES:
@@ -35,7 +35,12 @@ class RankingTests(unittest.TestCase):
     def test_every_ranked_page_has_a_label(self):
         for page in ffl.SERVICES:
             for pick in ffl.related(page):
-                self.assertIn(pick, ffl.SERVICES)
+                self.assertIn(pick, ffl.TARGETS)
+
+    def test_homepage_is_linked_as_the_general_repair_page(self):
+        self.assertEqual(ffl.TARGETS["index.html"], "German Auto Repair")
+        self.assertNotIn("index.html", ffl.SERVICES)
+        self.assertIn("index.html", ffl.related("german-car-brake-repair-snellville-ga.html"))
 
 
 if __name__ == "__main__":

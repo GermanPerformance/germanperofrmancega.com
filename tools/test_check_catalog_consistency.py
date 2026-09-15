@@ -43,7 +43,7 @@ class NameTests(unittest.TestCase):
         self.assertEqual(ccc.expected_name(SLUG), "BMW Oil Change")
         self.assertEqual(ccc.expected_name(HUB), "Mercedes Repair")
         self.assertEqual(ccc.expected_name(GENERIC), "Tune-Up")
-        self.assertEqual(ccc.expected_name("german-car-repair-snellville-ga.html"), "Auto Repair")
+        self.assertEqual(ccc.expected_name("german-car-ac-repair-snellville-ga.html"), "AC Repair")
         self.assertEqual(ccc.expected_name("pre-purchase-inspection-german-car-ga.html"),
                          "Pre-Purchase Inspection")
 
@@ -81,9 +81,9 @@ class RuleTests(unittest.TestCase):
         self.assertTrue(any("h1" in p for p in self.problems(h1="BMW<br>OIL<br>SERVICE")))
 
     def test_generic_h1_may_drop_the_auto_prefix(self):
-        slug = "german-car-repair-snellville-ga.html"
-        self.assertEqual(self.problems(slug=slug, title="German Auto Repair",
-                                       h1="GERMAN AUTO<br>REPAIR"), [])
+        slug = "german-car-ac-repair-snellville-ga.html"
+        self.assertEqual(self.problems(slug=slug, title="German Car AC Repair",
+                                       h1="GERMAN CAR<br>AC REPAIR"), [])
 
     def test_make_page_needs_three_crumbs_under_its_hub(self):
         two = '<div class="breadcrumb"><a href="/">Home</a><span>/</span><span class="crumb-here">BMW Oil Change — Snellville, GA</span></div>'

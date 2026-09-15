@@ -57,13 +57,13 @@ class DerivedShapeTests(unittest.TestCase):
 
     def test_groups_are_the_generic_column_then_one_per_make(self):
         names = [name for name, _ in cat.GROUPS]
-        self.assertEqual(names, ["All German Makes"] + [m.heading for m in cat.MAKES])
+        self.assertEqual(names, [cat.GENERIC_GROUP] + [m.heading for m in cat.MAKES])
         for name, _ in cat.GROUPS:
             self.assertIn(name, cat.HUBS)
 
     def test_money_services_lead_the_generic_column(self):
         _, first = cat.GROUPS[0]
-        self.assertEqual(tuple(first[:6]), tuple(cat.MONEY))
+        self.assertEqual(tuple(first[:len(cat.MONEY)]), tuple(cat.MONEY))
 
     def test_make_columns_follow_the_service_order(self):
         for make in cat.MAKES:
@@ -106,8 +106,8 @@ class NamingTests(unittest.TestCase):
     def test_generic_pages_keep_their_own_names(self):
         self.assertEqual(cat.full_label("german-car-oil-change-snellville-ga.html"),
                          "German Car Oil Change")
-        self.assertEqual(cat.nav_label("german-car-repair-snellville-ga.html"),
-                         "Auto Repair")
+        self.assertEqual(cat.nav_label("german-car-ac-repair-snellville-ga.html"),
+                         "Auto Air Conditioning")
         self.assertEqual(cat.nav_label("pre-purchase-inspection-german-car-ga.html"),
                          "Pre-Purchase Inspection")
 

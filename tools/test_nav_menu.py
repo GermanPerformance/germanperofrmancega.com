@@ -58,7 +58,7 @@ class CatalogTests(unittest.TestCase):
 
     def test_money_services_lead_the_first_group(self):
         _, first = service_catalog.GROUPS[0]
-        self.assertEqual(first[:6], service_catalog.MONEY)
+        self.assertEqual(first[:len(service_catalog.MONEY)], service_catalog.MONEY)
 
     def test_no_duplicate_pages(self):
         pages = [h for _, entries in service_catalog.GROUPS for h, _ in entries]

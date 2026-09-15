@@ -16,13 +16,139 @@
 <meta name="twitter:title" content="German Performance — German Auto Specialists | Snellville, GA" />
 <meta name="twitter:description" content="German Performance in Snellville, GA specializes in BMW, Mercedes, Audi, Porsche & VW repair. Factory-level diagnostics, OEM parts, CARFAX 2025 Top-Rated. Serving Gwinnett County since 2010." />
 <meta name="twitter:image" content="https://germanperformancega.com/og-image.jpg" />
-<link rel="stylesheet" href="assets/css/fonts.css?v=32">
-<link rel="stylesheet" href="assets/css/tokens.css?v=32">
-<link rel="stylesheet" href="assets/css/werkstatt.css?v=32">
-<link rel="stylesheet" href="assets/css/home.css?v=32">
+<style id="critical">
+@font-face {
+  font-family: 'Archivo';
+  font-style: normal;
+  font-weight: 300 900;
+  font-stretch: 62% 125%;
+  font-display: swap;
+  src: url(assets/fonts/archivo-300-900-latin-ext.woff2) format('woff2');
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+@font-face {
+  font-family: 'Archivo';
+  font-style: normal;
+  font-weight: 300 900;
+  font-stretch: 62% 125%;
+  font-display: swap;
+  src: url(assets/fonts/archivo-300-900-latin.woff2) format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: 'IBM Plex Mono';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url(assets/fonts/ibm-plex-mono-400-latin-ext.woff2) format('woff2');
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+@font-face {
+  font-family: 'IBM Plex Mono';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url(assets/fonts/ibm-plex-mono-400-latin.woff2) format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: 'IBM Plex Mono';
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url(assets/fonts/ibm-plex-mono-600-latin-ext.woff2) format('woff2');
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+@font-face {
+  font-family: 'IBM Plex Mono';
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url(assets/fonts/ibm-plex-mono-600-latin.woff2) format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: 'Roboto';
+  font-style: normal;
+  font-weight: 400 500;
+  font-stretch: 100%;
+  font-display: swap;
+  src: url(assets/fonts/roboto-400-500-latin-ext.woff2) format('woff2');
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+@font-face {
+  font-family: 'Roboto';
+  font-style: normal;
+  font-weight: 400 500;
+  font-stretch: 100%;
+  font-display: swap;
+  src: url(assets/fonts/roboto-400-500-latin.woff2) format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+:root {
+  --black:      #0a0a0a;   
+  --carbon:     #101214;   
+  --steel:      #16191d;   
+  --graphite:   #1f2329;   
+  --line:        rgba(255, 255, 255, 0.09);
+  --line-strong: rgba(255, 255, 255, 0.18);
+  --line-gold:   rgba(212, 160, 23, 0.42);
+  --white:      #f2f0ec;   
+  --light:      #d2d5d9;   
+  --silver:     #9aa0a6;   
+  --muted:      #8a8f94;   
+  --red:        #c0392b;
+  --red-b:      #f26152;
+  --red-dim:    rgba(192, 57, 43, 0.14);
+  --gold:       #d4a017;
+  --gold-light: #f0b820;
+  --gold-dim:   rgba(212, 160, 23, 0.12);
+  --red-bright: #f26152;
+  --font-display: 'Archivo', 'Helvetica Neue', Arial, sans-serif;
+  --font-body:    'Archivo', 'Helvetica Neue', Arial, sans-serif;
+  --font-mono:    'IBM Plex Mono', ui-monospace, 'SF Mono', Menlo, monospace;
+  --wdth-display: 118;     
+  --wdth-body:    100;
+  --step--2:  clamp(0.66rem, 0.64rem + 0.08vw, 0.72rem);
+  --step--1:  clamp(0.78rem, 0.75rem + 0.15vw, 0.85rem);
+  --step-0:   clamp(0.95rem, 0.92rem + 0.18vw, 1.05rem);
+  --step-1:   clamp(1.1rem,  1.02rem + 0.4vw,  1.3rem);
+  --step-2:   clamp(1.5rem,  1.3rem  + 1vw,    2rem);
+  --step-3:   clamp(2rem,    1.6rem  + 2vw,    3rem);
+  --step-4:   clamp(2.4rem,  1.7rem  + 3.2vw,  4.2rem);
+  --step-5:   clamp(2.7rem,  1.6rem  + 5.4vw,  6.2rem);
+  --step-hero: clamp(2.4rem, 5vw, 4.2rem);
+  --step-ed:   clamp(1.15rem, 1rem + 0.7vw, 1.55rem);
+  --step-4-long: clamp(1.9rem, 1rem + 4vw, 3.8rem);
+  --space-section: clamp(80px, 10.8vw, 144px);
+  --gutter:        clamp(20px, 5vw, 64px);
+  --rhythm:        clamp(14px, 1.6vw, 22px);
+  --container:     1200px;
+  --narrow:        760px;
+  --measure:       62ch;
+  --nav-h:         64px;
+  --topbar-h:      48px;
+  --edge: max(var(--gutter), calc((100% - var(--container)) / 2));
+  --radius:   8px;
+  --radius-s: 6px;
+  --ease: cubic-bezier(0.22, 0.61, 0.36, 1);
+}
+@media (min-width: 960px) {
+  :root { --nav-h: 76px; --topbar-h: 56px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+</style>
+<link rel="stylesheet" href="assets/css/bundle-home.css?v=33">
 
-<script defer src="assets/js/site.js?v=32"></script>
-<script defer src="assets/js/analytics.js?v=32"></script>
+<script defer src="assets/js/site.js?v=33"></script>
+<script defer src="assets/js/analytics.js?v=33"></script>
 
 <script type="application/ld+json">
 {
@@ -224,6 +350,22 @@
         },
         {
           "@type": "Question",
+          "name": "How do you estimate a repair?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Diagnosis first, then a written estimate that lists the parts and the labor before anything is ordered. If something changes once the car is apart, you get a call and a choice, not a surprise on the invoice."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Do you offer a warranty on repairs?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes. Every repair we perform carries a 12-month, 12,000-mile warranty. Keep the invoice: it is the record the warranty runs on, and the one a future buyer will ask to see."
+          }
+        },
+        {
+          "@type": "Question",
           "name": "Do you work with extended warranties?",
           "acceptedAnswer": {
             "@type": "Answer",
@@ -247,7 +389,7 @@
       <button type="button" class="nav-dd-btn" aria-expanded="false" aria-controls="nav-services" data-section="#services">Services<svg class="nav-chev" viewBox="0 0 10 10" fill="none" aria-hidden="true"><path d="M2 3.5 5 6.5 8 3.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
       <div class="nav-panel" id="nav-services">
         <ul class="nav-panel-grid">
-          <li class="svc-group"><span class="svc-group-name"><a href="#services">All German Makes</a></span><a href="/german-car-repair-snellville-ga">Auto Repair</a><a href="/german-car-brake-repair-snellville-ga">Brake Repair</a><a href="/german-car-transmission-repair-snellville-ga">Transmission Repair</a><a href="/german-car-oil-change-snellville-ga">Oil Change</a><a href="/german-car-tune-up-snellville-ga">Auto Tune-Up</a><a href="/german-car-ac-repair-snellville-ga">Auto Air Conditioning</a><a href="/german-car-check-engine-light-snellville">Check Engine Light</a><a href="/pre-purchase-inspection-german-car-ga">Pre-Purchase Inspection</a></li>
+          <li class="svc-group"><span class="svc-group-name"><a href="#services">Services</a></span><a href="/german-car-brake-repair-snellville-ga">Brake Repair</a><a href="/german-car-transmission-repair-snellville-ga">Transmission Repair</a><a href="/german-car-oil-change-snellville-ga">Oil Change</a><a href="/german-car-tune-up-snellville-ga">Auto Tune-Up</a><a href="/german-car-ac-repair-snellville-ga">Auto Air Conditioning</a><a href="/german-car-check-engine-light-snellville">Check Engine Light</a><a href="/pre-purchase-inspection-german-car-ga">Pre-Purchase Inspection</a></li>
           <li class="svc-group"><span class="svc-group-name"><a href="/bmw-repair-snellville-ga">BMW</a></span><a href="/bmw-oil-change-snellville-ga">Oil Change</a><a href="/bmw-suspension-repair-snellville-ga">Suspension Repair</a><a href="/bmw-transmission-repair-snellville-ga">Transmission Repair</a><a href="/bmw-cooling-system-repair-snellville-ga">Cooling System Repair</a><a href="/bmw-battery-replacement-snellville-ga">Battery Replacement</a><a href="/bmw-spark-plug-replacement-snellville-ga">Spark Plug Replacement</a></li>
           <li class="svc-group"><span class="svc-group-name"><a href="/mercedes-repair-snellville-ga">Mercedes-Benz</a></span><a href="/mercedes-oil-change-snellville-ga">Oil Change</a><a href="/mercedes-brake-service-snellville-ga">Brake Repair</a><a href="/mercedes-suspension-snellville-ga">Suspension Repair</a><a href="/mercedes-transmission-snellville-ga">Transmission Repair</a><a href="/mercedes-cooling-system-snellville-ga">Cooling System Repair</a><a href="/mercedes-ac-repair-snellville-ga">AC Repair</a><a href="/mercedes-engine-diagnostics-snellville-ga">Engine Diagnostics</a></li>
           <li class="svc-group"><span class="svc-group-name"><a href="/audi-repair-snellville-ga">Audi</a></span><a href="/audi-oil-change-snellville-ga">Oil Change</a><a href="/audi-brake-service-snellville-ga">Brake Repair</a><a href="/audi-suspension-repair-snellville-ga">Suspension Repair</a></li>
@@ -270,7 +412,7 @@
   <details class="mm-dd">
     <summary>Services<svg class="nav-chev" viewBox="0 0 10 10" fill="none" aria-hidden="true"><path d="M2 3.5 5 6.5 8 3.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></summary>
     <ul class="mm-groups">
-      <li class="svc-group"><span class="svc-group-name"><a href="#services">All German Makes</a></span><a href="/german-car-repair-snellville-ga">Auto Repair</a><a href="/german-car-brake-repair-snellville-ga">Brake Repair</a><a href="/german-car-transmission-repair-snellville-ga">Transmission Repair</a><a href="/german-car-oil-change-snellville-ga">Oil Change</a><a href="/german-car-tune-up-snellville-ga">Auto Tune-Up</a><a href="/german-car-ac-repair-snellville-ga">Auto Air Conditioning</a><a href="/german-car-check-engine-light-snellville">Check Engine Light</a><a href="/pre-purchase-inspection-german-car-ga">Pre-Purchase Inspection</a></li>
+      <li class="svc-group"><span class="svc-group-name"><a href="#services">Services</a></span><a href="/german-car-brake-repair-snellville-ga">Brake Repair</a><a href="/german-car-transmission-repair-snellville-ga">Transmission Repair</a><a href="/german-car-oil-change-snellville-ga">Oil Change</a><a href="/german-car-tune-up-snellville-ga">Auto Tune-Up</a><a href="/german-car-ac-repair-snellville-ga">Auto Air Conditioning</a><a href="/german-car-check-engine-light-snellville">Check Engine Light</a><a href="/pre-purchase-inspection-german-car-ga">Pre-Purchase Inspection</a></li>
       <li class="svc-group"><span class="svc-group-name"><a href="/bmw-repair-snellville-ga">BMW</a></span><a href="/bmw-oil-change-snellville-ga">Oil Change</a><a href="/bmw-suspension-repair-snellville-ga">Suspension Repair</a><a href="/bmw-transmission-repair-snellville-ga">Transmission Repair</a><a href="/bmw-cooling-system-repair-snellville-ga">Cooling System Repair</a><a href="/bmw-battery-replacement-snellville-ga">Battery Replacement</a><a href="/bmw-spark-plug-replacement-snellville-ga">Spark Plug Replacement</a></li>
       <li class="svc-group"><span class="svc-group-name"><a href="/mercedes-repair-snellville-ga">Mercedes-Benz</a></span><a href="/mercedes-oil-change-snellville-ga">Oil Change</a><a href="/mercedes-brake-service-snellville-ga">Brake Repair</a><a href="/mercedes-suspension-snellville-ga">Suspension Repair</a><a href="/mercedes-transmission-snellville-ga">Transmission Repair</a><a href="/mercedes-cooling-system-snellville-ga">Cooling System Repair</a><a href="/mercedes-ac-repair-snellville-ga">AC Repair</a><a href="/mercedes-engine-diagnostics-snellville-ga">Engine Diagnostics</a></li>
       <li class="svc-group"><span class="svc-group-name"><a href="/audi-repair-snellville-ga">Audi</a></span><a href="/audi-oil-change-snellville-ga">Oil Change</a><a href="/audi-brake-service-snellville-ga">Brake Repair</a><a href="/audi-suspension-repair-snellville-ga">Suspension Repair</a></li>
@@ -377,10 +519,10 @@
   <div class="mani fu">
     <div class="ed">
       <h2 class="ed-h">We built the kind of German car shop<br class="mani-h-br"> people wish they could find.</h2>
-      <figure class="mani-photo"><picture><source type="image/webp" sizes="(max-width: 799px) 100vw, 760px" srcset="assets/img/shop/bmw-m3-on-lift-420.webp 420w,
+      <figure class="mani-photo"><picture><source type="image/webp" sizes="(max-width: 799px) calc(100vw - 40px), 760px" srcset="assets/img/shop/bmw-m3-on-lift-420.webp 420w,
           assets/img/shop/bmw-m3-on-lift-640.webp 640w,
           assets/img/shop/bmw-m3-on-lift-800.webp 800w,
-          assets/img/shop/bmw-m3-on-lift-1100.webp 1100w"><source type="image/jpeg" sizes="(max-width: 799px) 100vw, 760px" srcset="assets/img/shop/bmw-m3-on-lift-420.jpg 420w,
+          assets/img/shop/bmw-m3-on-lift-1100.webp 1100w"><source type="image/jpeg" sizes="(max-width: 799px) calc(100vw - 40px), 760px" srcset="assets/img/shop/bmw-m3-on-lift-420.jpg 420w,
           assets/img/shop/bmw-m3-on-lift-640.jpg 640w,
           assets/img/shop/bmw-m3-on-lift-800.jpg 800w,
           assets/img/shop/bmw-m3-on-lift-1100.jpg 1100w"><img src="assets/img/shop/bmw-m3-on-lift-640.jpg" alt="A blue BMW E46 M3 raised on a two-post lift above a black E36 in the German Performance shop" width="1100" height="1375" loading="lazy" decoding="async"></picture></figure>
@@ -503,20 +645,6 @@
   </div>
   <div class="svc-cards fu">
     <div class="svc-card">
-      <figure class="svc-photo"><picture><source type="image/webp" sizes="(min-width: 960px) 400px, (min-width: 640px) 50vw, 100vw" srcset="assets/img/services/auto-repair-420.webp 420w,
-        assets/img/services/auto-repair-640.webp 640w,
-        assets/img/services/auto-repair-800.webp 800w,
-        assets/img/services/auto-repair-1100.webp 1100w"><source type="image/jpeg" sizes="(min-width: 960px) 400px, (min-width: 640px) 50vw, 100vw" srcset="assets/img/services/auto-repair-420.jpg 420w,
-        assets/img/services/auto-repair-640.jpg 640w,
-        assets/img/services/auto-repair-800.jpg 800w,
-        assets/img/services/auto-repair-1100.jpg 1100w"><img src="assets/img/services/auto-repair-640.jpg" alt="Technician diagnosing a BMW M engine bay on a lift at German Performance" width="1100" height="1375" loading="lazy" decoding="async"></picture></figure>
-      <div class="svc-body">
-        <h3 class="ct">Auto Repair</h3>
-        <p class="cd">Diagnosis first, on the factory software for your make. We find the part that failed, show you the evidence, and put the repair in writing before anything is ordered.</p>
-        <a href="/german-car-repair-snellville-ga" class="bg">Explore service <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8H13M9 4L13 8L9 12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></a>
-      </div>
-    </div>
-    <div class="svc-card">
       <figure class="svc-photo"><picture><source type="image/webp" sizes="(min-width: 960px) 400px, (min-width: 640px) 50vw, 100vw" srcset="assets/img/services/brake-repair-420.webp 420w,
         assets/img/services/brake-repair-640.webp 640w,
         assets/img/services/brake-repair-800.webp 800w,
@@ -586,10 +714,37 @@
         <a href="/german-car-ac-repair-snellville-ga" class="bg">Explore service <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8H13M9 4L13 8L9 12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></a>
       </div>
     </div>
+    <div class="svc-card">
+      <figure class="svc-photo"><picture><source type="image/webp" sizes="(min-width: 960px) 400px, (min-width: 640px) 50vw, 100vw" srcset="assets/img/services/auto-repair-420.webp 420w,
+        assets/img/services/auto-repair-640.webp 640w,
+        assets/img/services/auto-repair-800.webp 800w,
+        assets/img/services/auto-repair-1100.webp 1100w"><source type="image/jpeg" sizes="(min-width: 960px) 400px, (min-width: 640px) 50vw, 100vw" srcset="assets/img/services/auto-repair-420.jpg 420w,
+        assets/img/services/auto-repair-640.jpg 640w,
+        assets/img/services/auto-repair-800.jpg 800w,
+        assets/img/services/auto-repair-1100.jpg 1100w"><img src="assets/img/services/auto-repair-640.jpg" alt="Technician diagnosing a BMW M engine bay on a lift at German Performance" width="1100" height="1375" loading="lazy" decoding="async"></picture></figure>
+      <div class="svc-body">
+        <h3 class="ct">Check Engine Light</h3>
+        <p class="cd">Read on the factory software for your make, not a code reader. We find the part that failed, show you the evidence, and put the repair in writing before anything is ordered.</p>
+        <a href="/german-car-check-engine-light-snellville" class="bg">Explore service <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8H13M9 4L13 8L9 12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></a>
+      </div>
+    </div>
   </div>
   <div class="cta-col section-cta fu">
     <div class="acts"><a href="tel:+16783957459" class="bp"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M6.6 2.5a1.6 1.6 0 0 1 1.5 1l1 2.4a1.6 1.6 0 0 1-.4 1.8L7.4 8.9a11.6 11.6 0 0 0 5.7 5.7l1.2-1.3a1.6 1.6 0 0 1 1.8-.4l2.4 1a1.6 1.6 0 0 1 1 1.5v2.3a2.3 2.3 0 0 1-2.5 2.3 A18.4 18.4 0 0 1 2.2 5a2.3 2.3 0 0 1 2.3-2.5z"/></svg><span>Service My Car</span></a></div>
     <div class="assure"><span class="as"><svg class="laurel" viewBox="0 0 18 26" fill="currentColor" aria-hidden="true"><path d="M13.5 25.5Q-1.0 15.0 8.0 0.8" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/><ellipse cx="6.0" cy="21.3" rx="1.35" ry="3.60" transform="rotate(-85 6.0 21.3)"/><ellipse cx="9.0" cy="18.5" rx="1.35" ry="3.60" transform="rotate(-1 9.0 18.5)"/><ellipse cx="3.8" cy="17.1" rx="1.23" ry="3.15" transform="rotate(-71 3.8 17.1)"/><ellipse cx="7.0" cy="15.3" rx="1.23" ry="3.15" transform="rotate(13 7.0 15.3)"/><ellipse cx="3.0" cy="12.7" rx="1.11" ry="2.70" transform="rotate(-55 3.0 12.7)"/><ellipse cx="6.0" cy="12.1" rx="1.11" ry="2.70" transform="rotate(29 6.0 12.1)"/><ellipse cx="3.4" cy="8.5" rx="0.99" ry="2.25" transform="rotate(-38 3.4 8.5)"/><ellipse cx="6.0" cy="8.7" rx="0.99" ry="2.25" transform="rotate(46 6.0 8.7)"/><ellipse cx="4.9" cy="4.4" rx="0.87" ry="1.80" transform="rotate(-23 4.9 4.4)"/><ellipse cx="6.9" cy="5.1" rx="0.87" ry="1.80" transform="rotate(61 6.9 5.1)"/><ellipse cx="8.1" cy="0.5" rx="0.9" ry="2.2" transform="rotate(30 8.1 0.5)"/></svg><span class="as-t"><b>4.8-Star</b> on CARFAX<br><b>15+ Years</b> in business</span><svg class="laurel" viewBox="0 0 18 26" fill="currentColor" aria-hidden="true"><path d="M13.5 25.5Q-1.0 15.0 8.0 0.8" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/><ellipse cx="6.0" cy="21.3" rx="1.35" ry="3.60" transform="rotate(-85 6.0 21.3)"/><ellipse cx="9.0" cy="18.5" rx="1.35" ry="3.60" transform="rotate(-1 9.0 18.5)"/><ellipse cx="3.8" cy="17.1" rx="1.23" ry="3.15" transform="rotate(-71 3.8 17.1)"/><ellipse cx="7.0" cy="15.3" rx="1.23" ry="3.15" transform="rotate(13 7.0 15.3)"/><ellipse cx="3.0" cy="12.7" rx="1.11" ry="2.70" transform="rotate(-55 3.0 12.7)"/><ellipse cx="6.0" cy="12.1" rx="1.11" ry="2.70" transform="rotate(29 6.0 12.1)"/><ellipse cx="3.4" cy="8.5" rx="0.99" ry="2.25" transform="rotate(-38 3.4 8.5)"/><ellipse cx="6.0" cy="8.7" rx="0.99" ry="2.25" transform="rotate(46 6.0 8.7)"/><ellipse cx="4.9" cy="4.4" rx="0.87" ry="1.80" transform="rotate(-23 4.9 4.4)"/><ellipse cx="6.9" cy="5.1" rx="0.87" ry="1.80" transform="rotate(61 6.9 5.1)"/><ellipse cx="8.1" cy="0.5" rx="0.9" ry="2.2" transform="rotate(30 8.1 0.5)"/></svg></span><span class="as"><svg class="shield" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3 4.5 6v6c0 4.5 3.2 7.6 7.5 9 4.3-1.4 7.5-4.5 7.5-9V6z"/><path d="m9 12 2 2 4-4"/></svg><span class="as-t"><b>1-Year</b> service<br>warranties</span></span></div>
+  </div>
+</section>
+
+<!-- REPAIRS -->
+<section id="repairs">
+  <div class="sh fu"><div class="sl">What You Get</div><h2>WHAT WE<br><span class="accent">REPAIR</span></h2><p class="sd">A German car tells you what is wrong in more detail than most, if the tools can read it. Every repair here starts by reading the car properly, and ends with the fault gone rather than the light off.</p></div>
+  <div class="g3 fu">
+    <div class="card"><span class="ci">01</span><h3 class="ct">Factory-Level Diagnostics</h3><div class="cd">ISTA for BMW, XENTRY for Mercedes-Benz, ODIS for Audi and Volkswagen, PIWIS for Porsche. A generic scanner reads the engine module and little else; the factory software reads every control unit on the car, with the live data and the guided tests that come with it.</div></div>
+    <div class="card"><span class="ci">02</span><h3 class="ct">Engine Repair</h3><div class="cd">Oil leaks from valve cover, oil filter housing and timing cover gaskets, timing chain guides, PCV valves, water pumps, high-pressure fuel pumps and injectors. The failures on each engine family are well documented, and so are the right parts to fix them.</div></div>
+    <div class="card"><span class="ci">03</span><h3 class="ct">Electrical and Module Faults</h3><div class="cd">Battery and charging faults, wiring and connector damage, failed control modules and the coding and programming that follow a replacement. A new module on a modern German car is not working until it is coded to the vehicle.</div></div>
+    <div class="card"><span class="ci">04</span><h3 class="ct">Cooling System</h3><div class="cd">Plastic radiators, expansion tanks, thermostats and electric water pumps age on a schedule. We pressure-test the system, find the leak rather than guess at it, and replace what has failed with OEM or OEM-equivalent parts.</div></div>
+    <div class="card"><span class="ci">05</span><h3 class="ct">Suspension and Steering</h3><div class="cd">Control arm bushings, ball joints, tie rods, shocks, struts and air suspension components, then a four-wheel alignment to the factory specification once the parts are in. Worn bushings are the most common cause of the clunks and wander owners report.</div></div>
+    <div class="card"><span class="ci">06</span><h3 class="ct">Drivetrain and Differential</h3><div class="cd">Driveshaft center bearings and flex discs, CV axles and boots, differential and transfer case fluid services and seals. Fluids the manufacturer once called lifetime still wear, and the units they protect are expensive to replace.</div></div>
   </div>
 </section>
 
@@ -688,6 +843,8 @@
       <details class="fi" name="faq"><summary class="fq">How long have you been in business and are you CARFAX-rated?<span class="ficon" aria-hidden="true"></span></summary><div class="fa"><p>German Performance has been serving Gwinnett County since <strong>2010</strong>, over a decade of specializing in German vehicles. CARFAX named us a <strong>2025 Top-Rated Service Center</strong>, which means our service records are reported to CARFAX and our quality is independently verified through customer reviews and complaint history.</p></div></details>
       <details class="fi" name="faq"><summary class="fq">What diagnostic equipment do you use?<span class="ficon" aria-hidden="true"></span></summary><div class="fa"><p>We use <strong>factory-level diagnostic tools</strong>, the same systems the dealerships use, including ISTA for BMW, XENTRY/DAS for Mercedes-Benz, ODIS for Audi/VW, and PIWIS for Porsche. This means we can read all control modules, access live data, perform adaptations, and code new components, not just clear codes with a generic OBD-II scanner.</p></div></details>
       <details class="fi" name="faq"><summary class="fq">How do I schedule an appointment?<span class="ficon" aria-hidden="true"></span></summary><div class="fa"><p>The easiest way is to <strong>call us directly at (678) 395-7459</strong>. Same-week appointments are usually available. When you call, have your vehicle's year, make, model, and a brief description of the issue handy so we can estimate the time needed.</p></div></details>
+      <details class="fi" name="faq"><summary class="fq">How do you estimate a repair?<span class="ficon" aria-hidden="true"></span></summary><div class="fa"><p><strong>Diagnosis first, then a written estimate</strong> that lists the parts and the labor before anything is ordered. If something changes once the car is apart, you get a call and a choice, not a surprise on the invoice.</p></div></details>
+      <details class="fi" name="faq"><summary class="fq">Do you offer a warranty on repairs?<span class="ficon" aria-hidden="true"></span></summary><div class="fa"><p>Yes. Every repair we perform carries a <strong>12-month, 12,000-mile warranty</strong>. Keep the invoice: it is the record the warranty runs on, and the one a future buyer will ask to see.</p></div></details>
       <details class="fi" name="faq"><summary class="fq">Do you work with extended warranties?<span class="ficon" aria-hidden="true"></span></summary><div class="fa"><p>Yes. <strong>We work with extended warranties and accept most warranty companies</strong>, including CarShield, Endurance, Allstate, Route 66, CARCHEX and American Auto Shield. Bring your coverage information when you come in and we'll handle the claims process directly with your provider.</p></div></details>
     </div>
   </div>
@@ -737,7 +894,6 @@
   <div class="flinks">
     <a href="/bmw-oil-change-snellville-ga">BMW Oil Change</a>
     <a href="/mercedes-brake-service-snellville-ga">Mercedes Brake Service</a>
-    <a href="/german-car-repair-snellville-ga">German Auto Repair</a>
     <a href="/bmw-transmission-repair-snellville-ga">BMW Transmission Repair</a>
     <a href="/volkswagen-engine-repair-snellville-ga">VW Engine Repair</a>
     <a href="/porsche-inspection-snellville-ga">Porsche Inspection</a>

@@ -14,7 +14,7 @@ import os
 import sys
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
-from service_catalog import GROUPS, HUBS  # noqa: E402
+from service_catalog import GENERIC_GROUP, GROUPS, HUBS  # noqa: E402
 from urls import SITE, page_url  # noqa: E402
 
 REPO_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -46,7 +46,7 @@ def link(slug, label, note=""):
 
 
 def brand_note(brand):
-    return "Brand hub: every service the shop performs on that marque" if brand != "All German Makes" \
+    return "Brand hub: every service the shop performs on that marque" if brand != GENERIC_GROUP \
         else "Services for every German marque"
 
 

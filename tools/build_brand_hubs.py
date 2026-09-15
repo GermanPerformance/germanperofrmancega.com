@@ -35,7 +35,7 @@ sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 # in one file and stale in the others.
 from build_service_pages import checks_list  # noqa: E402
 from page_chrome import NAV, neutral_footer, scripts, stylesheets  # noqa: E402
-from service_catalog import GROUPS  # noqa: E402
+from service_catalog import GENERIC_GROUP, GROUPS, HOME  # noqa: E402
 import place  # noqa: E402
 from urls import href_for, page_url  # noqa: E402
 
@@ -259,8 +259,10 @@ BRANDS = [
 # the next build; the hand-copied lists this replaces had drifted from it.
 _BY_GROUP = dict(GROUPS)
 SERVICE_LINKS = {name: entries for name, entries in GROUPS
-                 if name != "All German Makes"}
-UNIVERSAL = _BY_GROUP["All German Makes"]
+                 if name != GENERIC_GROUP}
+# The homepage leads the make-agnostic column as the general repair page,
+# under the profile's category name, as the page it replaced did.
+UNIVERSAL = ((HOME, "Auto Repair"),) + _BY_GROUP[GENERIC_GROUP]
 
 
 def cards(items):

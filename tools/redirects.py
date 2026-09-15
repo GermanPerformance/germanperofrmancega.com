@@ -21,7 +21,7 @@ REDIRECTS = {
     "bmw-differential-service-snellville-ga.html": "bmw-transmission-repair-snellville-ga.html",
     "bmw-wheel-alignment-snellville-ga.html": "bmw-suspension-repair-snellville-ga.html",
     "german-car-emissions-repair-snellville-ga.html": "german-car-check-engine-light-snellville.html",
-    "german-car-fleet-service-snellville-ga.html": "german-car-repair-snellville-ga.html",
+    "german-car-fleet-service-snellville-ga.html": "index.html",
     "volkswagen-timing-chain-snellville-ga.html": "volkswagen-engine-repair-snellville-ga.html",
 }
 

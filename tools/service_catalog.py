@@ -20,12 +20,15 @@ Three tables and nothing else:
             pages), service, and for make-agnostic pages the name they
             carry in mixed lists ("German Car Oil Change")
 
-MONEY is the owner's six Google Business Profile categories in the order
-the homepage cards show them; their labels are the profile's, so the
-"All German Makes" column reads the way the profile does. GROUPS and
-HUBS are derived from the tables in the shape the consumers have always
-read: GROUPS is one (heading, ((href, label), ...)) per column, HUBS
-maps each heading to the link it carries.
+MONEY is the six category pages the homepage cards link to, in the
+owner's order, under the Google Business Profile's own names, so the
+"Services" column reads the way the profile does. The profile's primary
+category, "Auto repair shop", is the homepage itself (the general repair
+page was folded into it on 2026-09-15), so the sixth card is the
+diagnostics page. GROUPS and HUBS are derived from the tables in the
+shape the consumers have always read: GROUPS is one
+(heading, ((href, label), ...)) per column, HUBS maps each heading to the
+link it carries.
 """
 
 from collections import namedtuple
@@ -36,7 +39,8 @@ Page = namedtuple("Page", "slug make service label")
 
 # The jobs, in column order. A make's column lists the pages it has in
 # this order, so every column reads the same way. "repair" is the hub
-# itself and never appears inside a column.
+# itself and never appears inside a column; the make-agnostic repair
+# page is the homepage.
 SERVICES = (
     Service("oil",          "Oil Change"),
     Service("brakes",       "Brake Repair"),
@@ -63,19 +67,19 @@ MAKES = (
 )
 
 # The six category pages the homepage cards link to, in the owner's order,
-# under the Google Business Profile's own category names.
+# under the Google Business Profile's own names. "Auto repair shop" is the
+# homepage, so the cards run brake shop through engine diagnostic.
 MONEY = (
-    ("german-car-repair-snellville-ga.html",              "Auto Repair"),
     ("german-car-brake-repair-snellville-ga.html",        "Brake Repair"),
     ("german-car-transmission-repair-snellville-ga.html", "Transmission Repair"),
     ("german-car-oil-change-snellville-ga.html",          "Oil Change"),
     ("german-car-tune-up-snellville-ga.html",             "Auto Tune-Up"),
     ("german-car-ac-repair-snellville-ga.html",           "Auto Air Conditioning"),
+    ("german-car-check-engine-light-snellville.html",     "Check Engine Light"),
 )
 
 PAGES = (
-    # make-agnostic pages, in the order the "All German Makes" column shows
-    Page("german-car-repair-snellville-ga.html",              None, "repair",       "German Auto Repair"),
+    # make-agnostic pages, in the order the "Services" column shows
     Page("german-car-brake-repair-snellville-ga.html",        None, "brakes",       "German Car Brake Repair"),
     Page("german-car-transmission-repair-snellville-ga.html", None, "transmission", "German Car Transmission Repair"),
     Page("german-car-oil-change-snellville-ga.html",          None, "oil",          "German Car Oil Change"),
@@ -127,8 +131,16 @@ RELATED_GROUPS = {
     "repair": "general",
 }
 
-GENERIC_GROUP = "All German Makes"
+GENERIC_GROUP = "Services"
 GENERIC_HUB = "index.html#services"
+
+# The homepage is the make-agnostic repair page: the general repair page
+# was deleted on 2026-09-15 because it covered the same offering. It is
+# not in PAGES (no generator writes its chrome from the catalog), but the
+# related blocks and footer rows link to it where they linked to that
+# page, under the name that page went by.
+HOME = "index.html"
+HOME_LABEL = "German Auto Repair"
 
 _SERVICES = {s.key: s for s in SERVICES}
 _ORDER = {s.key: i for i, s in enumerate(SERVICES)}

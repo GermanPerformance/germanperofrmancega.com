@@ -28,7 +28,7 @@ import re
 import sys
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
-from fix_footer_links import SERVICES, brand_of, related  # noqa: E402
+from fix_footer_links import SERVICES, TARGETS, brand_of, related  # noqa: E402
 from service_catalog import (MAKES, full_label, hub_for, hubs, make_of,  # noqa: E402
                              service_of, service_pages)
 from urls import href_for  # noqa: E402
@@ -80,7 +80,7 @@ def build_block(page):
     lead, accent = BRAND_TITLES.get(brand_of(page), DEFAULT_TITLE)
     cards = "".join(
         f'    <a href="{href_for(p)}" class="rel-card">'
-        f'<span class="rel-name">{SERVICES[p]}</span>'
+        f'<span class="rel-name">{TARGETS[p]}</span>'
         f'<span class="rel-go">&rarr;</span></a>\n'
         for p in picks
     )
