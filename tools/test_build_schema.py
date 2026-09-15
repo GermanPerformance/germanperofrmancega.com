@@ -11,6 +11,7 @@ import unittest
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
 import build_schema as bs  # noqa: E402
+import posts  # noqa: E402
 
 URL = f"{bs.SITE}/bmw-oil-change-snellville-ga"
 THREE = ('<div class="breadcrumb"><a href="/">Home</a><span>/</span>'
@@ -52,6 +53,26 @@ class TrailTests(unittest.TestCase):
     def test_missing_crumb_falls_back_to_home_and_page(self):
         items = bs.trail_items("<main></main>", URL)
         self.assertEqual(items, [("Home", f"{bs.SITE}/"), ("", URL)])
+
+
+class PostTests(unittest.TestCase):
+    def test_every_registered_article_gets_its_own_dates(self):
+        for slug, (published, modified) in posts.POST_DATES.items():
+            url = bs.page_url(slug)
+            entity = bs.blog_entity(url, "A Title | German Performance", "d", published, modified)
+            self.assertEqual(entity["@type"], "BlogPosting")
+            self.assertEqual(entity["headline"], "A Title")
+            self.assertEqual(entity["datePublished"], published)
+            self.assertEqual(entity["dateModified"], modified)
+            self.assertEqual(entity["author"], {"@id": bs.BUSINESS_ID})
+
+    def test_the_live_pages_carry_one_blog_posting_each(self):
+        for slug in posts.POST_DATES:
+            with open(os.path.join(bs.REPO_ROOT, slug), encoding="utf-8") as fh:
+                content = fh.read()
+            self.assertEqual(content.count('"@type": "BlogPosting"'), 1, slug)
+            self.assertIn(f'"datePublished": "{posts.POST_DATES[slug][0]}"', content, slug)
+            self.assertIn(f'"dateModified": "{posts.POST_DATES[slug][1]}"', content, slug)
 
 
 if __name__ == "__main__":

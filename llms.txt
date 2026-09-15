@@ -59,7 +59,9 @@ on CARFAX, 180+ Google reviews.
 
 - [About](https://germanperformancega.com/about): Who runs the shop, the factory software it runs for each marque, and how a job proceeds
 - [Contact](https://germanperformancega.com/contact): Address, hours, map, and what to have ready before calling
-- [Dealer vs. independent](https://germanperformancega.com/dealer-vs-independent-german-car-repair): What changes when you leave the dealer for an independent German specialist
+- [German auto repair: dealership vs. independent shop](https://germanperformancega.com/dealer-vs-independent-german-car-repair): What changes when you leave the dealer for an independent German specialist
+- [What affects German car repair costs?](https://germanperformancega.com/what-affects-german-car-repair-costs): Diagnosis, parts tier, labor access, engine family, deferred maintenance and coding: what moves the bill, with no prices quoted
+- [Why do German cars need specialist diagnostics?](https://germanperformancega.com/why-german-cars-need-specialist-diagnostics): What a generic scanner misses on a car with dozens of control modules, and what the factory software does differently
 
 ## Policies
 

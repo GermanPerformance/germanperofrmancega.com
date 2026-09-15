@@ -365,7 +365,7 @@ def build(b):
   <div class="fu"><div class="sl">Other German makes</div>
   <h2>WE ALSO<br><span style="color:var(--red)">SPECIALISE IN</span></h2>
   <p class="sd">{b["brand"]} is one of the five makes we work on. German Performance is an independent <a href="{href_for("index.html")}">German auto repair shop in Snellville, GA</a> for BMW, Mercedes-Benz, Audi, Porsche and Volkswagen, and nothing else.</p></div>
-  <div class="flinks fu" style="margin-top:28px">{other}<a href="/dealer-vs-independent-german-car-repair">Dealer vs. Independent</a></div>
+  <div class="flinks fu" style="margin-top:28px">{other}<a href="/dealer-vs-independent-german-car-repair">Dealership vs. Independent</a><a href="/what-affects-german-car-repair-costs">Repair Costs</a><a href="/why-german-cars-need-specialist-diagnostics">Specialist Diagnostics</a></div>
 </section>
 
 <section style="background:var(--black);padding:80px 60px;text-align:center">

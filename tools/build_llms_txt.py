@@ -4,7 +4,7 @@
 Google ignores the file, but Perplexity, Claude and OpenAI's crawlers (all
 allowed in robots.txt) read it as a hint about which pages matter and what
 each one is for. It is built from tools/service_catalog.py so it lists
-exactly the pages the nav does, plus About, Contact and the one article;
+exactly the pages the nav does, plus About, Contact and the articles;
 regenerate it whenever the catalogue changes.
 
 Run from the repo root:  python3 tools/build_llms_txt.py
@@ -36,7 +36,9 @@ on CARFAX, 180+ Google reviews.
 INFO = [
     ("about.html", "About", "Who runs the shop, the factory software it runs for each marque, and how a job proceeds"),
     ("contact.html", "Contact", "Address, hours, map, and what to have ready before calling"),
-    ("dealer-vs-independent-german-car-repair.html", "Dealer vs. independent", "What changes when you leave the dealer for an independent German specialist"),
+    ("dealer-vs-independent-german-car-repair.html", "German auto repair: dealership vs. independent shop", "What changes when you leave the dealer for an independent German specialist"),
+    ("what-affects-german-car-repair-costs.html", "What affects German car repair costs?", "Diagnosis, parts tier, labor access, engine family, deferred maintenance and coding: what moves the bill, with no prices quoted"),
+    ("why-german-cars-need-specialist-diagnostics.html", "Why do German cars need specialist diagnostics?", "What a generic scanner misses on a car with dozens of control modules, and what the factory software does differently"),
 ]
 
 

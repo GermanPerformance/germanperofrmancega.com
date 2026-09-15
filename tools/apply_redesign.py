@@ -504,7 +504,7 @@ FOOTER_NAVIGATE = ('<div class="fc"><div class="fct">Navigate</div>'
                    '<a href="/">Home</a><a href="/about">About</a>'
                    '<a href="/#reviews">Reviews</a><a href="/#faq">FAQ</a>'
                    '<a href="/contact">Contact</a>'
-                   '<a href="/dealer-vs-independent-german-car-repair">Dealer vs. Independent</a></div>')
+                   '<a href="/dealer-vs-independent-german-car-repair">Dealership vs. Independent</a><a href="/what-affects-german-car-repair-costs">Repair Costs</a><a href="/why-german-cars-need-specialist-diagnostics">Specialist Diagnostics</a></div>')
 FOOTER_CONTACT_RE = re.compile(r'<div class="fc"><div class="fct">Contact</div>.*?</div>', re.S)
 FOOTER_NAVIGATE_RE = re.compile(r'<div class="fc"><div class="fct">Navigate</div>.*?</div>', re.S)
 FOOTER_YEAR_RE = re.compile(r'(<div class="fcopy">© )\d{4}( German Performance)')

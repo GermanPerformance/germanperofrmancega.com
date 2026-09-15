@@ -41,11 +41,11 @@ import sys
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import place  # noqa: E402
 from redirects import site_pages  # noqa: E402
-from urls import SITE, url_for_href  # noqa: E402
+from posts import POST_DATES  # noqa: E402
+from urls import SITE, page_url, url_for_href  # noqa: E402
 
 REPO_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 HOME = "index.html"
-POST = "dealer-vs-independent-german-car-repair.html"
 
 BUSINESS_ID = f"{SITE}/#business"
 WEBSITE_ID = f"{SITE}/#website"
@@ -245,7 +245,7 @@ def headline(title):
     return re.sub(r"\s*\|\s*" + re.escape(NAME) + r"\s*$", "", title)
 
 
-def blog_entity(url, title, description):
+def blog_entity(url, title, description, published, modified):
     return {
         "@type": "BlogPosting",
         "@id": f"{url}#article",
@@ -256,8 +256,8 @@ def blog_entity(url, title, description):
         "image": f"{SITE}/og-image.jpg",
         "publisher": {"@id": BUSINESS_ID},
         "author": {"@id": BUSINESS_ID},
-        "datePublished": "2026-07-28",
-        "dateModified": "2026-09-09",
+        "datePublished": published,
+        "dateModified": modified,
     }
 
 
@@ -329,9 +329,9 @@ def main():
             else:
                 print("  !! index.html: no FAQ found in the visible markup")
             counts["home"] += 1
-        elif name == POST:
+        elif name in POST_DATES:
             crumb = title.split("|")[0].strip()
-            graph.append(blog_entity(url, title, description))
+            graph.append(blog_entity(url, title, description, *POST_DATES[name]))
             graph.append(breadcrumbs([("Home", f"{SITE}/"), (crumb, url)]))
             counts["post"] += 1
         elif name in INFO_PAGES:

@@ -2,7 +2,7 @@
 #
 # Everything a visitor can reach is crawlable: the pages, the photographs
 # under /assets/img/ and /images/, the fonts and stylesheets a renderer
-# needs, llms.txt, and the seven redirect stubs (a crawler must fetch a
+# needs, llms.txt, and the six redirect stubs (a crawler must fetch a
 # stub to see where it now points). Only build tooling and internal
 # working notes are held back; they are not site content.
 #
