@@ -54,15 +54,14 @@ sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from build_service_pages import checks_list  # noqa: E402
 from build_landing_pages import photo_picture  # noqa: E402
 from page_chrome import neutral_blocks  # noqa: E402
+import place  # noqa: E402
 
 REPO_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SITE = "https://germanperformancega.com"
 DONOR = "porsche-oil-change-snellville-ga.html"
-MAPS = ("https://maps.google.com/?q=2144+Parkwood+Rd+NW+Snellville+GA+30078")
-# The keyless embed form: Google geocodes the address itself, so the pin
-# lands on the shop without a place ID or an API key.
-MAP_EMBED = ("https://www.google.com/maps?q=2144+Parkwood+Rd+NW,+Snellville,"
-             "+GA+30078&output=embed")
+# Both open the shop's Google listing, not the building (tools/place.py).
+MAPS = place.attr(place.DIRECTIONS)
+MAP_EMBED = place.attr(place.EMBED)
 
 # The photograph the homepage runs beside its story block, at the sizes
 # tools/build_shop_photos.py writes.

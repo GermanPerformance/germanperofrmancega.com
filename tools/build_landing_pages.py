@@ -50,7 +50,6 @@ REPO_ROOT = os.path.dirname(TOOLS)
 SITE = "https://germanperformancega.com"
 PLACE = "Snellville, GA"
 TEL = "tel:+16783957459"
-MAPS = "https://maps.google.com/?q=2144+Parkwood+Rd+NW+Snellville+GA+30078"
 DEFAULT_EYEBROW = "BMW · Mercedes · Audi · Porsche · VW"
 MARQUE_RE = re.compile(r"BMW|Mercedes|Audi|Porsche|Volkswagen|\bVW\b")
 PHOTO_WIDTHS = (420, 640, 800, 1100)

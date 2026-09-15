@@ -10,6 +10,7 @@ Plain Python 3, no dependencies. Run everything from the repo root.
 - `brand_pages/<make>.py` — the copy for a make's pages (`build_service_pages.py`).
 - `landing_pages.py` — the copy for the category landing pages (`build_landing_pages.py`).
 - `gbp_claims.py` — which Google Business Profile services each page answers for.
+- `place.py` — the shop's Google listing (place ID, CID, pin) and every Maps URL: embed, directions, `hasMap`, `sameAs`, write-a-review.
 - `redirects.py` — retired URLs and their successors (stubs, never in the sitemap).
 - `page_chrome.py` — the nav, footer, address block and asset links every generated page shares.
 - `apply_redesign.py` — `VERSION` (bump when a stylesheet or script changes)

@@ -49,10 +49,11 @@ import sys
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from service_catalog import GROUPS, HUBS  # noqa: E402
+import place  # noqa: E402
 from redirects import site_pages  # noqa: E402
 
 REPO_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-VERSION = "30"
+VERSION = "31"
 
 # The typefaces are served from assets/fonts/ (see tools/build_fonts.py):
 # the @font-face rules are the first stylesheet, so the browser asks for
@@ -484,7 +485,7 @@ NAV_RE = re.compile(r'(?:<div class="topbar">.*?</div>\s*)?<nav>.*?</nav>'
 
 # The footer's two fixed columns, the same on every page. The Services
 # column and the link row are the page's own (tools/fix_footer_links.py).
-MAPS_URL = "https://maps.google.com/?q=2144+Parkwood+Rd+NW+Snellville+GA+30078"
+MAPS_URL = place.attr(place.DIRECTIONS)
 FOOTER_CONTACT = ('<div class="fc"><div class="fct">Contact</div>'
                   '<a href="tel:+16783957459">(678) 395-7459</a>'
                   '<p>2144 Parkwood Rd NW</p><p>Snellville, GA 30078</p>'
@@ -562,6 +563,10 @@ RULES = [
     (r'<b>4\.5-Star</b> rated by<br><b>180\+</b> customers',
      '<b>4.8-Star</b> on CARFAX<br><b>15+ Years</b> in business'),
     (r'CARFAX Top-Rated and Google 4\.5★', 'CARFAX Top-Rated at 4.8★, 4.5★ on Google'),
+    # -- the legacy pages' CTA button: directions to the listing, not to the
+    #    building Google resolves the bare street address to (tools/place.py) --
+    (r'href="https://maps\.google\.com/\?q=2144\+Parkwood\+Rd\+NW\+Snellville\+GA\+30078"',
+     f'href="{MAPS_URL}"'),
 
     # -- trust strip: four cells, not five ---------------------------------
     (r'\s*<div class="ti"><div class="tv">Same</div><div class="tl">Week Appointments<br>Available</div></div>', ''),

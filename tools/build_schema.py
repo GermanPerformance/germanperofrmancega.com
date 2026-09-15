@@ -39,6 +39,7 @@ import re
 import sys
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+import place  # noqa: E402
 from redirects import site_pages  # noqa: E402
 
 REPO_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -62,19 +63,12 @@ INSTAGRAM = "https://www.instagram.com/germanperformance.auto"
 CARFAX = "https://www.carfax.com/Reviews-German-Performance-Snellville-GA_IY4SR7AEBP"
 FACEBOOK = "https://www.facebook.com/GermanPerformance1/"
 YELP = "https://www.yelp.com/biz/german-performance-snellville-2"
-# The Google Business Profile share link (Maps -> Share -> "Copy link",
-# or the g.page short link). None until the owner pastes it; the entity
-# then lists it first, since it is the profile the reviews live on.
-GOOGLE_BUSINESS_PROFILE = None
-MAP = "https://maps.google.com/?q=2144+Parkwood+Rd+NW+Snellville+GA+30078"
-
-# Where the pin goes. BimmerShops' listing for this shop (name and phone
-# match) publishes 33.845661, -84.055626; the US Census geocoder resolves
-# the street address to 33.847265, -84.056955, about 200 m away on the
-# same road. The directory value is used because it is attached to the
-# business rather than interpolated along the street. Six decimals is
-# ~10 cm, more than a pin needs.
-GEO = {"latitude": 33.845661, "longitude": -84.055626}
+# The Google Business Profile (permanent ?cid= link), the map that opens
+# the listing rather than the building, and the pin exactly where the
+# listing puts it: all from tools/place.py, which also documents why.
+GOOGLE_BUSINESS_PROFILE = place.PROFILE
+MAP = place.PLACE
+GEO = place.GEO
 
 AREA_SERVED = ["Snellville", "Loganville", "Grayson", "Lawrenceville",
                "Stone Mountain", "Gwinnett County"]

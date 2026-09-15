@@ -240,7 +240,7 @@
      precedes one, and it is the only other outbound action on the site. */
   document.addEventListener('click', function (event) {
     var link = event.target.closest &&
-               event.target.closest('a[href*="maps.google"], a[href*="goo.gl/maps"]');
+               event.target.closest('a[href*="google.com/maps"], a[href*="maps.google"], a[href*="goo.gl/maps"]');
     if (!link) return;
     gtag('event', 'get_directions', {
       event_category: 'local_intent',

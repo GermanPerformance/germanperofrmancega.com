@@ -26,6 +26,7 @@ sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from brand_pages import PAGES  # noqa: E402
 from fix_breadcrumbs import breadcrumb  # noqa: E402
 from page_chrome import NAP_GRID, NAV, footer, scripts, stylesheets  # noqa: E402
+import place  # noqa: E402
 
 REPO_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SITE = "https://germanperformancega.com"
@@ -157,7 +158,7 @@ def build(page):
     <p class="sd" style="margin:0 auto 44px;text-align:center;max-width:480px">Serving Snellville, Loganville, Grayson, Lawrenceville, and all of Gwinnett County.</p>
     <div style="display:flex;gap:20px;justify-content:center;flex-wrap:wrap">
       <a href="tel:+16783957459" class="bp"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M6.6 2.5a1.6 1.6 0 0 1 1.5 1l1 2.4a1.6 1.6 0 0 1-.4 1.8L7.4 8.9a11.6 11.6 0 0 0 5.7 5.7l1.2-1.3a1.6 1.6 0 0 1 1.8-.4l2.4 1a1.6 1.6 0 0 1 1 1.5v2.3a2.3 2.3 0 0 1-2.5 2.3 A18.4 18.4 0 0 1 2.2 5a2.3 2.3 0 0 1 2.3-2.5z"/></svg><span>Service My Car</span></a>
-      <a href="https://maps.google.com/?q=2144+Parkwood+Rd+NW+Snellville+GA+30078" target="_blank" rel="noopener" class="bg">Get Directions {ARROW}</a>
+      <a href="{place.attr(place.DIRECTIONS)}" target="_blank" rel="noopener" class="bg">Get Directions {ARROW}</a>
     </div>
   </div>
 </section>

@@ -161,7 +161,7 @@ async function adVisit(browser, origin) {
   const band = await clickAndRead(page, '.cta-band a.bw');
   check((events(band, 'generate_lead')[0] || {}).placement === 'cta_band',
         'red band tap -> placement=cta_band');
-  const directions = await clickAndRead(page, '.cta-final a[href*="maps.google"]');
+  const directions = await clickAndRead(page, '.cta-final a[href*="google.com/maps"]');
   check(events(directions, 'get_directions').length === 1, 'directions tap -> get_directions');
   await page.close();
 }
