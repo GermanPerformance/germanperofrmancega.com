@@ -48,12 +48,16 @@ def generic_page_for(service):
 
 
 def parents_row(page):
-    """On a make's page, the two places it belongs: every job the shop does
-    on that make, and the same job for every make. Reuses the footer's
-    link-row class, as the hubs do for their sister makes."""
+    """Under the grid, the other place the page belongs. On a make's page:
+    every job the shop does on that make, and the same job for every make.
+    On a make-agnostic page: the five brand hubs, named as the hubs name
+    themselves, so a reader who wants the make-specific detail (and the
+    search engine weighing "BMW repair") has the link from every general
+    page. Reuses the footer's link-row class, as the hubs do."""
     hub = hub_for(page)
     if hub is None:
-        return ""
+        links = [f'<a href="{href_for(h)}">{label}</a>' for h, label in hubs()]
+        return '  <div class="flinks fu">' + "".join(links) + "</div>\n"
     links = [f'<a href="{href_for(hub)}">All {_SHORT[make_of(page)]} services</a>']
     generic = generic_page_for(service_of(page))
     if generic:

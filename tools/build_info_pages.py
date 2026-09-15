@@ -56,12 +56,12 @@ sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 # fixed in one file and stale in the others.
 from build_service_pages import checks_list  # noqa: E402
 from build_landing_pages import photo_picture  # noqa: E402
-from page_chrome import neutral_blocks, stylesheets  # noqa: E402
+from page_chrome import NAV, neutral_blocks, scripts, stylesheets  # noqa: E402
+from page_chrome import neutral_footer as chrome_neutral_footer  # noqa: E402
 import place  # noqa: E402
 from urls import page_url  # noqa: E402
 
 REPO_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-DONOR = "porsche-oil-change-snellville-ga.html"
 # Both open the shop's Google listing, not the building (tools/place.py).
 MAPS = place.attr(place.DIRECTIONS)
 MAP_EMBED = place.attr(place.EMBED)
@@ -289,24 +289,18 @@ def neutral_footer(footer):
 
 
 def skeleton():
-    src = open(os.path.join(REPO_ROOT, DONOR), encoding="utf-8").read()
-
-    def grab(pattern):
-        match = re.search(pattern, src, re.S)
-        if not match:
-            raise SystemExit(f"{DONOR}: no match for {pattern[:44]}")
-        return match.group(0)
-
+    """The chrome every info page shares, from the tool that owns each
+    piece: nav and phone menu (tools/apply_redesign.py via page_chrome),
+    the neutral footer, the one bundle link with its critical block, and
+    the script tags. Nothing is scraped from another page any more -- the
+    donor this once read was a make's job page, retired on 2026-09-15."""
     return {
-        "nav": grab(r"<nav.*?</nav>"),
-        "mob": grab(r'<div id="mobile-menu".*?\n</div>'),
+        "nav": NAV,
+        "mob": "",
         "callbar": "",  # the fixed bottom call bar was removed site-wide
-        "footer": neutral_footer(grab(r"<footer>.*?</footer>")),
-        # Not scraped: the inline critical block and the one bundle link,
-        # from the tool that owns them (an info page is a site-sheet page).
+        "footer": chrome_neutral_footer(),
         "css": stylesheets("site"),
-        "scripts": "\n".join(
-            re.findall(r'<script defer src="assets/js/[^"]+"></script>', src)),
+        "scripts": scripts(),
     }
 
 
@@ -391,7 +385,6 @@ def build(page, sk):
 <body data-page-type="info">
 
 {sk['nav']}
-{sk['mob']}
 <main>
 <div class="breadcrumb"><a href="/">Home</a><span>/</span><span class="crumb-here">{page['crumb']}</span></div>
 <section class="hero">

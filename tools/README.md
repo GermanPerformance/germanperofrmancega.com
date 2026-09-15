@@ -7,7 +7,8 @@ Plain Python 3, no dependencies. Run everything from the repo root.
 - `service_catalog.py` — every service page: its make, its job, its one
   name. The nav, hub grids, footer, related blocks, breadcrumbs, `llms.txt`
   and the consistency checker derive from it. Add a page here first.
-- `brand_pages/<make>.py` — the copy for a make's pages (`build_service_pages.py`).
+- `brand_pages/<make>.py` — the copy for a make's hub (`build_brand_hubs.py`); `build_service_pages.py`
+  is the template library the general pages render on.
 - `landing_pages.py` — the copy for the category landing pages (`build_landing_pages.py`).
 - `gbp_claims.py` — which Google Business Profile services each page answers for.
 - `place.py` — the shop's Google listing (place ID, CID, pin) and every Maps URL: embed, directions, `hasMap`, `sameAs`, write-a-review.
@@ -35,7 +36,6 @@ Plain Python 3, no dependencies. Run everything from the repo root.
 
 ```
 python3 tools/build_css.py                    # CSS bundles + the inline critical block (first: the generators link them)
-python3 tools/build_service_pages.py          # brand_pages/*.py -> make pages
 python3 tools/build_general_service_pages.py  # three category pages on the same template
 python3 tools/build_brand_hubs.py             # five make hubs
 python3 tools/build_info_pages.py             # about, contact

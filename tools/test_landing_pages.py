@@ -123,10 +123,11 @@ class EntryContractTests(unittest.TestCase):
         self.assertEqual(len(slugs), len(set(slugs)))
 
     def test_no_entry_is_also_built_elsewhere(self):
+        import build_brand_hubs
         import build_general_service_pages
-        import build_service_pages
+        import posts
         others = {p["slug"] for p in build_general_service_pages.PAGES}
-        others |= {p["slug"] for p in build_service_pages.PAGES}
+        others |= set(build_brand_hubs.SLUGS) | set(posts.POST_DATES)
         for page in landing_pages.PAGES:
             self.assertNotIn(page["slug"], others, f"{page['slug']}: two writers")
 

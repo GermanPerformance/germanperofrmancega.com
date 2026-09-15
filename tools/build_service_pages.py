@@ -1,21 +1,18 @@
 #!/usr/bin/env python3
-"""Build the make-specific service pages from tools/brand_pages/.
+"""The service-page template: the markup tools/build_general_service_pages.py
+renders its pages on.
 
-One dict per page, kept by make in tools/brand_pages/<make>.py so each
-file stays readable as pages are added. A make's page says what that
-make's job actually involves -- the approvals, the resets, the parts that
-fail on those engines -- so no two makes share a page with the name
-swapped. Every technical claim is a documented characteristic of the
-marque; nothing about pricing, turnaround or certification is invented.
+It once also built the make-specific job pages from tools/brand_pages/;
+those pages were retired on 2026-09-15 in favour of the brand hubs, and
+brand_pages/ now holds the hubs' copy instead. What remains is a library:
+build(page) renders one page dict, checks_list() writes the hero facts,
+MARQUE_TOKENS says how each marque may name itself in them.
 
 The chrome -- nav, phone menu, address block, footer, stylesheet and
 script links -- comes from tools/page_chrome.py, never from a donor page,
-so no page inherits another marque's copy or a stale footer. The hero
-checklist names the page's own marque via checks_list(). The breadcrumb
-comes from tools/fix_breadcrumbs.py, so a make's page sits under its hub.
-
-Run from the repo root:  python3 tools/build_service_pages.py
-Then tools/apply_redesign.py, which normalises the template's markup.
+so no page inherits another marque's copy or a stale footer. The breadcrumb
+comes from tools/fix_breadcrumbs.py. tools/apply_redesign.py normalises the
+template's markup after a generator runs.
 """
 
 import os
@@ -23,7 +20,6 @@ import re
 import sys
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
-from brand_pages import PAGES  # noqa: E402
 from fix_breadcrumbs import breadcrumb  # noqa: E402
 from page_chrome import NAP_GRID, NAV, footer, scripts, stylesheets  # noqa: E402
 import place  # noqa: E402
@@ -169,35 +165,3 @@ def build(page):
 </body>
 </html>
 """
-
-
-def main():
-    written = []
-    for page in PAGES:
-        # Assert the hero checklist names this marque rather than trusting
-        # that it does -- copying a BMW donor is exactly how "BMW-Approved
-        # Parts & Fluids" once shipped on the Porsche hub. Both short and
-        # full forms count: the VW pages say "VW" deliberately, which is
-        # how the marque writes it.
-        page_html = build(page)
-
-        checks = page_html[page_html.find('<ul class="checks'):]
-        checks = checks[:checks.find("</ul>")]
-        if not any(token in checks for token in MARQUE_TOKENS[page["brand"]]):
-            raise SystemExit(
-                f"{page['slug']}: hero checklist does not name {page['brand']}")
-
-        path = os.path.join(REPO_ROOT, page["slug"])
-        with open(path, "w", encoding="utf-8") as fh:
-            fh.write(page_html)
-        words = len(re.sub(r"<[^>]+>", " ", page_html).split())
-        written.append((page["slug"], words))
-
-    for slug, words in written:
-        print(f"  wrote {slug:48s} ~{words} words")
-    print(f"\n{len(written)} service pages built")
-    return 0
-
-
-if __name__ == "__main__":
-    sys.exit(main())

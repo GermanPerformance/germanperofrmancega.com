@@ -385,6 +385,9 @@ def build(b):
 '''
 
 
+SLUGS = tuple(b["slug"] for b in BRANDS)
+
+
 def main():
     for b in BRANDS:
         path = os.path.join(REPO_ROOT, b["slug"])
