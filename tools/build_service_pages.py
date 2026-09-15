@@ -27,9 +27,9 @@ from brand_pages import PAGES  # noqa: E402
 from fix_breadcrumbs import breadcrumb  # noqa: E402
 from page_chrome import NAP_GRID, NAV, footer, scripts, stylesheets  # noqa: E402
 import place  # noqa: E402
+from urls import page_url  # noqa: E402
 
 REPO_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-SITE = "https://germanperformancega.com"
 
 ARROW = ('<svg width="16" height="16" viewBox="0 0 16 16" fill="none">'
          '<path d="M3 8H13M9 4L13 8L9 12" stroke="currentColor" '
@@ -100,7 +100,7 @@ def build(page):
 <title>{page['title']}</title>
 <meta name="description" content="{page['desc']}">
 <link rel="icon" type="image/png" href="assets/img/favicon-144.png">
-<link rel="canonical" href="{SITE}/{page['slug']}"/>
+<link rel="canonical" href="{page_url(page['slug'])}"/>
 {stylesheets()}
 </head>
 <body data-page-type="service">
@@ -113,7 +113,7 @@ def build(page):
     <div class="eyebrow fu">{page['brand']} Specialists &nbsp;·&nbsp; Snellville, GA &nbsp;·&nbsp;<span class="eyebrow-highlight">4.5★ Rated</span></div>
     <h1 class="fu">{line1}<br><span class="outline">{line2}</span><br><span class="accent">{line3}</span></h1>
     <p class="sub fu">{page['sub']}</p>
-    <div class="acts fu"><a href="tel:+16783957459" class="bp"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M6.6 2.5a1.6 1.6 0 0 1 1.5 1l1 2.4a1.6 1.6 0 0 1-.4 1.8L7.4 8.9a11.6 11.6 0 0 0 5.7 5.7l1.2-1.3a1.6 1.6 0 0 1 1.8-.4l2.4 1a1.6 1.6 0 0 1 1 1.5v2.3a2.3 2.3 0 0 1-2.5 2.3 A18.4 18.4 0 0 1 2.2 5a2.3 2.3 0 0 1 2.3-2.5z"/></svg><span>Service My Car</span></a><a href="index.html#services" class="bg">All Services {ARROW}</a></div>
+    <div class="acts fu"><a href="tel:+16783957459" class="bp"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M6.6 2.5a1.6 1.6 0 0 1 1.5 1l1 2.4a1.6 1.6 0 0 1-.4 1.8L7.4 8.9a11.6 11.6 0 0 0 5.7 5.7l1.2-1.3a1.6 1.6 0 0 1 1.8-.4l2.4 1a1.6 1.6 0 0 1 1 1.5v2.3a2.3 2.3 0 0 1-2.5 2.3 A18.4 18.4 0 0 1 2.2 5a2.3 2.3 0 0 1 2.3-2.5z"/></svg><span>Service My Car</span></a><a href="/#services" class="bg">All Services {ARROW}</a></div>
 {checks_list(page.get('marque', page['brand']))}
   </div>
 </section>

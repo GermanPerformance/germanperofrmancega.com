@@ -16,6 +16,7 @@ sys.path.insert(0, TOOLS)
 import apply_redesign as redesign  # noqa: E402
 import page_chrome as pc  # noqa: E402
 import service_catalog as cat  # noqa: E402
+from urls import href_for  # noqa: E402
 
 PAGE = "porsche-oil-change-snellville-ga.html"
 
@@ -47,8 +48,9 @@ class HeadTests(unittest.TestCase):
 class FooterTests(unittest.TestCase):
     def test_service_page_footer_uses_its_related_links(self):
         html = pc.footer(PAGE)
-        self.assertIn('<div class="fct">Services</div><a href="index.html#services">All Services</a>', html)
-        self.assertIn("porsche-brake-service-snellville-ga.html", html)
+        self.assertIn('<div class="fct">Services</div><a href="/#services">All Services</a>', html)
+        self.assertIn('href="/porsche-brake-service-snellville-ga"', html)
+        self.assertNotIn(".html", html)
         self.assertIn(str(datetime.date.today().year), html)
         self.assertIn("Get directions", html)
         self.assertIn(redesign.PRIVACY_LINK, html)
@@ -56,9 +58,9 @@ class FooterTests(unittest.TestCase):
     def test_neutral_footer_lists_the_hubs(self):
         col, flinks = pc.neutral_blocks()
         for hub, label in cat.hubs()[:3]:
-            self.assertIn(f'<a href="{hub}">{label}</a>', col)
+            self.assertIn(f'<a href="{href_for(hub)}">{label}</a>', col)
         for hub, label in cat.hubs():
-            self.assertIn(f'<a href="{hub}">{label}</a>', flinks)
+            self.assertIn(f'<a href="{href_for(hub)}">{label}</a>', flinks)
         self.assertNotIn("porsche", col)
 
     def test_footer_is_stable_under_the_redesign_pass(self):

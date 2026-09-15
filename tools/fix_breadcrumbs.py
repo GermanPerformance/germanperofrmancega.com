@@ -27,6 +27,7 @@ import sys
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from service_catalog import (PAGES, full_label, hub_for, hubs,  # noqa: E402
                              make_of)
+from urls import href_for  # noqa: E402
 
 REPO_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 AREA = "Snellville, GA"
@@ -47,7 +48,7 @@ def trail(slug):
 def breadcrumb(slug):
     parts = []
     for label, href in trail(slug):
-        parts.append(f'<a href="{href}">{label}</a>' if href
+        parts.append(f'<a href="{href_for(href)}">{label}</a>' if href
                      else f'<span class="crumb-here">{label}</span>')
     return '<div class="breadcrumb">' + "<span>/</span>".join(parts) + "</div>"
 

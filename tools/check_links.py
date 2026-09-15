@@ -2,8 +2,13 @@
 """Verify every internal link on the site resolves.
 
 Checks two classes of link that both silently 404 in a static site:
-  1. file targets   -- href="foo.html"        -> must exist on disk
-  2. anchor targets -- href="foo.html#bar"    -> "bar" must be an id in foo.html
+  1. file targets   -- href="/foo"            -> foo.html must exist on disk
+  2. anchor targets -- href="/foo#bar"        -> "bar" must be an id in foo.html
+
+Links are written in their clean form (tools/urls.py): "/" is index.html
+and "/foo" is foo.html. The old "foo.html" form still resolves, so a
+stray one is not a broken link -- check_catalog_consistency.py is what
+refuses it.
 
 Run from the repo root:  python3 tools/check_links.py
 Exit code 0 = all links resolve, 1 = broken links found.
@@ -13,6 +18,9 @@ import os
 import re
 import sys
 from collections import defaultdict
+
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+from urls import file_for  # noqa: E402
 
 REPO_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -47,13 +55,9 @@ def split_href(href, source):
         return None
 
     path, _, anchor = href.partition("#")
-    # Cache-busting query strings ("site.css?v=1") are not part of the path.
-    path = path.partition("?")[0]
-    # A bare "#anchor" refers to the current page.
-    target = path or source
-    # Root-relative links are served from the repo root; "/" is index.html.
-    if target.startswith("/"):
-        target = target.lstrip("/") or "index.html"
+    # A bare "#anchor" refers to the current page; anything else is a
+    # clean address or an asset path, both served from the repo root.
+    target = source if path == "" else file_for(href)
     return target, anchor
 
 

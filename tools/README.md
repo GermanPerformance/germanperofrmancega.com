@@ -12,6 +12,12 @@ Plain Python 3, no dependencies. Run everything from the repo root.
 - `gbp_claims.py` — which Google Business Profile services each page answers for.
 - `place.py` — the shop's Google listing (place ID, CID, pin) and every Maps URL: embed, directions, `hasMap`, `sameAs`, write-a-review.
 - `redirects.py` — retired URLs and their successors (stubs, never in the sitemap).
+- `urls.py` — the one address each page is served at: `/` for `index.html`,
+  `/about` for `about.html`, never `.html`. Generators write links with
+  `href_for()` / `page_url()`; `apply_redesign.py` runs `clean_links()` over
+  every page (index.html included) so a hand-written `.html` link comes out
+  clean; `check_links.py` resolves a clean address back to its file. The
+  catalog and the tools keep naming pages by file name.
 - `page_chrome.py` — the nav, footer, address block and asset links every generated page shares.
 - `apply_redesign.py` — `VERSION` (bump when a stylesheet or script changes)
   and the "run last" normaliser every page passes through.
@@ -37,6 +43,14 @@ python3 tools/build_redirects.py
 ```
 
 A second pass must change nothing (`git status` clean after re-running).
+
+Links, canonicals, `og:url`, JSON-LD, the sitemap, `llms.txt` and the
+redirect stubs all use the clean address (`tools/urls.py`). GitHub Pages
+serves `about.html` at `/about` on its own and cannot redirect the `.html`
+spelling, so the canonical carries the signal for search engines and
+`assets/js/site.js` tidies the address bar for a visitor who arrives on
+the old form. A local server for the pages must map `/about` to
+`about.html` the same way (`check_tracking_e2e.cjs` does).
 
 ## Checkers and tests
 

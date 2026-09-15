@@ -37,9 +37,9 @@ from build_service_pages import checks_list  # noqa: E402
 from page_chrome import NAV, neutral_footer, scripts, stylesheets  # noqa: E402
 from service_catalog import GROUPS  # noqa: E402
 import place  # noqa: E402
+from urls import href_for, page_url  # noqa: E402
 
 REPO_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-SITE = "https://germanperformancega.com"
 
 BRANDS = [
 {
@@ -270,19 +270,19 @@ def cards(items):
 
 
 def build(b):
-    url = f"{SITE}/{b['slug']}"
+    url = page_url(b["slug"])
     svc = SERVICE_LINKS[b["brand"]]
     line1, line2, line3 = b["h1"]
 
     service_cards = "\n".join(
-        f'    <a href="{h}" class="rel-card"><span class="rel-name">{b["possessive"]} {n}</span>'
+        f'    <a href="{href_for(h)}" class="rel-card"><span class="rel-name">{b["possessive"]} {n}</span>'
         f'<span class="rel-go">&rarr;</span></a>' for h, n in svc)
     universal_cards = "\n".join(
-        f'    <a href="{h}" class="rel-card"><span class="rel-name">{n}</span>'
+        f'    <a href="{href_for(h)}" class="rel-card"><span class="rel-name">{n}</span>'
         f'<span class="rel-go">&rarr;</span></a>' for h, n in UNIVERSAL)
 
     other = "".join(
-        f'<a href="{o["slug"]}">{o["brand"]}</a>'
+        f'<a href="{href_for(o["slug"])}">{o["brand"]}</a>'
         for o in BRANDS if o["slug"] != b["slug"])
 
     faq_html = "\n".join(
@@ -304,13 +304,13 @@ def build(b):
 <body data-page-type="hub">
 {NAV}
 <main>
-<div class="breadcrumb"><a href="index.html">Home</a><span>/</span><span style="color:var(--silver)">{b["crumb"]}</span></div>
+<div class="breadcrumb"><a href="/">Home</a><span>/</span><span style="color:var(--silver)">{b["crumb"]}</span></div>
 <section class="hero"><div class="hbg"></div><div class="hgrid"></div>
   <div class="hc">
     <div class="eyebrow fu">{b["brand"]} Specialists &nbsp;·&nbsp; Snellville, GA &nbsp;·&nbsp; <span class="eyebrow-highlight">4.5★ Rated</span></div>
     <h1 class="fu">{line1}<br><span class="outline">{line2}</span><br><span class="accent">{line3}</span></h1>
     <p class="sub fu">{b["sub"]}</p>
-    <div class="acts fu"><a href="tel:+16783957459" class="bp"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M6.6 2.5a1.6 1.6 0 0 1 1.5 1l1 2.4a1.6 1.6 0 0 1-.4 1.8L7.4 8.9a11.6 11.6 0 0 0 5.7 5.7l1.2-1.3a1.6 1.6 0 0 1 1.8-.4l2.4 1a1.6 1.6 0 0 1 1 1.5v2.3a2.3 2.3 0 0 1-2.5 2.3 A18.4 18.4 0 0 1 2.2 5a2.3 2.3 0 0 1 2.3-2.5z"/></svg><span>Service My Car</span></a><a href="index.html#services" class="bg">All Services <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8H13M9 4L13 8L9 12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></a></div>
+    <div class="acts fu"><a href="tel:+16783957459" class="bp"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M6.6 2.5a1.6 1.6 0 0 1 1.5 1l1 2.4a1.6 1.6 0 0 1-.4 1.8L7.4 8.9a11.6 11.6 0 0 0 5.7 5.7l1.2-1.3a1.6 1.6 0 0 1 1.8-.4l2.4 1a1.6 1.6 0 0 1 1 1.5v2.3a2.3 2.3 0 0 1-2.5 2.3 A18.4 18.4 0 0 1 2.2 5a2.3 2.3 0 0 1 2.3-2.5z"/></svg><span>Service My Car</span></a><a href="/#services" class="bg">All Services <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8H13M9 4L13 8L9 12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></a></div>
 {checks_list(b['possessive'])}
   </div>
 </section>
@@ -362,7 +362,7 @@ def build(b):
 <section style="background:var(--black)">
   <div class="fu"><div class="sl">Other German makes</div>
   <h2>WE ALSO<br><span style="color:var(--red)">SPECIALISE IN</span></h2></div>
-  <div class="flinks fu" style="margin-top:28px">{other}<a href="dealer-vs-independent-german-car-repair.html">Dealer vs. Independent</a></div>
+  <div class="flinks fu" style="margin-top:28px">{other}<a href="/dealer-vs-independent-german-car-repair">Dealer vs. Independent</a></div>
 </section>
 
 <section style="background:var(--black);padding:80px 60px;text-align:center">

@@ -22,6 +22,7 @@ sys.path.insert(0, TOOLS)
 
 import apply_redesign  # noqa: E402
 import service_catalog  # noqa: E402
+from urls import href_for  # noqa: E402
 
 MOB_GRAB = re.compile(r'<div id="mobile-menu">.*?\n</div>', re.S)
 NAV_GRAB = re.compile(r"<nav>.*?</nav>", re.S)
@@ -77,15 +78,20 @@ class NavMarkupTests(unittest.TestCase):
         for anchor in ('href="#reviews"', 'href="#story"', 'href="#services"',
                        'href="#faq"', 'href="#contact"'):
             self.assertIn(anchor, self.home)
-        self.assertNotIn("index.html#", self.home)
-        self.assertNotIn('href="about.html"', self.home)
+        self.assertNotIn('href="/#', self.home)
+        self.assertNotIn('href="/about"', self.home)
 
     def test_other_pages_link_into_the_homepage(self):
-        for target in ('href="index.html#reviews"', 'href="about.html"',
-                       'href="index.html#services"', 'href="index.html#faq"',
-                       'href="contact.html"'):
+        for target in ('href="/#reviews"', 'href="/about"',
+                       'href="/#services"', 'href="/#faq"',
+                       'href="/contact"'):
             self.assertIn(target, self.page)
         self.assertNotIn('href="#', self.page)
+
+    def test_every_link_is_a_clean_address(self):
+        for markup in (self.home, self.page):
+            self.assertNotIn(".html", markup)
+        self.assertIn('<a href="/" class="nav-logo">', self.page)
 
     def test_tuning_is_gone(self):
         for markup in (self.home, self.page):
@@ -130,7 +136,7 @@ class NavMarkupTests(unittest.TestCase):
         mob = mobile_menu(self.page)
         for _, entries in service_catalog.GROUPS:
             for href, label in entries:
-                link = f'<a href="{href}">{label}</a>'
+                link = f'<a href="{href_for(href)}">{label}</a>'
                 self.assertIn(link, nav)
                 self.assertIn(link, mob)
 
@@ -147,7 +153,7 @@ class HomepageTests(unittest.TestCase):
         section = html[html.index('<section id="services">'):]
         section = section[:section.index("</section>")]
         hrefs = re.findall(r'<a href="([^"]+)" class="bg"', section)
-        self.assertEqual(hrefs, [h for h, _ in service_catalog.MONEY])
+        self.assertEqual(hrefs, [href_for(h) for h, _ in service_catalog.MONEY])
 
 
 if __name__ == "__main__":

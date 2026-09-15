@@ -20,6 +20,7 @@ import build_landing_pages as blp  # noqa: E402
 import build_schema  # noqa: E402
 import landing_pages  # noqa: E402
 import reviews  # noqa: E402
+from urls import page_url  # noqa: E402
 
 H1_RE = re.compile(r"<h1[^>]*>(.*?)</h1>", re.S)
 HEADING_RE = re.compile(r"<h([1-6])[^>]*>", re.S)
@@ -200,7 +201,7 @@ class BuildTests(unittest.TestCase):
             markup = self.pages[slug]
             self.assertEqual(meta(markup, "og:title"), blp.title(page["service"]), slug)
             self.assertEqual(meta(markup, "og:description"), page["desc"], slug)
-            self.assertEqual(meta(markup, "og:url"), f"{blp.SITE}/{slug}", slug)
+            self.assertEqual(meta(markup, "og:url"), page_url(slug), slug)
             self.assertEqual(meta(markup, "og:type"), "website", slug)
             self.assertEqual(meta(markup, "twitter:card"), "summary_large_image", slug)
             image = meta(markup, "og:image")
@@ -242,8 +243,9 @@ class BuildTests(unittest.TestCase):
             self.assertIn(apply_redesign.NAV, markup, slug)
             self.assertIn('<body data-page-type="service">', markup, slug)
             self.assertIn(f'assets/js/analytics.js?v={apply_redesign.VERSION}', markup, slug)
-            self.assertIn('href="privacy-policy.html"', markup, slug)
-            self.assertIn(f'<link rel="canonical" href="{blp.SITE}/{slug}"/>', markup, slug)
+            self.assertIn('href="/privacy-policy"', markup, slug)
+            self.assertIn(f'<link rel="canonical" href="{page_url(slug)}"/>', markup, slug)
+            self.assertNotIn('.html"', markup, slug)
             self.assertIn(">Get directions<", markup, slug)
 
 

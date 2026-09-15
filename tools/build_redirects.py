@@ -22,9 +22,9 @@ import sys
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from redirects import REDIRECTS  # noqa: E402
+from urls import href_for, page_url  # noqa: E402
 
 REPO_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-SITE = "https://germanperformancega.com"
 SITE_NAME = "German Performance"
 
 
@@ -41,7 +41,7 @@ def short_title(title):
 
 
 def stub(old, new, new_title):
-    url = f"{SITE}/{new}"
+    url = page_url(new)
     label = html.escape(short_title(new_title))
     return f"""<!DOCTYPE html>
 <html lang="en">
@@ -54,7 +54,7 @@ def stub(old, new, new_title):
 <script>location.replace("{url}")</script>
 </head>
 <body>
-<p>This page has moved to <a href="{new}">{label}</a>.</p>
+<p>This page has moved to <a href="{href_for(new)}">{label}</a>.</p>
 </body>
 </html>
 """

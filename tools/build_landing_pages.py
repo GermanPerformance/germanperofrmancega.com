@@ -45,6 +45,7 @@ from page_chrome import footer  # noqa: E402
 from landing_pages import (AREA_LINE, DEFAULT_CTA_SUB, DEFAULT_STEPS,  # noqa: E402
                            PAGES)
 from reviews import REVIEWS  # noqa: E402
+from urls import page_url  # noqa: E402
 
 REPO_ROOT = os.path.dirname(TOOLS)
 SITE = "https://germanperformancega.com"
@@ -126,7 +127,7 @@ def og_image(page):
 
 
 def social_tags(page):
-    t, d, url = title(page["service"]), page["desc"], f'{SITE}/{page["slug"]}'
+    t, d, url = title(page["service"]), page["desc"], page_url(page["slug"])
     image = f"{SITE}/{og_image(page)}"
     return "\n".join((
         f'<meta property="og:type" content="website">',
@@ -278,7 +279,7 @@ def build(page):
 <title>{title(page["service"])}</title>
 <meta name="description" content="{page["desc"]}">
 <link rel="icon" type="image/png" href="assets/img/favicon-144.png">
-<link rel="canonical" href="{SITE}/{page["slug"]}"/>
+<link rel="canonical" href="{page_url(page["slug"])}"/>
 {social_tags(page)}
 {FONTS}
 <link rel="stylesheet" href="assets/css/tokens.css?v={v}">
@@ -288,7 +289,7 @@ def build(page):
 <body data-page-type="service">
 {redesign.NAV}
 <main>
-<div class="breadcrumb"><a href="index.html">Home</a><span>/</span><span class="crumb-here">{crumb(page["service"])}</span></div>
+<div class="breadcrumb"><a href="/">Home</a><span>/</span><span class="crumb-here">{crumb(page["service"])}</span></div>
 {hero(page)}
 
 {included(page)}

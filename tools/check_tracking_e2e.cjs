@@ -35,7 +35,7 @@ const path = require('path');
 const { chromium } = require('playwright-core');
 
 const REPO_ROOT = path.resolve(__dirname, '..');
-const PAGE = 'bmw-repair-snellville-ga.html';
+const PAGE = 'bmw-repair-snellville-ga';
 const SHOP_TEL = 'tel:+16783957459';
 const SHOP_DISPLAY = '(678) 395-7459';
 const FORWARD_DISPLAY = '(770) 555-0100';
@@ -78,9 +78,18 @@ const GTAG_STUB = `
   });
 })();`;
 
+/* The file behind a request, resolved the way GitHub Pages does it: "/"
+   is index.html and an extensionless path is that page's .html file. */
+function fileFor(url) {
+  const pathname = decodeURIComponent(url.split('?')[0]);
+  if (pathname === '/') return path.join(REPO_ROOT, 'index.html');
+  const file = path.join(REPO_ROOT, pathname);
+  return path.extname(file) ? file : `${file}.html`;
+}
+
 function serve() {
   const server = http.createServer((req, res) => {
-    const file = path.join(REPO_ROOT, decodeURIComponent(req.url.split('?')[0]));
+    const file = fileFor(req.url);
     if (!file.startsWith(REPO_ROOT) || !fs.existsSync(file) || fs.statSync(file).isDirectory()) {
       res.writeHead(404); res.end(); return;
     }

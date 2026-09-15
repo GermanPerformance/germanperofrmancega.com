@@ -49,8 +49,8 @@ class TrailTests(unittest.TestCase):
     def test_markup_uses_the_existing_classes_only(self):
         markup = fb.breadcrumb(MAKE_PAGE)
         self.assertEqual(markup, (
-            '<div class="breadcrumb"><a href="index.html">Home</a><span>/</span>'
-            f'<a href="{HUB}">BMW Repair</a><span>/</span>'
+            '<div class="breadcrumb"><a href="/">Home</a><span>/</span>'
+            '<a href="/bmw-repair-snellville-ga">BMW Repair</a><span>/</span>'
             '<span class="crumb-here">BMW Oil Change — Snellville, GA</span></div>'))
         self.assertNotIn("style=", markup)
 

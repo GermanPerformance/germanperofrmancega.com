@@ -21,6 +21,7 @@ REPO_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from service_catalog import (GROUPS, full_label, make_of, ranking_group,  # noqa: E402
                              service_of, service_pages)
+from urls import href_for  # noqa: E402
 
 # Every non-hub page and the name it carries in a mixed list, in catalog
 # order: each make's pages in the order its nav column shows them, then
@@ -70,14 +71,14 @@ def related(page, limit=8):
 def build_blocks(page):
     """Return the replacement footer 'Services' column and .flinks row."""
     picks = related(page)
-    column = "".join(f'<a href="{p}">{SERVICES[p]}</a>' for p in picks[:3])
+    column = "".join(f'<a href="{href_for(p)}">{SERVICES[p]}</a>' for p in picks[:3])
     services_col = (
         '<div class="fc"><div class="fct">Services</div>'
-        '<a href="index.html#services">All Services</a>'
+        '<a href="/#services">All Services</a>'
         f"{column}</div>"
     )
     flinks = '<div class="flinks">' + "".join(
-        f'<a href="{p}">{SERVICES[p]}</a>' for p in picks[3:8]
+        f'<a href="{href_for(p)}">{SERVICES[p]}</a>' for p in picks[3:8]
     ) + "</div>"
     return services_col, flinks
 

@@ -31,6 +31,7 @@ sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from fix_footer_links import SERVICES, brand_of, related  # noqa: E402
 from service_catalog import (MAKES, full_label, hub_for, hubs, make_of,  # noqa: E402
                              service_of, service_pages)
+from urls import href_for  # noqa: E402
 
 REPO_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -53,10 +54,10 @@ def parents_row(page):
     hub = hub_for(page)
     if hub is None:
         return ""
-    links = [f'<a href="{hub}">All {_SHORT[make_of(page)]} services</a>']
+    links = [f'<a href="{href_for(hub)}">All {_SHORT[make_of(page)]} services</a>']
     generic = generic_page_for(service_of(page))
     if generic:
-        links.append(f'<a href="{generic}">{full_label(generic)}</a>')
+        links.append(f'<a href="{href_for(generic)}">{full_label(generic)}</a>')
     return '  <div class="flinks fu">' + "".join(links) + "</div>\n"
 
 
@@ -78,7 +79,7 @@ def build_block(page):
     picks = related(page, limit=6)
     lead, accent = BRAND_TITLES.get(brand_of(page), DEFAULT_TITLE)
     cards = "".join(
-        f'    <a href="{p}" class="rel-card">'
+        f'    <a href="{href_for(p)}" class="rel-card">'
         f'<span class="rel-name">{SERVICES[p]}</span>'
         f'<span class="rel-go">&rarr;</span></a>\n'
         for p in picks

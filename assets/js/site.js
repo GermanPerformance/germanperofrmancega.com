@@ -1,8 +1,18 @@
 /* German Performance -- one script for every page.
-   Scroll reveal, the hiding nav, the Services panel, the mobile menu, and
-   the active nav link. */
+   The clean address, scroll reveal, the hiding nav, the Services panel,
+   the mobile menu, and the active nav link. */
 (function () {
   'use strict';
+
+  /* Every page has one address, without ".html" (the homepage is "/"),
+     and that is what the canonical, the sitemap and every link say. The
+     host serves the ".html" spelling too and cannot redirect it, so a
+     visitor who arrives that way gets the clean address in the bar
+     without a reload; the canonical tag is what search engines follow. */
+  var clean = location.pathname.replace(/\/index\.html$/, '/').replace(/\.html$/, '');
+  if (clean !== location.pathname && window.history && history.replaceState) {
+    try { history.replaceState(history.state, '', clean + location.search + location.hash); } catch (e) {}
+  }
 
   /* Scroll reveal. Hero children animate with CSS on load, so skip them. */
   var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;

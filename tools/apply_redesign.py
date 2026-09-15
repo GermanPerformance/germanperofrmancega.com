@@ -51,9 +51,10 @@ sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from service_catalog import GROUPS, HUBS  # noqa: E402
 import place  # noqa: E402
 from redirects import site_pages  # noqa: E402
+import urls  # noqa: E402
 
 REPO_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-VERSION = "31"
+VERSION = "32"
 
 # The typefaces are served from assets/fonts/ (see tools/build_fonts.py):
 # the @font-face rules are the first stylesheet, so the browser asks for
@@ -325,7 +326,7 @@ def footer_seal(html):
                   lambda m: m.group(1) + footer_seal_markup(), html, count=1, flags=re.S)
 
 
-PRIVACY_LINK = ' · <a href="privacy-policy.html">Privacy Policy</a>'
+PRIVACY_LINK = ' · <a href="/privacy-policy">Privacy Policy</a>'
 FCOPY_RE = re.compile(r'(<div class="fcopy">© \d{4} German Performance — Snellville, GA 30078)'
                       r'(?:' + re.escape(PRIVACY_LINK) + r')?(</div>)')
 
@@ -409,7 +410,9 @@ CHEVRON = ('<svg class="nav-chev" viewBox="0 0 10 10" fill="none" aria-hidden="t
 
 
 def href(target, home):
-    return HOME_HREFS.get(target, target) if home else target
+    """The homepage links down its own document; every other page links to
+    the page's clean address (tools/urls.py)."""
+    return HOME_HREFS[target] if home and target in HOME_HREFS else urls.href_for(target)
 
 
 def service_columns(home, indent):
@@ -441,7 +444,7 @@ def nav_markup(home=False):
     spy = ' data-section="#services"' if home else ""
     return f'''{TOPBAR}
 <nav>
-  <a href="index.html" class="nav-logo">{LOGO_NAV}</a>
+  <a href="/" class="nav-logo">{LOGO_NAV}</a>
   <ul class="nav-links">
     <li><a href="{h('index.html#reviews')}">Reviews</a></li>
     <li class="nav-dd">
@@ -492,10 +495,10 @@ FOOTER_CONTACT = ('<div class="fc"><div class="fct">Contact</div>'
                   f'<a href="{MAPS_URL}" target="_blank" rel="noopener">Get directions</a>'
                   '<p>Mon–Fri: 9:30 AM–6 PM</p></div>')
 FOOTER_NAVIGATE = ('<div class="fc"><div class="fct">Navigate</div>'
-                   '<a href="index.html">Home</a><a href="about.html">About</a>'
-                   '<a href="index.html#reviews">Reviews</a><a href="index.html#faq">FAQ</a>'
-                   '<a href="contact.html">Contact</a>'
-                   '<a href="dealer-vs-independent-german-car-repair.html">Dealer vs. Independent</a></div>')
+                   '<a href="/">Home</a><a href="/about">About</a>'
+                   '<a href="/#reviews">Reviews</a><a href="/#faq">FAQ</a>'
+                   '<a href="/contact">Contact</a>'
+                   '<a href="/dealer-vs-independent-german-car-repair">Dealer vs. Independent</a></div>')
 FOOTER_CONTACT_RE = re.compile(r'<div class="fc"><div class="fct">Contact</div>.*?</div>', re.S)
 FOOTER_NAVIGATE_RE = re.compile(r'<div class="fc"><div class="fct">Navigate</div>.*?</div>', re.S)
 FOOTER_YEAR_RE = re.compile(r'(<div class="fcopy">© )\d{4}( German Performance)')
@@ -517,7 +520,7 @@ def footer_chrome(html, home=False):
 FOOTER_COLUMNS = f'''  <div class="ft">
     <div><div class="fb">{LOGO_FOOT}</div><div class="ftag">German auto specialists<br>BMW · Mercedes · Audi · Porsche · VW</div></div>
     {FOOTER_CONTACT}
-    <div class="fc"><div class="fct">Services</div><a href="bmw-repair-snellville-ga.html">BMW Repair</a><a href="mercedes-repair-snellville-ga.html">Mercedes-Benz Repair</a><a href="audi-repair-snellville-ga.html">Audi Repair</a><a href="porsche-repair-snellville-ga.html">Porsche Repair</a><a href="volkswagen-repair-snellville-ga.html">Volkswagen Repair</a></div>
+    <div class="fc"><div class="fct">Services</div><a href="/bmw-repair-snellville-ga">BMW Repair</a><a href="/mercedes-repair-snellville-ga">Mercedes-Benz Repair</a><a href="/audi-repair-snellville-ga">Audi Repair</a><a href="/porsche-repair-snellville-ga">Porsche Repair</a><a href="/volkswagen-repair-snellville-ga">Volkswagen Repair</a></div>
     {FOOTER_NAVIGATE}
   </div>'''
 
@@ -629,6 +632,9 @@ LINK_ROW_BUTTONS = re.compile(r'(<div class="fu link-row">)(.*?)(</div>)', re.S)
 
 
 def transform(html):
+    # Clean addresses first, so every rule below sees one form of a link,
+    # and again last, so nothing a rule writes goes out with ".html" on it.
+    html = urls.clean_links(html)
     for pattern, replacement in RULES:
         html = re.sub(pattern, replacement, html, flags=re.S)
     html = LINK_ROW_BUTTONS.sub(
@@ -647,7 +653,7 @@ def transform(html):
             f'<script defer src="assets/js/analytics.js?v={VERSION}"></script>',
             f'<script defer src="assets/js/site.js?v={VERSION}"></script>\n'
             f'  <script defer src="assets/js/analytics.js?v={VERSION}"></script>')
-    return html
+    return urls.clean_links(html)
 
 
 def main():
@@ -675,6 +681,7 @@ def main():
         print("index.html: nav block not found")
         return 1
     updated = footer_chrome(updated, home=True)
+    updated = urls.clean_links(updated)
     if updated != original:
         with open(index, "w", encoding="utf-8") as fh:
             fh.write(updated)

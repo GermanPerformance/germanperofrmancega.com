@@ -15,9 +15,9 @@ import sys
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from service_catalog import GROUPS, HUBS  # noqa: E402
+from urls import SITE, page_url  # noqa: E402
 
 REPO_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-SITE = "https://germanperformancega.com"
 
 INTRO = """# German Performance
 
@@ -41,7 +41,7 @@ INFO = [
 
 
 def link(slug, label, note=""):
-    url = f"{SITE}/{slug}" if slug != "index.html#services" else f"{SITE}/"
+    url = f"{SITE}/" if slug == "index.html#services" else page_url(slug)
     return f"- [{label}]({url})" + (f": {note}" if note else "")
 
 

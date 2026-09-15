@@ -31,9 +31,9 @@ import sys
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from build_info_pages import neutral_footer  # noqa: E402
+from urls import page_url  # noqa: E402
 
 REPO_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-SITE = "https://germanperformancega.com"
 DONOR = "dealer-vs-independent-german-car-repair.html"
 SLUG = "privacy-policy.html"
 EFFECTIVE = "September 12, 2026"
@@ -195,7 +195,7 @@ def build(sk):
 <title>{TITLE}</title>
 <meta name="description" content="{DESC}">
 <link rel="icon" type="image/png" href="assets/img/favicon-144.png">
-<link rel="canonical" href="{SITE}/{SLUG}">
+<link rel="canonical" href="{page_url(SLUG)}">
 {sk['fonts']}
 {sk['css']}
 </head>

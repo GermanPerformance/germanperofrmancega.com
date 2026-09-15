@@ -55,9 +55,9 @@ from build_service_pages import checks_list  # noqa: E402
 from build_landing_pages import photo_picture  # noqa: E402
 from page_chrome import neutral_blocks  # noqa: E402
 import place  # noqa: E402
+from urls import page_url  # noqa: E402
 
 REPO_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-SITE = "https://germanperformancega.com"
 DONOR = "porsche-oil-change-snellville-ga.html"
 # Both open the shop's Google listing, not the building (tools/place.py).
 MAPS = place.attr(place.DIRECTIONS)
@@ -382,7 +382,7 @@ def build(page, sk):
 <title>{page['title']}</title>
 <meta name="description" content="{page['desc']}">
 <link rel="icon" type="image/png" href="assets/img/favicon-144.png">
-<link rel="canonical" href="{SITE}/{page['slug']}"/>
+<link rel="canonical" href="{page_url(page['slug'])}"/>
 {sk['fonts']}
 {sk['css']}
 </head>
@@ -391,13 +391,13 @@ def build(page, sk):
 {sk['nav']}
 {sk['mob']}
 <main>
-<div class="breadcrumb"><a href="index.html">Home</a><span>/</span><span class="crumb-here">{page['crumb']}</span></div>
+<div class="breadcrumb"><a href="/">Home</a><span>/</span><span class="crumb-here">{page['crumb']}</span></div>
 <section class="hero">
   <div class="hc">
     <div class="eyebrow fu">{page['eyebrow']}</div>
     <h1 class="fu">{l1}<br><span class="outline">{l2}</span><br><span class="accent">{l3}</span></h1>
     <p class="sub fu">{page['sub']}</p>
-    <div class="acts fu"><a href="tel:+16783957459" class="bp"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M6.6 2.5a1.6 1.6 0 0 1 1.5 1l1 2.4a1.6 1.6 0 0 1-.4 1.8L7.4 8.9a11.6 11.6 0 0 0 5.7 5.7l1.2-1.3a1.6 1.6 0 0 1 1.8-.4l2.4 1a1.6 1.6 0 0 1 1 1.5v2.3a2.3 2.3 0 0 1-2.5 2.3 A18.4 18.4 0 0 1 2.2 5a2.3 2.3 0 0 1 2.3-2.5z"/></svg><span>Service My Car</span></a><a href="index.html#services" class="bg">All Services {ARROW}</a></div>
+    <div class="acts fu"><a href="tel:+16783957459" class="bp"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M6.6 2.5a1.6 1.6 0 0 1 1.5 1l1 2.4a1.6 1.6 0 0 1-.4 1.8L7.4 8.9a11.6 11.6 0 0 0 5.7 5.7l1.2-1.3a1.6 1.6 0 0 1 1.8-.4l2.4 1a1.6 1.6 0 0 1 1 1.5v2.3a2.3 2.3 0 0 1-2.5 2.3 A18.4 18.4 0 0 1 2.2 5a2.3 2.3 0 0 1 2.3-2.5z"/></svg><span>Service My Car</span></a><a href="/#services" class="bg">All Services {ARROW}</a></div>
 {checks_list()}
   </div>
 </section>

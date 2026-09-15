@@ -15,6 +15,7 @@ sys.path.insert(0, TOOLS)
 import check_catalog_consistency as ccc  # noqa: E402
 import fix_breadcrumbs as fb  # noqa: E402
 import service_catalog as cat  # noqa: E402
+from urls import href_for, page_url  # noqa: E402
 
 SLUG = "bmw-oil-change-snellville-ga.html"
 HUB = "mercedes-repair-snellville-ga.html"
@@ -27,9 +28,9 @@ def page(slug, title=None, h1=None, crumb=None, desc="A fine page.", canonical=N
     title = title or ccc.expected_name(slug)
     h1 = h1 or ccc.expected_name(slug).upper().replace(" ", "<br>")
     crumb = crumb or fb.breadcrumb(slug)
-    canonical = canonical or f"{ccc.SITE}/{slug}"
+    canonical = canonical or page_url(slug)
     page_type = page_type or ("hub" if slug in {m.hub for m in cat.MAKES} else "service")
-    links = "".join(f'<a href="{h}">{l}</a>' for _, e in cat.GROUPS for h, l in e) if nav else ""
+    links = "".join(f'<a href="{href_for(h)}">{l}</a>' for _, e in cat.GROUPS for h, l in e) if nav else ""
     return (f'<title>{title} Snellville GA | German Performance</title>\n'
             f'<meta name="description" content="{desc}">\n'
             f'<link rel="canonical" href="{canonical}"/>\n'
@@ -85,7 +86,7 @@ class RuleTests(unittest.TestCase):
                                        h1="GERMAN AUTO<br>REPAIR"), [])
 
     def test_make_page_needs_three_crumbs_under_its_hub(self):
-        two = '<div class="breadcrumb"><a href="index.html">Home</a><span>/</span><span class="crumb-here">BMW Oil Change — Snellville, GA</span></div>'
+        two = '<div class="breadcrumb"><a href="/">Home</a><span>/</span><span class="crumb-here">BMW Oil Change — Snellville, GA</span></div>'
         self.assertTrue(any("breadcrumb" in p for p in self.problems(crumb=two)))
 
     def test_generic_page_stays_two_crumbs(self):
@@ -98,6 +99,8 @@ class RuleTests(unittest.TestCase):
 
     def test_canonical_and_page_type(self):
         self.assertTrue(any("canonical" in p for p in self.problems(canonical="https://example.com/x.html")))
+        # The ".html" spelling is a second address for the same page, not its own.
+        self.assertTrue(any("canonical" in p for p in self.problems(canonical=page_url(SLUG) + ".html")))
         self.assertTrue(any("data-page-type" in p for p in self.problems(page_type="hub")))
         self.assertTrue(any("data-page-type" in p for p in self.problems(slug=HUB, page_type="service")))
 

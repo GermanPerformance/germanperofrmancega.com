@@ -30,10 +30,10 @@ import sys
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import service_catalog as cat  # noqa: E402
+from urls import href_for, page_url  # noqa: E402
 from fix_breadcrumbs import breadcrumb  # noqa: E402
 
 REPO_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-SITE = "https://germanperformancega.com"
 DESCRIPTION_MAX = 160
 
 TITLE_RE = re.compile(r"<title>(.*?)</title>", re.S)
@@ -112,7 +112,7 @@ def check_page(slug, content):
         yield f"description is {len(desc)} characters (max {DESCRIPTION_MAX})"
 
     canonical = _first(CANONICAL_RE, content)
-    if canonical != f"{SITE}/{slug}":
+    if canonical != page_url(slug):
         yield f'canonical "{canonical}" is not this page'
 
     kind = "hub" if slug in _HUBS else "service"
@@ -120,7 +120,8 @@ def check_page(slug, content):
         yield f'data-page-type is not "{kind}"'
 
     nav = _first(NAV_RE, content)
-    missing = [h for _, entries in cat.GROUPS for h, _ in entries if f'href="{h}"' not in nav]
+    missing = [h for _, entries in cat.GROUPS for h, _ in entries
+               if f'href="{href_for(h)}"' not in nav]
     if missing:
         yield f"nav is missing {len(missing)} catalog pages (stale regeneration?)"
 

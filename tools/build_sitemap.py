@@ -28,8 +28,10 @@ import subprocess
 import sys
 from xml.sax.saxutils import escape
 
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+from urls import SITE, page_url  # noqa: E402
+
 REPO_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-SITE = "https://germanperformancega.com"
 FALLBACK_IMAGE = f"{SITE}/og-image.jpg"
 CANONICAL_RE = re.compile(r'<link rel="canonical" href="([^"]*)"')
 OG_IMAGE_RE = re.compile(r'<meta property="og:image" content="([^"]*)"')
@@ -58,7 +60,7 @@ def last_modified(name):
 
 
 def own_url(name):
-    return f"{SITE}/" if name == "index.html" else f"{SITE}/{name}"
+    return page_url(name)
 
 
 def is_own_canonical(name, canonical):

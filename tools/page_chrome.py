@@ -23,6 +23,7 @@ sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import apply_redesign as redesign  # noqa: E402
 from fix_footer_links import build_blocks  # noqa: E402
 from service_catalog import hubs  # noqa: E402
+from urls import href_for  # noqa: E402
 
 SITE = "https://germanperformancega.com"
 FAVICON = '<link rel="icon" type="image/png" href="assets/img/favicon-144.png">'
@@ -81,9 +82,9 @@ def neutral_blocks():
     """The Services column and link row for pages that belong to no make:
     the hubs themselves, About, Contact. Three hubs in the column, all
     five in the row."""
-    links = [f'<a href="{h}">{n}</a>' for h, n in hubs()]
+    links = [f'<a href="{href_for(h)}">{n}</a>' for h, n in hubs()]
     column = ('<div class="fc"><div class="fct">Services</div>'
-              '<a href="index.html#services">All Services</a>'
+              '<a href="/#services">All Services</a>'
               + "".join(links[:3]) + "</div>")
     return column, '<div class="flinks">' + "".join(links) + "</div>"
 

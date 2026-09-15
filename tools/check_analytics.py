@@ -54,7 +54,7 @@ TEL = re.compile(r'href="tel:([^"]*)"')
 E164 = re.compile(r"^\+1\d{10}$")
 INLINE_TAG = re.compile(r"gtag\(|dataLayer\.push|googletagmanager\.com")
 PRIVACY_PAGE = "privacy-policy.html"
-PRIVACY_LINK = re.compile(r'href="privacy-policy\.html"')
+PRIVACY_LINK = re.compile(r'href="/privacy-policy"')
 # Each id, its placeholder, and the shape of a real one. The placeholders
 # satisfy the shapes on purpose (X is a letter), so they are excluded by
 # name rather than by pattern.

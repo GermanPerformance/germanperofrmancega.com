@@ -12,6 +12,7 @@ sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import build_redirects  # noqa: E402
 import build_sitemap  # noqa: E402
 from redirects import REDIRECTS, site_pages  # noqa: E402
+from urls import page_url  # noqa: E402
 
 REPO_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SITE = "https://germanperformancega.com"
@@ -38,14 +39,17 @@ class Stub(unittest.TestCase):
                                          "Audi Repair & Service Snellville GA | German Performance")
 
     def test_instant_meta_refresh_to_the_absolute_url(self):
-        self.assertIn(f'<meta http-equiv="refresh" content="0; url={SITE}/audi-repair-snellville-ga.html">', self.html)
+        self.assertIn(f'<meta http-equiv="refresh" content="0; url={SITE}/audi-repair-snellville-ga">', self.html)
 
     def test_canonical_names_the_successor(self):
-        self.assertIn(f'<link rel="canonical" href="{SITE}/audi-repair-snellville-ga.html">', self.html)
+        self.assertIn(f'<link rel="canonical" href="{SITE}/audi-repair-snellville-ga">', self.html)
 
     def test_browsers_get_a_script_and_people_get_a_link(self):
-        self.assertIn(f'location.replace("{SITE}/audi-repair-snellville-ga.html")', self.html)
-        self.assertIn('<a href="audi-repair-snellville-ga.html">Audi Repair &amp; Service Snellville GA</a>', self.html)
+        self.assertIn(f'location.replace("{SITE}/audi-repair-snellville-ga")', self.html)
+        self.assertIn('<a href="/audi-repair-snellville-ga">Audi Repair &amp; Service Snellville GA</a>', self.html)
+
+    def test_successor_is_named_without_its_extension(self):
+        self.assertNotIn(".html", self.html.split("<title>")[1])
 
     def test_stub_is_not_indexable_content(self):
         self.assertNotIn('name="description"', self.html)
@@ -56,8 +60,10 @@ class Stub(unittest.TestCase):
 class Sitemap(unittest.TestCase):
     def test_a_page_canonicalised_elsewhere_is_not_listed(self):
         self.assertFalse(build_sitemap.is_own_canonical(
-            "audi-timing-belt-snellville-ga.html", f"{SITE}/audi-repair-snellville-ga.html"))
+            "audi-timing-belt-snellville-ga.html", f"{SITE}/audi-repair-snellville-ga"))
         self.assertTrue(build_sitemap.is_own_canonical(
+            "audi-repair-snellville-ga.html", f"{SITE}/audi-repair-snellville-ga"))
+        self.assertFalse(build_sitemap.is_own_canonical(
             "audi-repair-snellville-ga.html", f"{SITE}/audi-repair-snellville-ga.html"))
         self.assertTrue(build_sitemap.is_own_canonical("index.html", f"{SITE}/"))
 
@@ -68,7 +74,7 @@ class OnDisk(unittest.TestCase):
             path = os.path.join(REPO_ROOT, old)
             self.assertTrue(os.path.exists(path), f"{old} not built")
             with open(path, encoding="utf-8") as fh:
-                self.assertIn(f'url={SITE}/{new}"', fh.read())
+                self.assertIn(f'url={page_url(new)}"', fh.read())
 
     def test_no_stub_in_the_sitemap(self):
         with open(os.path.join(REPO_ROOT, "sitemap.xml"), encoding="utf-8") as fh:

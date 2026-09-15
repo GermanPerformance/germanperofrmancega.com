@@ -41,10 +41,9 @@ import sys
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import place  # noqa: E402
 from redirects import site_pages  # noqa: E402
+from urls import SITE, url_for_href  # noqa: E402
 
 REPO_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-SITE = "https://germanperformancega.com"
-
 HOME = "index.html"
 POST = "dealer-vs-independent-german-car-repair.html"
 
@@ -297,8 +296,7 @@ def trail_items(content, url):
     """BreadcrumbList items for the page: every linked step at its own URL,
     then the page itself."""
     steps = visible_trail(content) or (("Home", "index.html"), ("", None))
-    linked = [(label, f"{SITE}/" if href == "index.html" else f"{SITE}/{href}")
-              for label, href in steps[:-1]]
+    linked = [(label, url_for_href(href)) for label, href in steps[:-1]]
     return linked + [(steps[-1][0], url)]
 
 
