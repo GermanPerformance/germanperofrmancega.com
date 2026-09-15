@@ -17,7 +17,7 @@ import fix_breadcrumbs as fb  # noqa: E402
 import service_catalog as cat  # noqa: E402
 from urls import href_for, page_url  # noqa: E402
 
-SLUG = "bmw-oil-change-snellville-ga.html"
+SLUG = "bmw-repair-snellville-ga.html"
 HUB = "mercedes-repair-snellville-ga.html"
 GENERIC = "german-car-tune-up-snellville-ga.html"
 
@@ -40,7 +40,7 @@ def page(slug, title=None, h1=None, crumb=None, desc="A fine page.", canonical=N
 
 class NameTests(unittest.TestCase):
     def test_expected_names(self):
-        self.assertEqual(ccc.expected_name(SLUG), "BMW Oil Change")
+        self.assertEqual(ccc.expected_name(SLUG), "BMW Repair")
         self.assertEqual(ccc.expected_name(HUB), "Mercedes Repair")
         self.assertEqual(ccc.expected_name(GENERIC), "Tune-Up")
         self.assertEqual(ccc.expected_name("german-car-ac-repair-snellville-ga.html"), "AC Repair")
@@ -80,24 +80,23 @@ class RuleTests(unittest.TestCase):
                                        h1="VOLKSWAGEN<br>REPAIR"), [])
 
     def test_wrong_title(self):
-        self.assertTrue(any("title" in p for p in self.problems(title="BMW Oil Service")))
+        self.assertTrue(any("title" in p for p in self.problems(title="BMW Service")))
 
     def test_h1_must_name_make_and_job(self):
-        self.assertTrue(any("h1" in p for p in self.problems(h1="VW<br>OIL<br>CHANGE",
-                                                              slug="volkswagen-oil-change-snellville-ga.html")))
-        self.assertTrue(any("h1" in p for p in self.problems(h1="BMW<br>OIL<br>SERVICE")))
+        self.assertTrue(any("h1" in p for p in self.problems(h1="VW<br>REPAIR",
+                                                              slug="volkswagen-repair-snellville-ga.html")))
+        self.assertTrue(any("h1" in p for p in self.problems(h1="BMW<br>SERVICE")))
 
     def test_generic_h1_may_drop_the_auto_prefix(self):
         slug = "german-car-ac-repair-snellville-ga.html"
         self.assertEqual(self.problems(slug=slug, title="German Car AC Repair",
                                        h1="GERMAN CAR<br>AC REPAIR"), [])
 
-    def test_make_page_needs_three_crumbs_under_its_hub(self):
-        two = '<div class="breadcrumb"><a href="/">Home</a><span>/</span><span class="crumb-here">BMW Oil Change — Snellville, GA</span></div>'
-        self.assertTrue(any("breadcrumb" in p for p in self.problems(crumb=two)))
-
-    def test_generic_page_stays_two_crumbs(self):
-        three = fb.breadcrumb(SLUG)
+    def test_hub_and_generic_page_stay_two_crumbs(self):
+        three = ('<div class="breadcrumb"><a href="/">Home</a><span>/</span>'
+                 '<a href="/bmw-repair-snellville-ga">BMW Repair</a><span>/</span>'
+                 '<span class="crumb-here">BMW Oil Change — Snellville, GA</span></div>')
+        self.assertTrue(any("breadcrumb" in p for p in self.problems(crumb=three)))
         self.assertTrue(any("breadcrumb" in p for p in self.problems(slug=GENERIC, crumb=three)))
 
     def test_description_bounds(self):
@@ -108,7 +107,7 @@ class RuleTests(unittest.TestCase):
         self.assertTrue(any("canonical" in p for p in self.problems(canonical="https://example.com/x.html")))
         # The ".html" spelling is a second address for the same page, not its own.
         self.assertTrue(any("canonical" in p for p in self.problems(canonical=page_url(SLUG) + ".html")))
-        self.assertTrue(any("data-page-type" in p for p in self.problems(page_type="hub")))
+        self.assertTrue(any("data-page-type" in p for p in self.problems(slug=GENERIC, page_type="hub")))
         self.assertTrue(any("data-page-type" in p for p in self.problems(slug=HUB, page_type="service")))
 
     def test_nav_must_carry_the_whole_catalog(self):

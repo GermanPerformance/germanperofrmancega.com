@@ -18,7 +18,7 @@ import page_chrome as pc  # noqa: E402
 import service_catalog as cat  # noqa: E402
 from urls import href_for  # noqa: E402
 
-PAGE = "porsche-oil-change-snellville-ga.html"
+PAGE = "german-car-oil-change-snellville-ga.html"
 
 
 class HeadTests(unittest.TestCase):
@@ -55,7 +55,7 @@ class FooterTests(unittest.TestCase):
     def test_service_page_footer_uses_its_related_links(self):
         html = pc.footer(PAGE)
         self.assertIn('<div class="fct">Services</div><a href="/#services">All Services</a>', html)
-        self.assertIn('href="/porsche-brake-service-snellville-ga"', html)
+        self.assertIn('href="/german-car-brake-repair-snellville-ga"', html)
         self.assertNotIn(".html", html)
         self.assertIn(str(datetime.date.today().year), html)
         self.assertIn("Get directions", html)

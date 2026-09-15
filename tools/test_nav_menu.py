@@ -102,6 +102,23 @@ class NavMarkupTests(unittest.TestCase):
             self.assertLess(menu.index("</details>"), menu.index('href="/guides"'))
             self.assertLess(menu.index('href="/guides"'), menu.index(">About<"))
 
+    def test_makes_column_lists_the_five_hubs_in_catalog_order(self):
+        """The second column, in the panel and in the phone menu alike, is
+        the five hubs, BMW and Mercedes first."""
+        for markup in (self.home, self.page):
+            for part in markup.split('<div id="mobile-menu">'):
+                self.check_makes_column(part)
+
+    def check_makes_column(self, markup):
+        columns = re.findall(r'<li class="svc-group">(.*?)</li>', markup)
+        self.assertEqual(len(columns), 2)
+        makes = columns[1]
+        self.assertIn(f">{service_catalog.MAKES_GROUP}</a></span>", makes)
+        hrefs = re.findall(r'<a href="([^"]+)">([^<]+)</a>', makes)[1:]
+        self.assertEqual(
+            [h for h, _ in hrefs], [href_for(m.hub) for m in service_catalog.MAKES])
+        self.assertEqual([l for _, l in hrefs][:2], ["BMW Repair", "Mercedes Repair"])
+
     def test_tuning_is_gone(self):
         for markup in (self.home, self.page):
             self.assertNotIn("#performance", markup)

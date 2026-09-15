@@ -9,8 +9,9 @@ tools/check_gbp_alignment.py reads all three.
 
 Keyword variants of one service fold into one page ("BMW Shop", "BMW
 mechanic" and "Independent BMW mechanic" are all the BMW hub), and a
-brand page claims the generic service it is a variant of. Categories
-count as services: the "Brake shop" category is answered by the brake page.
+brand hub claims the generic services its make's copy describes.
+Categories count as services: the "Brake shop" category is answered by
+the brake page.
 """
 
 # Hand-written pages, until each is rebuilt on the framework. An entry
@@ -34,50 +35,34 @@ LEGACY = {
         "Auto engine diagnostic", "check engine light"),
     "pre-purchase-inspection-german-car-ga.html": ("Vehicle Inspection",),
 
-    # brand hubs
+    # brand hubs: the hub's own services plus, since 2026-09-15, every
+    # service the make's retired job pages answered for -- the hub's
+    # "services we perform" cards carry that copy now
     "bmw-repair-snellville-ga.html": (
         "BMW repair", "BMW Shop", "BMW mechanic", "Independent BMW mechanic",
-        "BMW specialist", "BMW dealership alternative"),
+        "BMW specialist", "BMW dealership alternative",
+        "BMW Oil change", "Steering & suspension repair", "Transmission repair",
+        "Coolant Leaks", "BMW Water Pump Replacement", "BMW Thermostat Replacement",
+        "Battery", "Auto battery replacement", "Spark plug replacement"),
     "mercedes-repair-snellville-ga.html": (
         "Mercedes Repair", "Mercedes shop", "Mercedes mechanic",
         "Independent Mercedes mechanic", "Mercedes specialist",
-        "Mercedes dealership alternative", "AMG repair"),
+        "Mercedes dealership alternative", "AMG repair",
+        "Mercedes oil change", "Brakes", "Brake service & repair",
+        "Steering & suspension repair", "Transmission", "Air conditioning",
+        "Auto engine diagnostic", "Coolant Leaks", "Mercedes Water Pump Replacement",
+        "Mercedes Thermostat Replacement"),
     "audi-repair-snellville-ga.html": (
         "Audi repair", "Audi Shop", "Audi Mechanic", "Independent Audi mechanic",
-        "Audi specialist", "Audi dealership alternative"),
+        "Audi specialist", "Audi dealership alternative",
+        "Audi oil change", "Brakes", "Steering & suspension repair"),
     "porsche-repair-snellville-ga.html": (
         "Porsche repair", "Porsche mechanic", "Independent Porsche mechanic",
-        "Porsche specialist", "Porsche dealership alternative"),
+        "Porsche specialist", "Porsche dealership alternative",
+        "Oil change", "Brakes", "Steering & suspension repair", "Vehicle Inspection"),
     "volkswagen-repair-snellville-ga.html": (
-        "Volkswagen repair", "VW mechanic", "VW specialist"),
-
-    # brand + service pages
-    "bmw-oil-change-snellville-ga.html": ("BMW Oil change",),
-    "bmw-suspension-repair-snellville-ga.html": ("Steering & suspension repair",),
-    "bmw-transmission-repair-snellville-ga.html": ("Transmission repair",),
-    "bmw-cooling-system-repair-snellville-ga.html": (
-        "Coolant Leaks", "BMW Water Pump Replacement", "BMW Thermostat Replacement"),
-    "bmw-battery-replacement-snellville-ga.html": ("Battery", "Auto battery replacement"),
-    "bmw-spark-plug-replacement-snellville-ga.html": ("Spark plug replacement",),
-    "mercedes-oil-change-snellville-ga.html": ("Mercedes oil change",),
-    "mercedes-brake-service-snellville-ga.html": ("Brakes", "Brake service & repair"),
-    "mercedes-suspension-snellville-ga.html": ("Steering & suspension repair",),
-    "mercedes-transmission-snellville-ga.html": ("Transmission",),
-    "mercedes-ac-repair-snellville-ga.html": ("Air conditioning",),
-    "mercedes-engine-diagnostics-snellville-ga.html": ("Auto engine diagnostic",),
-    "mercedes-cooling-system-snellville-ga.html": (
-        "Coolant Leaks", "Mercedes Water Pump Replacement",
-        "Mercedes Thermostat Replacement"),
-    "audi-oil-change-snellville-ga.html": ("Audi oil change",),
-    "audi-brake-service-snellville-ga.html": ("Brakes",),
-    "audi-suspension-repair-snellville-ga.html": ("Steering & suspension repair",),
-    "porsche-oil-change-snellville-ga.html": ("Oil change",),
-    "porsche-brake-service-snellville-ga.html": ("Brakes",),
-    "porsche-suspension-repair-snellville-ga.html": ("Steering & suspension repair",),
-    "porsche-inspection-snellville-ga.html": ("Vehicle Inspection",),
-    "volkswagen-oil-change-snellville-ga.html": ("Oil change",),
-    "volkswagen-brake-service-snellville-ga.html": ("Brakes",),
-    "volkswagen-engine-repair-snellville-ga.html": ("Engine repair",),
+        "Volkswagen repair", "VW mechanic", "VW specialist",
+        "Oil change", "Brakes", "Engine repair"),
 }
 
 _WATER_PUMP = ("Water Pump Replacement", "BMW Water Pump Replacement",

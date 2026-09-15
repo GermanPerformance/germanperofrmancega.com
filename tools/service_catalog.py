@@ -18,7 +18,10 @@ Three tables and nothing else:
             name page labels use, and the make's repair hub
   PAGES     one row per page: slug, make (None for the make-agnostic
             pages), service, and for make-agnostic pages the name they
-            carry in mixed lists ("German Car Oil Change")
+            carry in mixed lists ("German Car Oil Change"). Since
+            2026-09-15 a make has one page, its repair hub: the job pages
+            (bmw-oil-change...) were consolidated into the hubs, and the
+            SERVICES table still names the jobs the hubs describe.
 
 MONEY is the six category pages the homepage cards link to, in the
 owner's order, under the Google Business Profile's own names, so the
@@ -27,8 +30,9 @@ category, "Auto repair shop", is the homepage itself (the general repair
 page was folded into it on 2026-09-15), so the sixth card is the
 diagnostics page. GROUPS and HUBS are derived from the tables in the
 shape the consumers have always read: GROUPS is one
-(heading, ((href, label), ...)) per column, HUBS maps each heading to the
-link it carries.
+(heading, ((href, label), ...)) per column -- "Services", the seven
+make-agnostic pages, and "Makes", the five hubs -- and HUBS maps each
+heading to the link it carries.
 """
 
 from collections import namedtuple
@@ -87,39 +91,13 @@ PAGES = (
     Page("german-car-ac-repair-snellville-ga.html",           None, "ac",           "German Car AC Repair"),
     Page("german-car-check-engine-light-snellville.html",     None, "cel",          "Check Engine Light"),
     Page("pre-purchase-inspection-german-car-ga.html",        None, "inspection",   "Pre-Purchase Inspection"),
-    # BMW
-    Page("bmw-repair-snellville-ga.html",                 "bmw", "repair",       None),
-    Page("bmw-oil-change-snellville-ga.html",             "bmw", "oil",          None),
-    Page("bmw-suspension-repair-snellville-ga.html",      "bmw", "suspension",   None),
-    Page("bmw-transmission-repair-snellville-ga.html",    "bmw", "transmission", None),
-    Page("bmw-cooling-system-repair-snellville-ga.html",  "bmw", "cooling",      None),
-    Page("bmw-battery-replacement-snellville-ga.html",    "bmw", "battery",      None),
-    Page("bmw-spark-plug-replacement-snellville-ga.html", "bmw", "plugs",        None),
-    # Mercedes-Benz
-    Page("mercedes-repair-snellville-ga.html",             "mercedes", "repair",       None),
-    Page("mercedes-oil-change-snellville-ga.html",         "mercedes", "oil",          None),
-    Page("mercedes-brake-service-snellville-ga.html",      "mercedes", "brakes",       None),
-    Page("mercedes-suspension-snellville-ga.html",         "mercedes", "suspension",   None),
-    Page("mercedes-transmission-snellville-ga.html",       "mercedes", "transmission", None),
-    Page("mercedes-cooling-system-snellville-ga.html",     "mercedes", "cooling",      None),
-    Page("mercedes-ac-repair-snellville-ga.html",          "mercedes", "ac",           None),
-    Page("mercedes-engine-diagnostics-snellville-ga.html", "mercedes", "diagnostics",  None),
-    # Audi
-    Page("audi-repair-snellville-ga.html",            "audi", "repair",     None),
-    Page("audi-oil-change-snellville-ga.html",        "audi", "oil",        None),
-    Page("audi-brake-service-snellville-ga.html",     "audi", "brakes",     None),
-    Page("audi-suspension-repair-snellville-ga.html", "audi", "suspension", None),
-    # Porsche
-    Page("porsche-repair-snellville-ga.html",            "porsche", "repair",     None),
-    Page("porsche-oil-change-snellville-ga.html",        "porsche", "oil",        None),
-    Page("porsche-brake-service-snellville-ga.html",     "porsche", "brakes",     None),
-    Page("porsche-suspension-repair-snellville-ga.html", "porsche", "suspension", None),
-    Page("porsche-inspection-snellville-ga.html",        "porsche", "inspection", None),
-    # Volkswagen
-    Page("volkswagen-repair-snellville-ga.html",        "volkswagen", "repair", None),
-    Page("volkswagen-oil-change-snellville-ga.html",    "volkswagen", "oil",    None),
-    Page("volkswagen-brake-service-snellville-ga.html", "volkswagen", "brakes", None),
-    Page("volkswagen-engine-repair-snellville-ga.html", "volkswagen", "engine", None),
+    # the brand hubs: the make's job pages were retired into them on
+    # 2026-09-15 (tools/redirects.py forwards the old addresses)
+    Page("bmw-repair-snellville-ga.html",        "bmw",        "repair", None),
+    Page("mercedes-repair-snellville-ga.html",   "mercedes",   "repair", None),
+    Page("audi-repair-snellville-ga.html",       "audi",       "repair", None),
+    Page("porsche-repair-snellville-ga.html",    "porsche",    "repair", None),
+    Page("volkswagen-repair-snellville-ga.html", "volkswagen", "repair", None),
 )
 
 # How the related-services ranking groups jobs: a BMW spark-plug page and
@@ -133,6 +111,9 @@ RELATED_GROUPS = {
 
 GENERIC_GROUP = "Services"
 GENERIC_HUB = "index.html#services"
+# The five hubs, in MAKES order; the heading links where the homepage
+# names the makes.
+MAKES_GROUP = "Makes"
 
 # The homepage is the make-agnostic repair page: the general repair page
 # was deleted on 2026-09-15 because it covered the same offering. It is
@@ -202,9 +183,12 @@ def full_label(slug):
 
 
 def nav_label(slug):
-    """The page's name inside its own column, where the heading names the
-    make: the job alone, or the profile's category name for a money page."""
+    """The page's name inside its own column: a hub's full name in the
+    Makes column, a job alone under a make heading, or the profile's
+    category name for a money page."""
     p = _page(slug)
+    if p.service == "repair":
+        return full_label(slug)
     if p.make is not None:
         return _SERVICES[p.service].label
     return _MONEY.get(slug, p.label)
@@ -231,6 +215,10 @@ def _make_column(m):
                  if p.service != "repair")
 
 
+def _makes_column():
+    return tuple((m.hub, nav_label(m.hub)) for m in MAKES)
+
+
 def service_pages():
     """Every page that is not a hub: the makes' pages in column order, then
     the make-agnostic pages in the order their column shows them."""
@@ -244,7 +232,6 @@ def hubs():
 
 _check_tables()
 
-GROUPS = ((GENERIC_GROUP, _generic_column()),) + tuple(
-    (m.heading, _make_column(m)) for m in MAKES)
+GROUPS = ((GENERIC_GROUP, _generic_column()), (MAKES_GROUP, _makes_column()))
 
-HUBS = {GENERIC_GROUP: GENERIC_HUB, **{m.heading: m.hub for m in MAKES}}
+HUBS = {GENERIC_GROUP: GENERIC_HUB, MAKES_GROUP: GENERIC_HUB}

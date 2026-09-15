@@ -55,9 +55,9 @@ class DerivedShapeTests(unittest.TestCase):
     """What apply_redesign, build_brand_hubs, build_llms_txt and
     test_nav_menu read: the names and shapes must not move."""
 
-    def test_groups_are_the_generic_column_then_one_per_make(self):
+    def test_groups_are_the_generic_column_then_the_makes(self):
         names = [name for name, _ in cat.GROUPS]
-        self.assertEqual(names, [cat.GENERIC_GROUP] + [m.heading for m in cat.MAKES])
+        self.assertEqual(names, [cat.GENERIC_GROUP, cat.MAKES_GROUP])
         for name, _ in cat.GROUPS:
             self.assertIn(name, cat.HUBS)
 
@@ -65,12 +65,11 @@ class DerivedShapeTests(unittest.TestCase):
         _, first = cat.GROUPS[0]
         self.assertEqual(tuple(first[:len(cat.MONEY)]), tuple(cat.MONEY))
 
-    def test_make_columns_follow_the_service_order(self):
-        for make in cat.MAKES:
-            column = dict(cat.GROUPS)[make.heading]
-            order = [SERVICE_ORDER.index(cat.service_of(h)) for h, _ in column]
-            self.assertEqual(order, sorted(order), make.heading)
-            self.assertNotIn(make.hub, [h for h, _ in column])
+    def test_makes_column_is_the_hubs_in_make_order(self):
+        column = dict(cat.GROUPS)[cat.MAKES_GROUP]
+        self.assertEqual(column, cat.hubs())
+        self.assertEqual([h for h, _ in column][:2],
+                         ["bmw-repair-snellville-ga.html", "mercedes-repair-snellville-ga.html"])
 
     def test_labels_are_unique_within_a_column(self):
         for name, entries in cat.GROUPS:
@@ -93,15 +92,17 @@ class NamingTests(unittest.TestCase):
             if "Cooling System" in label:
                 self.assertIn("Cooling System Repair", label)
 
-    def test_make_pages_are_named_make_then_service(self):
-        self.assertEqual(cat.full_label("bmw-oil-change-snellville-ga.html"),
-                         "BMW Oil Change")
-        self.assertEqual(cat.full_label("volkswagen-engine-repair-snellville-ga.html"),
-                         "Volkswagen Engine Repair")
+    def test_hubs_are_named_make_then_repair_everywhere(self):
         self.assertEqual(cat.full_label("mercedes-repair-snellville-ga.html"),
                          "Mercedes Repair")
-        self.assertEqual(cat.nav_label("mercedes-ac-repair-snellville-ga.html"),
-                         "AC Repair")
+        self.assertEqual(cat.full_label("volkswagen-repair-snellville-ga.html"),
+                         "Volkswagen Repair")
+        self.assertEqual(cat.nav_label("bmw-repair-snellville-ga.html"), "BMW Repair")
+
+    def test_no_make_has_job_pages_any_more(self):
+        for page in cat.PAGES:
+            if page.make is not None:
+                self.assertEqual(page.service, "repair", page.slug)
 
     def test_generic_pages_keep_their_own_names(self):
         self.assertEqual(cat.full_label("german-car-oil-change-snellville-ga.html"),

@@ -1,21 +1,17 @@
 #!/usr/bin/env python3
-"""Give every make's service page the breadcrumb that says where it lives.
+"""The breadcrumb every catalog page carries, from tools/service_catalog.py.
 
-Home / BMW Repair / BMW Oil Change. The middle crumb is the make's repair
-hub, so a reader on a BMW page can step up to everything else the shop
-does on a BMW, and search engines see the page as part of that hub rather
-than a loose leaf. The trail comes from tools/service_catalog.py, so the
-names match the nav, the hub grid and the footer, and tools/build_schema.py
-reads it back into the page's BreadcrumbList.
+Home / BMW Repair — Snellville, GA on a hub; Home / German Car Oil Change
+— Snellville, GA on a make-agnostic page; and, when a make had job pages
+(until 2026-09-15), Home / BMW Repair / BMW Oil Change, the three-level
+trail that made a job page part of its hub. The names match the nav, the
+hub grids and the footer, and tools/build_schema.py reads the trail back
+into the page's BreadcrumbList.
 
-Hubs and the make-agnostic pages keep their two-level crumb: a hub is the
-top of its own trail, and the category pages hang from the homepage's
-services section, which is not a page.
-
-The generators that build make pages emit this trail themselves via
-breadcrumb(), so on their output this is a no-op; the hand-written pages
-are the ones it rewrites. Idempotent. Runs after tools/apply_redesign.py
-(which normalises the crumb's classes) and before tools/build_schema.py.
+The generators emit the trail themselves via breadcrumb(); main() rewrites
+the crumb on any make job page that is hand-written, which since the
+consolidation is none, so the pipeline no longer runs this file. It stays
+as the library the generators and the consistency checker import.
 
 Run from the repo root:  python3 tools/fix_breadcrumbs.py
 """

@@ -45,12 +45,11 @@ python3 tools/build_posts.py                  # posts/ -> the supporting article
 python3 tools/apply_redesign.py               # nav, chrome, footer columns, version stamps
 python3 tools/fix_footer_links.py             # footer Services column + link row
 python3 tools/add_related_services.py         # in-body related block + hub link row
-python3 tools/fix_breadcrumbs.py              # Home / <Make> Repair / <Make> <Job>
 python3 tools/build_social_tags.py            # Open Graph / Twitter (before schema: og:image)
 python3 tools/build_schema.py                 # JSON-LD from the page as it stands
+python3 tools/build_redirects.py              # stubs before the sitemap, so a retired page drops out on the first pass
 python3 tools/build_sitemap.py
 python3 tools/build_llms_txt.py
-python3 tools/build_redirects.py
 ```
 
 A second pass must change nothing (`git status` clean after re-running).

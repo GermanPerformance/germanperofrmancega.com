@@ -279,16 +279,13 @@ nav.nav-up { transform: translateY(-100%); }
     list-style: none;
     margin: 0 auto;
     padding: 0;
-    max-width: var(--container);
+    max-width: 720px;
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 32px 24px;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 32px 48px;
   }
   .nav-right { justify-content: flex-end; }
   #hamburger, #mobile-menu { display: none !important; }
-}
-@media (min-width: 1100px) {
-  .nav-panel-grid { grid-template-columns: repeat(6, 1fr); gap: 0 24px; }
 }
 .bp, .bg, .bw, .nav-cta, .btn-primary, .mcta {
   display: inline-flex;

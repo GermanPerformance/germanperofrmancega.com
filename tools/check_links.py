@@ -8,7 +8,9 @@ Checks two classes of link that both silently 404 in a static site:
 Links are written in their clean form (tools/urls.py): "/" is index.html
 and "/foo" is foo.html. The old "foo.html" form still resolves, so a
 stray one is not a broken link -- check_catalog_consistency.py is what
-refuses it.
+refuses it. A third class is a link to a retired address: its redirect
+stub is on disk, so the link resolves, but a live page linking it sends
+readers through a redirect, and it fails here.
 
 Run from the repo root:  python3 tools/check_links.py
 Exit code 0 = all links resolve, 1 = broken links found.
@@ -20,6 +22,7 @@ import sys
 from collections import defaultdict
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+from redirects import is_redirect  # noqa: E402
 from urls import file_for  # noqa: E402
 
 REPO_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -76,6 +79,12 @@ def check(root):
             target_path = os.path.join(root, target)
             if not os.path.isfile(target_path):
                 yield source, href, f"missing file: {target}"
+                continue
+            # A retired address still resolves (its stub is on disk), so a
+            # stale link would pass unnoticed and send readers and crawlers
+            # through a redirect. Only a stub may link a stub's successor.
+            if is_redirect(target) and not is_redirect(source):
+                yield source, href, f"links a retired page: {target}"
                 continue
 
             if anchor and anchor not in ids_in(target_path):
