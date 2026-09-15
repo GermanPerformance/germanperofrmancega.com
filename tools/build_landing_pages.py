@@ -101,9 +101,21 @@ def h1_em(service):
     return round(width * H1_MARGIN, 2)
 
 
+# The widest first line that still fits a 320px phone at the --step-3
+# floor (280px column / (0.833 x 32px)); a longer line lowers the floor.
+H1_EM_PHONE_MAX = 10.5
+H1_MIN_LONG = "1.5rem"
+
+
+def h1_style(service):
+    em = h1_em(service)
+    floor = f";--h1-min:{H1_MIN_LONG}" if em > H1_EM_PHONE_MAX else ""
+    return f"--h1-em:{em:.2f}{floor}"
+
+
 def h1_markup(service):
     place = PLACE.replace(" ", "&nbsp;")
-    return (f'<h1 class="fu" style="--h1-em:{h1_em(service):.2f}">{service} in<br>'
+    return (f'<h1 class="fu" style="{h1_style(service)}">{service} in<br>'
             f'<span class="accent">{place}</span></h1>')
 
 
@@ -143,7 +155,9 @@ def social_tags(page):
 
 # -- sections -----------------------------------------------------------------
 
-def hero(page):
+def hero(page, marque=None):
+    """The hero. A make-agnostic page's checklist says "factory parts"; a
+    brand hub passes its marque so the list names it."""
     return f'''<section class="hero hero-svc"><div class="hbg"></div>
   <div class="hc">
     <div class="eyebrow fu"><span>{page.get("eyebrow", DEFAULT_EYEBROW)}</span></div>
@@ -152,7 +166,7 @@ def hero(page):
     <div class="acts fu"><a href="{TEL}" class="bp">{redesign.CTA}</a></div>
     <div class="hero-proof">
     {redesign.hero_seal_markup()}
-{redesign.checks_list()}
+{redesign.checks_list(marque)}
     </div>
   </div>
 </section>'''
@@ -261,7 +275,7 @@ def faq(page):
 
 
 def band(page):
-    l1, l2 = band_head(page["service"])
+    l1, l2 = page.get("band_head") or band_head(page["service"])
     return (f'<div class="cta-band fu"><div><div class="cbt">{l1}<br>{l2}</div>'
             f'<div class="cbs">{page.get("cta_sub", DEFAULT_CTA_SUB)}</div></div>'
             f'<div class="cta-col"><a href="{TEL}" class="bw">{redesign.CTA}</a>'

@@ -67,6 +67,13 @@ class RuleTests(unittest.TestCase):
         self.assertEqual(self.problems(slug=HUB, title="Mercedes-Benz Repair",
                                        h1="MERCEDES-BENZ<br>REPAIR"), [])
 
+    def test_hub_in_the_money_page_framework_passes(self):
+        # "{Make} Repair in Snellville, GA" as title and two-line H1, the
+        # form tools/build_brand_hubs.py writes.
+        self.assertEqual(self.problems(
+            slug=HUB, title="Mercedes Repair in Snellville, GA",
+            h1='Mercedes Repair in<br><span class="accent">Snellville,&nbsp;GA</span>'), [])
+
     def test_hub_title_may_carry_the_short_form_in_brackets(self):
         slug = "volkswagen-repair-snellville-ga.html"
         self.assertEqual(self.problems(slug=slug, title="Volkswagen (VW) Repair",

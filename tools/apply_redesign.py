@@ -58,7 +58,7 @@ import urls  # noqa: E402
 import build_css  # noqa: E402
 
 REPO_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-VERSION = "34"
+VERSION = "35"
 
 # The typefaces are served from assets/fonts/ (see tools/build_fonts.py):
 # the @font-face rules travel inline in every page's <style id="critical">

@@ -1,18 +1,20 @@
-"""The make-specific service pages, one module per make.
+"""The brand hubs' copy, one module per make.
 
-tools/build_service_pages.py renders every dict in PAGES. Keeping the
-copy here, by make, keeps each file readable and the generator small;
-tools/service_catalog.py still decides where each page appears.
+tools/build_brand_hubs.py renders every HUB dict in HUBS. Keeping the copy
+here, by make, keeps each file readable and the generator small;
+tools/service_catalog.py still decides where each hub appears. Until
+2026-09-15 these modules held the make-specific job pages, since retired
+into the hubs (tools/redirects.py forwards their addresses).
 """
 
-from .audi import PAGES as AUDI
-from .bmw import PAGES as BMW
-from .mercedes import PAGES as MERCEDES
-from .porsche import PAGES as PORSCHE
-from .volkswagen import PAGES as VOLKSWAGEN
+from .audi import HUB as AUDI
+from .bmw import HUB as BMW
+from .mercedes import HUB as MERCEDES
+from .porsche import HUB as PORSCHE
+from .volkswagen import HUB as VOLKSWAGEN
 
-PAGES = BMW + MERCEDES + AUDI + PORSCHE + VOLKSWAGEN
+HUBS = (BMW, MERCEDES, AUDI, PORSCHE, VOLKSWAGEN)
 
-_slugs = [p["slug"] for p in PAGES]
+_slugs = [h["slug"] for h in HUBS]
 if len(_slugs) != len(set(_slugs)):
     raise SystemExit("brand_pages: a slug appears in more than one make module")

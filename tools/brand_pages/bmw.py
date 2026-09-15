@@ -1,222 +1,111 @@
-"""BMW service pages, built by tools/build_service_pages.py.
+"""The BMW hub: what the shop sees on a BMW and every service it performs
+on one, consolidated from the six BMW job pages retired on 2026-09-15. Six cards,
+two rows of three; the battery job lives with diagnostics and electrical.
 
-One dict per page (the 3, 5 and 7 Series, X3, X5 and M cars). Every technical
-claim is a documented characteristic of the marque; nothing about pricing,
-turnaround or certification is invented. The dict shape is the one
-build_service_pages renders: slug, brand, [marque], h1 (three lines), title,
-desc, sub, cards_head, cards_sub, cards, why_head, why_lead, why_points,
-faq_head, faqs, cta, cta_sub.
+Every technical claim is a documented characteristic of the marque;
+nothing about pricing, turnaround or certification is invented. The
+credential sentence in "closing" is the owner's (2026-09-15).
 """
 
-WARRANTY = (
-    "No. Federal law protects your right to have routine maintenance and "
-    "repairs performed by an independent shop without voiding a manufacturer "
-    "warranty, as long as the correct specification parts and fluids are used "
-    "and the work is documented. You leave with a written record of what was "
-    "done.")
+from posts.common import CEL, OIL, TRANSMISSION, TUNE_UP
 
-PAGES = (
-{
- "slug": "bmw-oil-change-snellville-ga.html",
+HUB = {
+ "slug": "bmw-repair-snellville-ga.html",
+ "make": "bmw",
  "brand": "BMW",
- "h1": ("BMW", "OIL", "CHANGE"),
- "title": "BMW Oil Change Snellville GA | German Performance",
- "desc": ("BMW oil change in Snellville, GA. Longlife-approved oil for your "
-          "engine code, OEM cartridge filter, leak check and CBS reset. "
-          "Call (678) 395-7459."),
- "sub": ("BMW oil service in Snellville, GA — for the 3, 5 and 7 Series, the X "
-         "models, Z4 and M cars. The Longlife approval your engine calls for, "
-         "an OEM cartridge filter, the leaks these engines are known for "
-         "checked, and CBS reset so the car's own schedule stays right."),
- "cards_head": ("A PROPER BMW", "OIL SERVICE"),
- "cards_sub": ("BMW publishes an approval for every engine, sets its own "
-               "interval, and on most models since the mid-2000s gives you no "
-               "dipstick. Each of those is a place a generic oil change goes "
-               "wrong."),
- "cards": [
-   ("The Right Longlife Approval",
-    "BMW's Longlife specifications are not interchangeable. LL-01 covers most "
-    "of the older gasoline range, LL-04 the diesels and many turbocharged "
-    "engines, and the newest engines call for the thin LL-17 FE+ grade. We "
-    "fill the approval and viscosity BMW lists for your engine code, not a "
-    "full synthetic that happens to say European on the jug."),
-   ("An Interval That Suits the Engine",
-    "CBS will stretch the reminder toward 15,000 miles. The turbocharged N20, "
-    "N55, B48 and B58 and every M engine are better served at 7,000 to 10,000 "
-    "— oil that has spent a year in a hot turbo engine is not the oil that "
-    "went in. We set the reminder to the interval we actually recommend, and "
-    "tell you why."),
-   ("Cartridge Filter and Drain Washer",
-    "An OEM or OEM-equivalent cartridge filter with new O-rings on the housing "
-    "cap, and a new crush washer on the drain plug. Reusing either is how a "
-    "BMW ends up with a slow drip on the garage floor a month later."),
-   ("Level Set Electronically",
-    "Most BMWs built since the mid-2000s have no dipstick; the level is read "
-    "by a sensor and shown through iDrive, and it only reads correctly with "
-    "the engine warm. We verify it that way before handover rather than "
-    "trusting the fill quantity in the book."),
-   ("The Leaks We Look For",
-    "The oil filter housing gasket, the oil cooler gasket beneath it and the "
-    "valve cover gasket are the three leaks these engines are known for, and "
-    "a leak from the housing lands on the serpentine belt. We check all three "
-    "while the car is up and tell you what we found."),
-   ("CBS Reset and Inspection",
-    "Condition Based Service is reset through BMW-compatible diagnostics so "
-    "the car's own schedule stays accurate — the vehicle check, brake fluid "
-    "and microfilter counters included where they are due. The car gets a "
-    "multi-point inspection while it is on the lift."),
+ "possessive": "BMW",
+ "eyebrow": "BMW Specialists · Snellville, GA · Since 2010",
+ "desc": ("Independent BMW repair in Snellville, GA. ISTA factory diagnostics, OEM parts, "
+          "ASE-certified technicians, 12-month warranty. Serving Gwinnett County since 2010."),
+ "sub": ("Most people find us because something on their BMW is behaving oddly and the last "
+         "shop wanted to start replacing parts to find out why. We diagnose first, using the "
+         "same software the dealer runs, and tell you what we actually found."),
+ "tool": "ISTA",
+ "before": [
+   ("A warning you can't interpret",
+    "BMW dashboards report symptoms, not causes. A drivetrain malfunction message can mean a coil, a fuel injector, a boost leak or a timing issue, and a generic code reader will not tell them apart."),
+   ("A repair bill that keeps growing",
+    "The expensive version of a cheap diagnosis is paying for two or three parts before the right one gets replaced. That is the pattern we most often hear about from people calling us second."),
+   ("Nobody explaining the why",
+    "Being told a car needs a part is not the same as understanding what failed and what happens if it waits. You should get both."),
  ],
- "why_head": ("BMW OIL", "DONE RIGHT"),
- "why_lead": ("The difference between a BMW oil change and an ordinary one is "
-              "not the oil. It is the approval, the interval, the filter "
-              "housing that leaks if its seals are reused, and the fact that "
-              "you cannot check the result with a dipstick. We treat each of "
-              "those as part of the job."),
- "why_points": [
-   "BMW Longlife-approved oil matched to your engine code and year",
-   "Intervals set for turbocharged and M engines, not the CBS maximum",
-   "OEM cartridge filters with new housing O-rings and drain washer",
-   "Electronic oil level verified at operating temperature before handover",
-   "Filter housing, oil cooler and valve cover gaskets inspected every time",
-   "CBS reset through BMW-compatible diagnostics, and a written record",
+ # (title, body, the make-agnostic page that covers the same job, or None)
+ "services": [
+   ("Diagnostics, electrical and the battery",
+    "Every job starts on the factory software. ISTA talks to every control module, shows live "
+    "data and walks the technician through BMW's own test plan for the fault, which is how a "
+    "drivetrain malfunction gets traced to one coil, one injector or one boost leak rather than "
+    "a parts list. Electrical faults get the same treatment: a parasitic-draw test when the "
+    "battery keeps dying, and a new AGM battery of the correct rating registered to the "
+    "Intelligent Battery Sensor, because an unregistered battery is overcharged as if it were "
+    "the old one and dies early. You get a written report with photographs before anything is "
+    "approved.", CEL),
+   ("Oil service to the Longlife approval",
+    "BMW's Longlife specifications are not interchangeable: LL-01 for most of the older gasoline "
+    "range, LL-04 for the diesels and many turbocharged engines, LL-17 FE+ for the newest B-series. "
+    "We fill the approval BMW lists for your engine code, fit an OEM cartridge filter with new "
+    "O-rings, set the level electronically with the engine warm, check the three leaks these "
+    "engines are known for, and reset Condition Based Service properly. The turbocharged N20, "
+    "N55, B48, B58 and every M engine are better served at 7,000 to 10,000 miles than the "
+    "15,000 the reminder will stretch to.", OIL),
+   ("Cooling system: pump, thermostat, tank",
+    "Plastic is the weak point. The electric water pump on the N52, N54 and N55, the "
+    "map-controlled thermostat, the expansion tank and the radiator end tanks all age on a "
+    "schedule and fail gradually, then suddenly. We pressure-test the system cold to find a "
+    "seep before it is a puddle, replace the pump and thermostat together when one has failed, "
+    "and fill with the BMW-specification coolant, never a universal product mixed into it.", None),
+   ("Suspension: thrust arms, EDC, air springs",
+    "On the E-chassis 3 and 5 Series the hydraulic thrust arm bushings fail with a shimmy under "
+    "braking; on the F and G cars the tension struts do the same. Cars with Electronic Damper "
+    "Control need the correct adaptive damper and, on some models, coding afterwards. The rear "
+    "air springs on the X5 and X6 crack with age and a car that sits low at the back overnight "
+    "is telling you. Every repair ends with a four-wheel alignment to BMW's figures.", None),
+   ("Transmission service on the ZF 6HP and 8HP",
+    "The fluid BMW once called lifetime is not. We drain, inspect the pan for debris, replace the "
+    "filter and gasket, refill with the ZF-approved fluid and set the level at the specified "
+    "temperature, then reset the adaptations so the car relearns its shifts. Harsh or delayed "
+    "shifts are tested at the mechatronic unit and solenoids before anything is condemned; a "
+    "valve body repair is often the answer, a rebuild rarely the first one.", TRANSMISSION),
+   ("Spark plugs, coils and misfires",
+    "A misfire is diagnosed on live data before anything is replaced, because plugs, coils, "
+    "injectors and compression all produce one. The N20, N54, N55, B58 and S55 each take a "
+    "different plug and heat range; we fit the OEM specification, test every coil while the "
+    "cover is off, check the valve cover gasket and plug tubes for the oil that kills coils, "
+    "and road-test before the car leaves.", TUNE_UP),
  ],
- "faq_head": ("BMW OIL CHANGE", "FAQ"),
+ "known": [
+   ("Cooling system failures",
+    "Plastic thermostat housings, water pumps and expansion tanks are a known weak point across the N-series and B-series engines. They tend to fail gradually and then suddenly, which is why we pressure-test rather than wait for a leak to be visible."),
+   ("Oil leaks from the valve cover and filter housing",
+    "The gaskets harden with heat and age. Oil dripping onto a hot exhaust is the burning smell owners usually describe, and catching it early keeps it a gasket job rather than a contaminated belt or damaged sensor."),
+   ("Timing chain concerns on N20 and N26 engines",
+    "Chain guide wear on certain model years produces a distinctive rattle on cold start. This is worth diagnosing promptly, because the failure mode is severe."),
+   ("Carbon buildup on direct-injection engines",
+    "No fuel washes the back of the intake valves, so deposits accumulate and cause rough idle, misfires and lost power. Walnut blasting removes them without damaging the port."),
+   ("Electrical faults and battery registration",
+    "A new battery must be registered to the charging system or the car will overcharge it and shorten its life. It is a coding step, not a parts step, and it is routinely skipped."),
+ ],
+ "reviews": ("nageeb", "sahir"),
  "faqs": [
-   ("How often does a BMW need an oil change?",
-    "BMW's Condition Based Service will typically call for a change somewhere "
-    "between 10,000 and 15,000 miles. For the turbocharged engines and the M "
-    "cars we recommend 7,000 to 10,000 miles or once a year, whichever comes "
-    "first. Extended intervals are where the timing-chain and oil-consumption "
-    "problems on these engines tend to start."),
-   ("What oil does my BMW take?",
-    "It depends on the engine. Most older gasoline engines call for BMW "
-    "Longlife-01, many turbocharged and diesel engines for Longlife-04, and "
-    "the newest B-series engines for the thinner Longlife-17 FE+ grade. The "
-    "approval is in your owner's manual and we confirm it against the engine "
-    "code before we fill."),
-   ("Why does my BMW have no dipstick?",
-    "Since the mid-2000s most BMWs read the oil level with a sensor in the pan "
-    "and show it through iDrive. It only reads accurately with the engine at "
-    "operating temperature on level ground, which is how we check it. If the "
-    "display ever shows the level dropping between services, that is worth a "
-    "call rather than a top-up."),
-   ("Is it normal for a BMW to use oil between changes?",
-    "Some consumption on a turbocharged engine is normal and BMW allows for "
-    "it. What matters is the rate. A car that needs a quart every few thousand "
-    "miles should be looked at — the usual causes are the valve cover gasket, "
-    "the filter housing gasket or the crankcase ventilation valve, none of "
-    "which are expensive to catch early."),
-   ("Will you reset the service light?",
-    "Yes. We reset Condition Based Service through BMW-compatible diagnostics, "
-    "so the oil counter and the other service items are correct, rather than "
-    "clearing the message with a generic tool and leaving the schedule wrong."),
-   ("Will an independent oil change affect my BMW warranty?", WARRANTY),
+  ("Do I have to take my BMW to the dealer for service?",
+   "No. Under the Magnuson-Moss Warranty Act a dealer cannot void your factory warranty because an independent shop performed routine maintenance or repairs, provided the work is done correctly with appropriate parts. We document everything so your records are dealer-presentation ready."),
+  ("Do you use the same diagnostic software as a BMW dealer?",
+   "Yes. We run ISTA, which gives us access to every control module, live data, adaptations and coding, rather than the generic fault codes a basic OBD-II scanner reads."),
+  ("What is the drivetrain malfunction message on my BMW?",
+   "It is the car protecting itself after detecting a fault it considers serious enough to reduce power. The underlying cause varies widely -- ignition, fuel delivery, boost control and sensors are all candidates -- so it needs a proper scan rather than a guess."),
+  ("How often does a BMW need an oil change?",
+   "Condition Based Service will stretch the reminder toward 15,000 miles. On the turbocharged N20, N55, B48 and B58 engines and on every M engine we recommend 7,000 to 10,000 miles or once a year, because oil that has spent a year in a hot turbocharged engine is not the oil that went in. We set the reminder to the interval we recommend and tell you why."),
+  ("Why does a new BMW battery need to be registered?",
+   "The Intelligent Battery Sensor tracks the battery's age and adjusts the charging strategy to it. Register the new battery and the car charges it correctly; skip it and the alternator treats the new battery as an old one and overcharges it, which shortens its life. Registration is done through ISTA and is part of every battery we fit."),
+  ("Can you reset the BMW service indicator?",
+   "Yes. Every BMW service we perform includes the correct Condition Based Service reset, so your dashboard reflects what has actually been done."),
  ],
- "cta": ("BMW OIL SERVICE", "DUE?"),
- "cta_sub": "Call with the model and year — we will confirm the Longlife approval your engine needs.",
-},
-{
- "slug": "bmw-suspension-repair-snellville-ga.html",
- "brand": "BMW",
- "h1": ("BMW", "SUSPENSION", "REPAIR"),
- "title": "BMW Suspension Repair Snellville GA | German Performance",
- "desc": ("BMW suspension repair in Snellville, GA. Thrust arm and tension strut "
-          "bushings, struts, EDC dampers, X5 air springs and alignment to spec. "
-          "Call (678) 395-7459."),
- "sub": ("BMW suspension repair in Snellville, GA — control arms and bushings, "
-         "struts and shocks, EDC adaptive dampers, rear air springs and the "
-         "alignment that follows, on the 3, 5 and 7 Series, X models and M "
-         "cars."),
- "cards_head": ("BMW SUSPENSION", "REPAIR"),
- "cards_sub": ("BMW suspensions are precise when they are right and vague when "
-               "they are not. The parts that go are well known by chassis: the "
-               "fluid-filled front bushings on the older cars, the tension "
-               "struts on the newer ones, the rear subframe mounts, and the air "
-               "springs under the X5."),
- "cards": [
-   ("Thrust Arm and Tension Strut Bushings",
-    "On the E-chassis 3 and 5 Series the front thrust arm bushings are "
-    "hydraulic-filled and fail with a shimmy under braking; on the F and G "
-    "cars the tension struts and their bushings do the same job and fail the "
-    "same way. We replace them with OEM or OEM-equivalent parts, not the "
-    "softer aftermarket bushing that lasts a year."),
-   ("Struts, Shocks and EDC Dampers",
-    "Conventional dampers are replaced in axle pairs with new mounts and "
-    "bearings. Cars with Electronic Damper Control carry adaptive dampers that "
-    "need the correct part for the car and, on some models, coding afterwards. "
-    "We fit what the car was built with and finish the job through "
-    "BMW-compatible diagnostics where it needs it."),
-   ("Rear Subframe and Trailing Arm Bushings",
-    "The rear subframe mounts and trailing arm bushings on the 3 Series are a "
-    "known wear point that shows up as a clunk over bumps and a rear end that "
-    "feels loose in corners. They are a press job done properly with the "
-    "subframe supported, not a shortcut."),
-   ("xDrive and Ride Height",
-    "xDrive cars use different front struts and control arms from the "
-    "rear-drive version of the same model, and the ride-height sensors on "
-    "cars with adaptive headlights or air suspension have to read correctly "
-    "afterwards. We fit the right parts for the drivetrain and check the "
-    "sensors."),
-   ("X5 and X6 Air Suspension",
-    "The rear air springs on the X5 and X6 crack with age and the compressor "
-    "works itself to death keeping up. A car that sits low at the back "
-    "overnight is telling you. We replace the springs and, where it is tired, "
-    "the compressor, with OEM-equivalent parts."),
-   ("Alignment to BMW Specification",
-    "Every suspension repair ends with a four-wheel alignment to BMW's figures "
-    "for the model, with the car loaded the way BMW specifies. An arm swap "
-    "without an alignment eats a set of tires."),
- ],
- "why_head": ("BMW SUSPENSION", "DONE RIGHT"),
- "why_lead": ("A BMW that wanders, shimmies under braking or clunks over bumps "
-              "almost always has one of a short list of worn parts. Knowing "
-              "the list by chassis, fitting parts that last, and aligning the "
-              "car afterwards is the difference between fixing it once and "
-              "fixing it twice."),
- "why_points": [
-   "Thrust arm and tension strut bushings — the wear point on every 3 and 5 Series",
-   "Struts and shocks in pairs with new mounts; EDC dampers coded where required",
-   "Rear subframe and trailing arm bushings pressed properly",
-   "Correct parts for xDrive, and ride-height sensors verified afterwards",
-   "X5 and X6 rear air springs and compressors",
-   "Four-wheel alignment to BMW's specification after every repair",
- ],
- "faq_head": ("BMW SUSPENSION", "FAQ"),
- "faqs": [
-   ("Why does my BMW shimmy when I brake?",
-    "On most 3 and 5 Series it is the front thrust arm or tension strut "
-    "bushings. They are filled with fluid and lose it with age, and the arm "
-    "can then move under braking load; the steering wheel shakes and the car "
-    "feels loose. It is one of the most common repairs on these cars and a "
-    "straightforward one."),
-   ("What is EDC and does it change the repair?",
-    "Electronic Damper Control is BMW's adaptive damping — the dampers adjust "
-    "electronically to the road and the driving mode. Replacing them means "
-    "fitting the correct adaptive part for the car rather than a conventional "
-    "damper, and on some models coding the system afterwards with "
-    "BMW-compatible diagnostics. A conventional damper on an EDC car leaves a "
-    "fault and a hard ride."),
-   ("Why does my X5 sit low at the back in the morning?",
-    "The rear air springs. They are rubber, they crack with age and they let "
-    "the air out overnight; the compressor pumps the car back up when you "
-    "start it, until it wears out too. Replacing the springs is the repair; "
-    "if the compressor has been running constantly for a while it may need "
-    "replacing as well."),
-   ("What causes a clunk from the rear over bumps?",
-    "Usually the rear subframe mounts or the trailing arm bushings, both of "
-    "which are known wear points on the 3 Series in particular. Sway bar end "
-    "links and shock mounts are the other candidates. We find it on the lift "
-    "before we replace anything."),
-   ("Do I need an alignment after suspension work?",
-    "Yes. Any control arm, strut or bushing replacement changes the geometry, "
-    "and BMW's tolerances are tight. We align the car to BMW's specification "
-    "after the repair. Skipping it costs a set of tires."),
-   ("Do you use factory parts?",
-    "OEM or OEM-equivalent parts from the manufacturers that supply BMW. "
-    "Bushings and arms are where cheap parts show up fastest — softer rubber "
-    "that fails within a year — so we do not use them."),
- ],
- "cta": ("BMW SUSPENSION", "FEELING LOOSE?"),
- "cta_sub": "Call and describe it — the symptom usually names the part on a BMW.",
-},
-)
+ "models": "1, 2, 3, 4, 5, 6, 7 and 8 Series, X1 through X7, Z4, and the full M range.",
+ "band_head": ("NOT SURE WHAT'S WRONG?", "THAT'S THE POINT OF CALLING."),
+ "cta_sub": "Describe what the car is doing. We'll tell you what we'd check first.",
+ "closing": ("German Performance has worked only on German cars since 2010, more than 10,000 of them "
+             "through this shop. The technicians are ASE-certified and Mercedes-Benz factory-trained, "
+             "one an ASE Master Technician with the advanced engine diagnostics certification, and "
+             "every BMW repair leaves with a written 12-month, 12,000-mile parts-and-labor warranty. "
+             "Serving Snellville, Loganville, Grayson, Lawrenceville and all of Gwinnett County."),
+}

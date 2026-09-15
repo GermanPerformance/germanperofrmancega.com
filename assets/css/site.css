@@ -134,7 +134,10 @@ section .rel-grid + .flinks { margin-top: 28px; }
 .hero-svc .hc { container-type: inline-size; }
 .hero-svc h1 {
   --h1-k: 1;
-  font-size: clamp(min(var(--step-3), var(--step-hero)),
+  /* The floor. A name too wide for a 320px phone at --step-3 ("Volkswagen
+     Repair in") lowers it inline with --h1-min (build_landing_pages.h1_style). */
+  --h1-min: min(var(--step-3), var(--step-hero));
+  font-size: clamp(var(--h1-min),
                    calc(100cqi / (var(--h1-em) * var(--h1-k))), var(--step-hero));
 }
 @media (max-width: 900px) { .hero-svc h1 { --h1-k: 1.042; } }
@@ -169,3 +172,7 @@ section .rel-grid + .flinks { margin-top: 28px; }
 @media (min-width: 960px) {
   .svc-figure iframe { aspect-ratio: 4 / 3; }
 }
+
+/* The guide cards on a brand hub: the whole card is the link. */
+a.card { text-decoration: none; color: inherit; }
+a.card:hover .ct { color: var(--gold); }

@@ -27,6 +27,7 @@ TOOLS = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, TOOLS)
 
 from landing_pages import PAGES  # noqa: E402
+from service_catalog import MAKES  # noqa: E402
 
 REPO_ROOT = os.path.dirname(TOOLS)
 SHELL_GLOB = os.path.expanduser(
@@ -76,17 +77,21 @@ def measure(binary, path, width):
     return json.loads(m.group(1).replace("&quot;", '"')) if m else None
 
 
+# Every page on the two-line hero: the landing pages and the five brand hubs.
+SLUGS = tuple(p["slug"] for p in PAGES) + tuple(m.hub for m in MAKES)
+
+
 def check(binary):
     """Yield (slug, width, reason) for every render that broke the promise."""
     with tempfile.TemporaryDirectory() as folder:
-        for page in PAGES:
-            path = probe_copy(page["slug"], folder)
+        for slug in SLUGS:
+            path = probe_copy(slug, folder)
             for width in WIDTHS:
                 result = measure(binary, path, width)
                 if result is None:
-                    yield page["slug"], width, "no measurement (fonts or script failed)"
+                    yield slug, width, "no measurement (fonts or script failed)"
                 elif result["lines"] != 1:
-                    yield page["slug"], width, f'first line wraps ({result["lines"]} line boxes) at {result["px"]}px'
+                    yield slug, width, f'first line wraps ({result["lines"]} line boxes) at {result["px"]}px'
 
 
 def main():
@@ -96,7 +101,7 @@ def main():
         return 0
     broken = list(check(binary))
     if not broken:
-        print(f"OK: hero H1 holds two lines on {len(PAGES)} page(s) at "
+        print(f"OK: hero H1 holds two lines on {len(SLUGS)} page(s) at "
               f"{', '.join(str(w) for w in WIDTHS)}px.")
         return 0
     print(f"WRAPPED: {len(broken)} render(s) broke the two-line hero\n")
