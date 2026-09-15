@@ -22,13 +22,19 @@ PAGE = "porsche-oil-change-snellville-ga.html"
 
 
 class HeadTests(unittest.TestCase):
-    def test_stylesheets_are_fonts_then_the_cascade_at_version(self):
+    def test_stylesheets_are_the_critical_block_then_one_bundle_at_version(self):
         links = pc.stylesheets()
         hrefs = re.findall(r'href="([^"]+)"', links)
         v = redesign.VERSION
-        self.assertEqual(hrefs, [f"assets/css/fonts.css?v={v}", f"assets/css/tokens.css?v={v}",
-                                 f"assets/css/werkstatt.css?v={v}", f"assets/css/site.css?v={v}"])
+        self.assertEqual(hrefs, [f"assets/css/bundle-site.css?v={v}"])
+        self.assertTrue(links.startswith('<style id="critical">'))
+        self.assertIn("@font-face", links)
+        self.assertIn("--font-display", links)
+        self.assertIn("url(assets/fonts/", links)
+        self.assertNotIn("../fonts/", links)
         self.assertNotIn("fonts.googleapis", links)
+        self.assertEqual(re.findall(r'href="([^"]+)"', pc.stylesheets("home")),
+                         [f"assets/css/bundle-home.css?v={v}"])
 
     def test_scripts_carry_the_tracker(self):
         self.assertIn("assets/js/site.js?v=", pc.scripts())

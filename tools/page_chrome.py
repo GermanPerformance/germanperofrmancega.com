@@ -21,13 +21,13 @@ import sys
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import apply_redesign as redesign  # noqa: E402
+import build_css  # noqa: E402
 from fix_footer_links import build_blocks  # noqa: E402
 from service_catalog import hubs  # noqa: E402
 from urls import href_for  # noqa: E402
 
 SITE = "https://germanperformancega.com"
 FAVICON = '<link rel="icon" type="image/png" href="assets/img/favicon-144.png">'
-SHEETS = ("tokens", "werkstatt", "site")
 SCRIPTS = ("site", "analytics")
 
 # Phone bar, nav and phone menu, exactly as tools/apply_redesign.py writes
@@ -44,12 +44,9 @@ NAP_GRID = '''<div class="ic-grid">
       </div>'''
 
 
-def stylesheets():
-    """Fonts, then the cascade in the order apply_redesign enforces."""
-    v = redesign.VERSION
-    sheets = "\n".join(f'<link rel="stylesheet" href="assets/css/{name}.css?v={v}">'
-                       for name in SHEETS)
-    return f"{redesign.fonts_markup()}\n{sheets}"
+def stylesheets(kind="site"):
+    """The inline critical block, then the one bundle link (tools/build_css.py)."""
+    return build_css.stylesheets(kind, redesign.VERSION)
 
 
 def scripts():

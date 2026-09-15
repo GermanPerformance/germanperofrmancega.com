@@ -167,9 +167,10 @@
     }
 
     /* One library serves both ids; whichever is configured names it. Fetch
-       it at once for ad visitors, otherwise once the page is idle.
-       requestIdleCallback is not in Safari, so fall back to a timeout
-       rather than blocking. */
+       it at once for ad visitors, otherwise after the page has loaded and
+       gone idle, so its 170 KB never competes with the fonts and photos
+       a first paint is waiting on. requestIdleCallback is not in Safari,
+       so fall back to a timeout rather than blocking. */
     var load = function () {
       var s = document.createElement('script');
       s.async = true;
@@ -177,12 +178,19 @@
               (ga4Configured ? MEASUREMENT_ID : ADS_ID);
       document.head.appendChild(s);
     };
+    var whenIdle = function () {
+      if ('requestIdleCallback' in window) {
+        requestIdleCallback(load, { timeout: 3000 });
+      } else {
+        setTimeout(load, 1200);
+      }
+    };
     if (fromAd()) {
       load();
-    } else if ('requestIdleCallback' in window) {
-      requestIdleCallback(load, { timeout: 3000 });
+    } else if (document.readyState === 'complete') {
+      whenIdle();
     } else {
-      setTimeout(load, 1200);
+      window.addEventListener('load', whenIdle, { once: true });
     }
   }
 

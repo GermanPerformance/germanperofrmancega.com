@@ -55,7 +55,7 @@ sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 # fixed in one file and stale in the others.
 from build_service_pages import checks_list  # noqa: E402
 from build_landing_pages import photo_picture  # noqa: E402
-from page_chrome import neutral_blocks  # noqa: E402
+from page_chrome import neutral_blocks, stylesheets  # noqa: E402
 import place  # noqa: E402
 from urls import page_url  # noqa: E402
 
@@ -301,10 +301,9 @@ def skeleton():
         "mob": grab(r'<div id="mobile-menu".*?\n</div>'),
         "callbar": "",  # the fixed bottom call bar was removed site-wide
         "footer": neutral_footer(grab(r"<footer>.*?</footer>")),
-        "fonts": grab(r'<link rel="stylesheet" href="assets/css/fonts\.css[^>]*>'),
-        # Every local stylesheet, in document order -- never a range regex.
-        "css": "\n".join(
-            re.findall(r'<link rel="stylesheet" href="assets/css/[^"]+"[^>]*>', src)),
+        # Not scraped: the inline critical block and the one bundle link,
+        # from the tool that owns them (an info page is a site-sheet page).
+        "css": stylesheets("site"),
         "scripts": "\n".join(
             re.findall(r'<script defer src="assets/js/[^"]+"></script>', src)),
     }
@@ -386,7 +385,6 @@ def build(page, sk):
 <meta name="description" content="{page['desc']}">
 <link rel="icon" type="image/png" href="assets/img/favicon-144.png">
 <link rel="canonical" href="{page_url(page['slug'])}"/>
-{sk['fonts']}
 {sk['css']}
 </head>
 <body data-page-type="info">

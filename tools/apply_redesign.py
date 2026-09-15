@@ -9,8 +9,11 @@ markup pattern, so the redesign reaches them by transformation rather
 than by hand. Every rule below maps one piece of the old markup onto the
 new system:
 
-  * stylesheets load tokens -> werkstatt (base) -> page sheet, so the base
-    no longer has to out-specify the page sheet it used to load after
+  * stylesheets are one inline critical block (fonts + tokens) and one
+    bundle link (werkstatt + page sheet, tools/build_css.py), so a phone
+    paints after one request instead of four; the legacy triple
+    tokens -> page -> werkstatt is still recognised and rewritten, and
+    the base no longer has to out-specify the page sheet it used to load after
   * a fixed phone bar above one nav and one mobile menu on every page,
     with the call button and hamburger grouped so the bar reads
     logo | links | call; About and Contact point at their own pages, so
@@ -52,13 +55,16 @@ from service_catalog import GROUPS, HUBS  # noqa: E402
 import place  # noqa: E402
 from redirects import site_pages  # noqa: E402
 import urls  # noqa: E402
+import build_css  # noqa: E402
 
 REPO_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-VERSION = "32"
+VERSION = "33"
 
 # The typefaces are served from assets/fonts/ (see tools/build_fonts.py):
-# the @font-face rules are the first stylesheet, so the browser asks for
-# the headline face as soon as it has parsed the CSS. The Google Fonts
+# the @font-face rules travel inline in every page's <style id="critical">
+# (tools/build_css.py), so the browser asks for the headline face as soon
+# as it has the document. fonts_markup() survives only for the legacy
+# Google Fonts rule below; the critical rule then replaces it. The Google Fonts
 # block this replaces cost two hosts in series -- the CSS, then the file
 # URLs read out of it -- before a heading could paint. Deliberately no
 # <link rel="preload"> for the font: measured on an emulated slow 4G
@@ -530,16 +536,22 @@ RULES = [
     #    script for every page -----------------------------------------------
     (GOOGLE_FONTS_RE, fonts_markup()),
     (r'<link rel="preload" href="assets/fonts/[^"]*" as="font"[^>]*>\n', ''),
-    (r'<link rel="stylesheet" href="assets/css/tokens\.css\?v=\d+">\n'
-     r'<link rel="stylesheet" href="assets/css/(site|post)\.css\?v=\d+">\n'
-     r'<link rel="stylesheet" href="assets/css/werkstatt\.css\?v=\d+">',
-     f'<link rel="stylesheet" href="assets/css/tokens.css?v={VERSION}">\n'
-     f'<link rel="stylesheet" href="assets/css/werkstatt.css?v={VERSION}">\n'
-     f'<link rel="stylesheet" href="assets/css/\\1.css?v={VERSION}">'),
+    # A page still linking the sheets one by one (either legacy order, with
+    # or without fonts.css) gets the inline critical block and its bundle.
+    (r'(?:<link rel="stylesheet" href="assets/css/fonts\.css\?v=\d+">\n)?'
+     r'<link rel="stylesheet" href="assets/css/tokens\.css\?v=\d+">\n'
+     r'(?:<link rel="stylesheet" href="assets/css/werkstatt\.css\?v=\d+">\n'
+     r'<link rel="stylesheet" href="assets/css/(site|post|home)\.css\?v=\d+">'
+     r'|<link rel="stylesheet" href="assets/css/(site|post|home)\.css\?v=\d+">\n'
+     r'<link rel="stylesheet" href="assets/css/werkstatt\.css\?v=\d+">)',
+     lambda m: build_css.stylesheets(m.group(1) or m.group(2), VERSION)),
+    # The critical block is regenerated from fonts.css and tokens.css on
+    # every pass, so an edit to either reaches every page.
+    (build_css.CRITICAL_RE.pattern, lambda m: build_css.critical_markup()),
     # Every stylesheet and script carries the current cache-buster, whatever
     # order the links are in. Bump VERSION whenever a sheet changes, or a
     # browser that saw the old sheet keeps it against the new markup.
-    (r'(assets/(?:css|js)/[a-z]+\.(?:css|js))\?v=\d+', f'\\1?v={VERSION}'),
+    (r'(assets/(?:css|js)/[a-z-]+\.(?:css|js))\?v=\d+', f'\\1?v={VERSION}'),
     (r'<script defer src="assets/js/site\.js\?v=\d+"></script>',
      f'<script defer src="assets/js/site.js?v={VERSION}"></script>'),
     (r'<script defer src="assets/js/analytics\.js\?v=\d+"></script>',
@@ -672,7 +684,7 @@ def main():
 
     # The homepage is hand-built, but its chrome must match every other
     # page's: apply the nav rule alone, with in-page anchors, and never the
-    # version stamps (those five refs are hand-edited).
+    # version stamps (those refs are hand-edited).
     index = os.path.join(REPO_ROOT, "index.html")
     with open(index, encoding="utf-8") as fh:
         original = fh.read()
@@ -682,10 +694,15 @@ def main():
         return 1
     updated = footer_chrome(updated, home=True)
     updated = urls.clean_links(updated)
+    # ... and its inline critical block, which is build output like the nav.
+    updated, n = build_css.CRITICAL_RE.subn(lambda m: build_css.critical_markup(), updated, count=1)
+    if n != 1:
+        print("index.html: <style id=\"critical\"> block not found")
+        return 1
     if updated != original:
         with open(index, "w", encoding="utf-8") as fh:
             fh.write(updated)
-    print("index.html nav " + ("updated" if updated != original else "current"))
+    print("index.html chrome " + ("updated" if updated != original else "current"))
 
     leftovers = []
     for name in pages:

@@ -32,6 +32,7 @@ import sys
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from build_info_pages import neutral_footer  # noqa: E402
 from urls import page_url  # noqa: E402
+from page_chrome import stylesheets  # noqa: E402
 
 REPO_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 DONOR = "dealer-vs-independent-german-car-repair.html"
@@ -159,9 +160,9 @@ def skeleton():
         "nav": grab(r"<nav.*?</nav>"),
         "mob": grab(r'<div id="mobile-menu".*?\n</div>'),
         "footer": neutral_footer(grab(r"<footer>.*?</footer>")),
-        "fonts": grab(r'<link rel="stylesheet" href="assets/css/fonts\.css[^>]*>'),
-        "css": "\n".join(
-            re.findall(r'<link rel="stylesheet" href="assets/css/[^"]+"[^>]*>', src)),
+        # Not scraped: the inline critical block and the one bundle link,
+        # from the tool that owns them (the privacy page is a post-sheet page).
+        "css": stylesheets("post"),
         "scripts": "\n".join(
             re.findall(r'<script defer src="assets/js/[^"]+"></script>', src)),
     }
@@ -196,7 +197,6 @@ def build(sk):
 <meta name="description" content="{DESC}">
 <link rel="icon" type="image/png" href="assets/img/favicon-144.png">
 <link rel="canonical" href="{page_url(SLUG)}">
-{sk['fonts']}
 {sk['css']}
 </head>
 <body data-page-type="info">

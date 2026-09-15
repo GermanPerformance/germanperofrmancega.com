@@ -19,12 +19,17 @@ Plain Python 3, no dependencies. Run everything from the repo root.
   clean; `check_links.py` resolves a clean address back to its file. The
   catalog and the tools keep naming pages by file name.
 - `page_chrome.py` — the nav, footer, address block and asset links every generated page shares.
+- `build_css.py` — the one stylesheet request per page: `assets/css/bundle-{home,site,post}.css`
+  (werkstatt + page sheet, comments stripped) and the inline `<style id="critical">` (fonts + tokens).
+  Edit the source sheets in `assets/css/`, never the bundles; they are build output committed
+  like the pages, and every pass regenerates the critical block on all pages, index.html included.
 - `apply_redesign.py` — `VERSION` (bump when a stylesheet or script changes)
   and the "run last" normaliser every page passes through.
 
 ## Pipeline
 
 ```
+python3 tools/build_css.py                    # CSS bundles + the inline critical block (first: the generators link them)
 python3 tools/build_service_pages.py          # brand_pages/*.py -> make pages
 python3 tools/build_general_service_pages.py  # three category pages on the same template
 python3 tools/build_brand_hubs.py             # five make hubs

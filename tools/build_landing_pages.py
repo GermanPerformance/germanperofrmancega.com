@@ -41,7 +41,7 @@ sys.path.insert(0, TOOLS)
 
 import apply_redesign as redesign  # noqa: E402
 from add_related_services import build_block as related_block  # noqa: E402
-from page_chrome import footer  # noqa: E402
+from page_chrome import footer, stylesheets  # noqa: E402
 from landing_pages import (AREA_LINE, DEFAULT_CTA_SUB, DEFAULT_STEPS,  # noqa: E402
                            PAGES)
 from reviews import REVIEWS  # noqa: E402
@@ -70,7 +70,6 @@ GLYPH_EM = {
 UNKNOWN_GLYPH_EM = .80
 H1_MARGIN = 1.03  # the measurement's error band, so the line never wraps
 
-FONTS = redesign.fonts_markup()
 STAR = ('<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="m12 2 3.09 '
         '6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01z"/></svg>')
 PHOTO_SIZES = "(min-width: 960px) 580px, 100vw"
@@ -281,10 +280,7 @@ def build(page):
 <link rel="icon" type="image/png" href="assets/img/favicon-144.png">
 <link rel="canonical" href="{page_url(page["slug"])}"/>
 {social_tags(page)}
-{FONTS}
-<link rel="stylesheet" href="assets/css/tokens.css?v={v}">
-<link rel="stylesheet" href="assets/css/werkstatt.css?v={v}">
-<link rel="stylesheet" href="assets/css/site.css?v={v}">
+{stylesheets()}
 </head>
 <body data-page-type="service">
 {redesign.NAV}
