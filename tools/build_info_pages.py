@@ -27,18 +27,20 @@ actually proceeds.
 Every fact here already appears on the site or in its schema: trading since
 2010, Mon-Fri 9:30-18:00, 2144 Parkwood Rd NW, 4.5 stars from 185 reviews,
 12-month/12,000-mile warranty, no appointment needed, extended warranties
-accepted. Nothing about staff, certifications or capacity is invented.
+accepted. Nothing about staff or capacity is invented; the one credential
+line (licensed, certified, trained by certified BMW and Mercedes-Benz
+mechanics) was supplied by the owner on 2026-09-15.
 
 The "people" section on /about is the E-E-A-T piece the page lacked: the
 homepage names Sam and Zayd beside their photograph and says they answer
 the phone and work on the cars, but the About page -- the one a reader or
 a search engine opens to find out who is behind a business -- said nothing
 about anyone. It now shows the same photograph and repeats exactly those
-facts. Their surnames, titles and any certifications are not on the site,
-so they are not here either; add them to PEOPLE_POINTS when the owner
-supplies them. /contact gains the map the homepage already embeds, so the
-page that answers "where" shows it, and the same photograph so the
-building is recognisable from the road.
+facts. Their surnames and titles are not on the site, so they are not
+here either; add them to PEOPLE_POINTS when the owner supplies them.
+/contact gains the map the homepage already embeds, so the page that
+answers "where" shows it, and the same photograph so the building is
+recognisable from the road.
 
 Run from the repo root:  python3 tools/build_info_pages.py
 """
@@ -99,6 +101,7 @@ PAGES = [
  "people_points": [
    "Family-owned, working on German cars in Snellville since 2010",
    "The people who answer the phone are the people who do the work",
+   "Licensed, certified technicians, trained by certified BMW and Mercedes-Benz mechanics",
    "Every car diagnosed on the factory software for its marque — ISTA, XENTRY, ODIS, PIWIS",
    "A written estimate before a single part is ordered",
    "12-month, 12,000-mile warranty on every repair",
