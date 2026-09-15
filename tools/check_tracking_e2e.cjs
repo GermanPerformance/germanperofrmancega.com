@@ -35,7 +35,7 @@ const path = require('path');
 const { chromium } = require('playwright-core');
 
 const REPO_ROOT = path.resolve(__dirname, '..');
-const PAGE = 'bmw-repair-snellville-ga';
+const PAGE = 'bmw-repair';
 const SHOP_TEL = 'tel:+16783957459';
 const SHOP_DISPLAY = '(678) 395-7459';
 const FORWARD_DISPLAY = '(770) 555-0100';

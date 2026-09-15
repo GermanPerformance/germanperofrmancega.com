@@ -84,7 +84,7 @@ POSTS = [
                 f"replacing the part that failed and replacing the parts around "
                 f"it. The homepage sets out what "
                 f'<a href="{REPAIRS}">factory-level diagnostics</a> covers; a '
-                f"{link('german-car-check-engine-light-snellville.html', 'check engine light diagnosis')} "
+                f"{link('german-car-check-engine-light.html', 'check engine light diagnosis')} "
                 f"is the usual starting point.",
                 ("callout",
                  "Paying for a proper diagnosis feels like an extra line on the "
@@ -138,11 +138,11 @@ POSTS = [
                 f"is also why a shop that works on one family of cars every week "
                 f"quotes with more confidence than one that sees it twice a "
                 f"year. Our make pages set out what we see on "
-                f"{link('bmw-repair-snellville-ga.html', 'BMW')}, "
-                f"{link('mercedes-repair-snellville-ga.html', 'Mercedes-Benz')}, "
-                f"{link('audi-repair-snellville-ga.html', 'Audi')}, "
-                f"{link('porsche-repair-snellville-ga.html', 'Porsche')} and "
-                f"{link('volkswagen-repair-snellville-ga.html', 'Volkswagen')}.",
+                f"{link('bmw-repair.html', 'BMW')}, "
+                f"{link('mercedes-repair.html', 'Mercedes-Benz')}, "
+                f"{link('audi-repair.html', 'Audi')}, "
+                f"{link('porsche-repair.html', 'Porsche')} and "
+                f"{link('volkswagen-repair.html', 'Volkswagen')}.",
             ]),
             ("Deferred maintenance compounds", [
                 "The biggest bills we write are rarely for one failure. They "
@@ -163,7 +163,7 @@ POSTS = [
                 f"On a modern German car, fitting the part is not the end of the "
                 f"repair. A new battery has to be registered to the charging "
                 f"system, which is why a "
-                f"{link('bmw-repair-snellville-ga.html', 'BMW battery replacement')} "
+                f"{link('bmw-repair.html', 'BMW battery replacement')} "
                 f"is more than a swap. A replaced control module has to be "
                 f"coded to the vehicle before it does anything at all. A "
                 f"transmission service is followed by an adaptation reset, and "
@@ -325,7 +325,7 @@ POSTS = [
                 f"On a modern German car, fitting the part is half the repair. "
                 f"A new battery has to be registered so the charging system "
                 f"stops charging it as if it were the old, tired one, which is "
-                f"why a {link('bmw-repair-snellville-ga.html', 'BMW battery replacement')} "
+                f"why a {link('bmw-repair.html', 'BMW battery replacement')} "
                 f"is a diagnostic job as well as a mechanical one. A replacement "
                 f"control module is a blank until it is coded to the vehicle "
                 f"and its options. A service is not complete until the service "
@@ -375,7 +375,7 @@ POSTS = [
                 ("list", [
                     f"A check engine light, especially one that has come back "
                     f"after being cleared. Start with a "
-                    f"{link('german-car-check-engine-light-snellville.html', 'check engine light diagnosis')}.",
+                    f"{link('german-car-check-engine-light.html', 'check engine light diagnosis')}.",
                     "Anything intermittent or electrical: a warning that comes "
                     "and goes, a module that drops out, a battery that keeps "
                     "dying.",
@@ -385,7 +385,7 @@ POSTS = [
                     "engine light. Those come from modules a generic scanner "
                     "never sees.",
                     f"A car you are about to buy. A "
-                    f"{link('pre-purchase-inspection-german-car-ga.html', 'pre-purchase inspection')} "
+                    f"{link('german-car-pre-purchase-inspection.html', 'pre-purchase inspection')} "
                     f"reads every module's fault memory, including faults that "
                     f"were cleared before the sale.",
                 ]),

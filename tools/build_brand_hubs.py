@@ -7,8 +7,10 @@ land on, and it has to answer them. Each hub carries what usually brings
 that marque in, every service the shop performs on it (the copy of the
 job pages retired on 2026-09-15, consolidated), the marque's known weak
 points, two of the shop's real Google reviews, six questions, the seven
-make-agnostic service pages, the guides written for that marque, the
-other four makes and the shop's credentials.
+make-agnostic service pages, the guides written for that marque, and the
+shop's credentials with one link up to the homepage. It never links the
+other makes' hubs outside the nav (owner, 2026-09-15); the footer lists
+the homepage and the general services for the same reason.
 
 Copy structure is Before-After-Bridge: the symptom that made someone
 search and the fear behind it (paying for parts until the noise stops);
@@ -36,9 +38,9 @@ import build_landing_pages as blp  # noqa: E402
 from brand_pages import HUBS  # noqa: E402
 from build_service_pages import MARQUE_TOKENS  # noqa: E402
 from fix_breadcrumbs import breadcrumb  # noqa: E402
-from page_chrome import NAV, neutral_footer, scripts, stylesheets  # noqa: E402
+from page_chrome import NAV, make_footer, scripts, stylesheets  # noqa: E402
 from posts import GUIDES_PAGE, READING, SUMMARY, guides_for  # noqa: E402
-from service_catalog import GENERIC_GROUP, GROUPS, HOME, full_label, hubs  # noqa: E402
+from service_catalog import GENERIC_GROUP, GROUPS, HOME, full_label  # noqa: E402
 from urls import href_for, page_url  # noqa: E402
 
 REPO_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -48,10 +50,13 @@ REPO_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # there reaches the hubs on the next build.
 UNIVERSAL = ((HOME, "Auto Repair"),) + dict(GROUPS)[GENERIC_GROUP]
 SLUGS = tuple(h["slug"] for h in HUBS)
-OTHER_MAKES_LINE = (
-    "{brand} is one of the five makes we work on. German Performance is an independent "
-    '<a href="{home}">German auto repair shop in Snellville, GA</a> for BMW, Mercedes-Benz, '
-    "Audi, Porsche and Volkswagen, and nothing else.")
+# The closing section's second sentence: the one link up to the homepage.
+# A hub never links the other makes' hubs (owner, 2026-09-15): a reader on
+# the BMW page wants BMW, the services, or the shop itself.
+HOME_LINE = (
+    "German Performance is an independent "
+    '<a href="{home}">German auto repair shop in Snellville, GA</a> that works on {brand} '
+    "and four other German makes, and nothing else.")
 
 
 def article(noun, upper=False):
@@ -146,18 +151,10 @@ def guides_section(hub):
 '''
 
 
-def other_makes_section(hub):
-    others = "".join(
-        f'<a href="{href_for(h)}">{label}</a>' for h, label in hubs() if h != hub["slug"])
-    return f'''<section>
-  <div class="sh fu"><div class="sl">Other German makes</div>{blp.two_line("WE ALSO", "SPECIALISE IN")}<p class="sd">{OTHER_MAKES_LINE.format(brand=hub["brand"], home=href_for(HOME))}</p></div>
-  <div class="flinks fu">{others}<a href="{href_for(GUIDES_PAGE)}">Repair Guides</a></div>
-</section>'''
-
-
 def closing_section(hub):
+    home_line = HOME_LINE.format(brand=hub["brand"], home=href_for(HOME))
     return f'''<section>
-  <div class="sh fu"><div class="sl">Get Started</div>{blp.two_line(f"SNELLVILLE'S {hub['possessive'].upper()}", "SPECIALISTS")}<p class="sd">{hub["closing"]}</p></div>
+  <div class="sh fu"><div class="sl">Get Started</div>{blp.two_line(f"SNELLVILLE'S {hub['possessive'].upper()}", "SPECIALISTS")}<p class="sd">{hub["closing"]} {home_line}</p></div>
   {blp.section_cta()}
 </section>'''
 
@@ -198,11 +195,10 @@ def build(hub):
 
 {universal_section(hub)}
 
-{guides_section(hub)}{other_makes_section(hub)}
-
+{guides_section(hub)}
 {closing_section(hub)}
 </main>
-{neutral_footer()}
+{make_footer()}
 <script defer src="assets/js/site.js?v={v}"></script>
 <script defer src="assets/js/analytics.js?v={v}"></script>
 </body>

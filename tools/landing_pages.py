@@ -64,7 +64,7 @@ DEFAULT_CTA_SUB = ("Call and tell us the make, model and year. Same-week slots "
 
 PAGES = (
 {
- "slug": "german-car-brake-repair-snellville-ga.html",
+ "slug": "german-car-brake-repair.html",
  "service": "Brake Repair",
  "gbp": ("Brake shop", "Brakes", "Auto brake repair", "Auto brake replacement",
          "Brake service & repair"),

@@ -63,41 +63,41 @@ SERVICES = (
 )
 
 MAKES = (
-    Make("bmw",        "BMW",           "BMW",        "bmw-repair-snellville-ga.html"),
-    Make("mercedes",   "Mercedes-Benz", "Mercedes",   "mercedes-repair-snellville-ga.html"),
-    Make("audi",       "Audi",          "Audi",       "audi-repair-snellville-ga.html"),
-    Make("porsche",    "Porsche",       "Porsche",    "porsche-repair-snellville-ga.html"),
-    Make("volkswagen", "Volkswagen",    "Volkswagen", "volkswagen-repair-snellville-ga.html"),
+    Make("bmw",        "BMW",           "BMW",        "bmw-repair.html"),
+    Make("mercedes",   "Mercedes-Benz", "Mercedes",   "mercedes-repair.html"),
+    Make("audi",       "Audi",          "Audi",       "audi-repair.html"),
+    Make("porsche",    "Porsche",       "Porsche",    "porsche-repair.html"),
+    Make("volkswagen", "Volkswagen",    "Volkswagen", "volkswagen-repair.html"),
 )
 
 # The six category pages the homepage cards link to, in the owner's order,
 # under the Google Business Profile's own names. "Auto repair shop" is the
 # homepage, so the cards run brake shop through engine diagnostic.
 MONEY = (
-    ("german-car-brake-repair-snellville-ga.html",        "Brake Repair"),
-    ("german-car-transmission-repair-snellville-ga.html", "Transmission Repair"),
-    ("german-car-oil-change-snellville-ga.html",          "Oil Change"),
-    ("german-car-tune-up-snellville-ga.html",             "Auto Tune-Up"),
-    ("german-car-ac-repair-snellville-ga.html",           "Auto Air Conditioning"),
-    ("german-car-check-engine-light-snellville.html",     "Check Engine Light"),
+    ("german-car-brake-repair.html",        "Brake Repair"),
+    ("german-car-transmission-repair.html", "Transmission Repair"),
+    ("german-car-oil-change.html",          "Oil Change"),
+    ("german-car-tune-up.html",             "Auto Tune-Up"),
+    ("german-car-ac-repair.html",           "Auto Air Conditioning"),
+    ("german-car-check-engine-light.html",     "Check Engine Light"),
 )
 
 PAGES = (
     # make-agnostic pages, in the order the "Services" column shows
-    Page("german-car-brake-repair-snellville-ga.html",        None, "brakes",       "German Car Brake Repair"),
-    Page("german-car-transmission-repair-snellville-ga.html", None, "transmission", "German Car Transmission Repair"),
-    Page("german-car-oil-change-snellville-ga.html",          None, "oil",          "German Car Oil Change"),
-    Page("german-car-tune-up-snellville-ga.html",             None, "tune-up",      "German Car Tune-Up"),
-    Page("german-car-ac-repair-snellville-ga.html",           None, "ac",           "German Car AC Repair"),
-    Page("german-car-check-engine-light-snellville.html",     None, "cel",          "Check Engine Light"),
-    Page("pre-purchase-inspection-german-car-ga.html",        None, "inspection",   "Pre-Purchase Inspection"),
+    Page("german-car-brake-repair.html",        None, "brakes",       "German Car Brake Repair"),
+    Page("german-car-transmission-repair.html", None, "transmission", "German Car Transmission Repair"),
+    Page("german-car-oil-change.html",          None, "oil",          "German Car Oil Change"),
+    Page("german-car-tune-up.html",             None, "tune-up",      "German Car Tune-Up"),
+    Page("german-car-ac-repair.html",           None, "ac",           "German Car AC Repair"),
+    Page("german-car-check-engine-light.html",     None, "cel",          "Check Engine Light"),
+    Page("german-car-pre-purchase-inspection.html",        None, "inspection",   "Pre-Purchase Inspection"),
     # the brand hubs: the make's job pages were retired into them on
     # 2026-09-15 (tools/redirects.py forwards the old addresses)
-    Page("bmw-repair-snellville-ga.html",        "bmw",        "repair", None),
-    Page("mercedes-repair-snellville-ga.html",   "mercedes",   "repair", None),
-    Page("audi-repair-snellville-ga.html",       "audi",       "repair", None),
-    Page("porsche-repair-snellville-ga.html",    "porsche",    "repair", None),
-    Page("volkswagen-repair-snellville-ga.html", "volkswagen", "repair", None),
+    Page("bmw-repair.html",        "bmw",        "repair", None),
+    Page("mercedes-repair.html",   "mercedes",   "repair", None),
+    Page("audi-repair.html",       "audi",       "repair", None),
+    Page("porsche-repair.html",    "porsche",    "repair", None),
+    Page("volkswagen-repair.html", "volkswagen", "repair", None),
 )
 
 # How the related-services ranking groups jobs: a BMW spark-plug page and

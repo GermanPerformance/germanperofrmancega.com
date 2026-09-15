@@ -57,11 +57,15 @@ def expected_name(slug):
 
 def name_pattern(slug):
     """The name as a regex: a hub may use the column heading, and its
-    title may add the short form in brackets ("Volkswagen (VW) Repair")."""
+    title may add the short form in brackets ("Volkswagen (VW) Repair");
+    a make-agnostic page may use the profile's own name for the service
+    instead ("Auto Air Conditioning" for the AC page), since its H1 is
+    "{profile name} in Snellville, GA" (owner, 2026-09-15)."""
     make = cat.make_of(slug)
     name = expected_name(slug)
     if not make:
-        return re.escape(name)
+        names = {name, cat.nav_label(slug)}
+        return "(?:" + "|".join(re.escape(n) for n in sorted(names)) + ")"
     m = _MAKES[make]
     job = re.escape(name[len(m.short) + 1:])
     return rf"(?:{re.escape(m.short)}|{re.escape(m.heading)})(?: \([A-Z]+\))? {job}"

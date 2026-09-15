@@ -26,8 +26,7 @@ import tempfile
 TOOLS = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, TOOLS)
 
-from landing_pages import PAGES  # noqa: E402
-from service_catalog import MAKES  # noqa: E402
+from service_catalog import PAGES  # noqa: E402
 
 REPO_ROOT = os.path.dirname(TOOLS)
 SHELL_GLOB = os.path.expanduser(
@@ -78,7 +77,9 @@ def measure(binary, path, width):
 
 
 # Every page on the two-line hero: the landing pages and the five brand hubs.
-SLUGS = tuple(p["slug"] for p in PAGES) + tuple(m.hub for m in MAKES)
+# Every catalog page carries the two-line H1 since 2026-09-15: the seven
+# general pages and the five hubs.
+SLUGS = tuple(p.slug for p in PAGES)
 
 
 def check(binary):

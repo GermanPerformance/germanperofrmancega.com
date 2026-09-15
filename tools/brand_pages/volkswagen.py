@@ -10,7 +10,7 @@ checklist says "VW", the marque's own short form.
 from posts.common import BRAKES, OIL, TRANSMISSION
 
 HUB = {
- "slug": "volkswagen-repair-snellville-ga.html",
+ "slug": "volkswagen-repair.html",
  "make": "volkswagen",
  "brand": "Volkswagen",
  "possessive": "VW",

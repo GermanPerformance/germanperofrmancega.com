@@ -35,18 +35,18 @@ class Mapping(unittest.TestCase):
 class Stub(unittest.TestCase):
     def setUp(self):
         self.html = build_redirects.stub("audi-timing-belt-snellville-ga.html",
-                                         "audi-repair-snellville-ga.html",
+                                         "audi-repair.html",
                                          "Audi Repair & Service Snellville GA | German Performance")
 
     def test_instant_meta_refresh_to_the_absolute_url(self):
-        self.assertIn(f'<meta http-equiv="refresh" content="0; url={SITE}/audi-repair-snellville-ga">', self.html)
+        self.assertIn(f'<meta http-equiv="refresh" content="0; url={SITE}/audi-repair">', self.html)
 
     def test_canonical_names_the_successor(self):
-        self.assertIn(f'<link rel="canonical" href="{SITE}/audi-repair-snellville-ga">', self.html)
+        self.assertIn(f'<link rel="canonical" href="{SITE}/audi-repair">', self.html)
 
     def test_browsers_get_a_script_and_people_get_a_link(self):
-        self.assertIn(f'location.replace("{SITE}/audi-repair-snellville-ga")', self.html)
-        self.assertIn('<a href="/audi-repair-snellville-ga">Audi Repair &amp; Service Snellville GA</a>', self.html)
+        self.assertIn(f'location.replace("{SITE}/audi-repair")', self.html)
+        self.assertIn('<a href="/audi-repair">Audi Repair &amp; Service Snellville GA</a>', self.html)
 
     def test_successor_is_named_without_its_extension(self):
         self.assertNotIn(".html", self.html.split("<title>")[1])
@@ -60,11 +60,11 @@ class Stub(unittest.TestCase):
 class Sitemap(unittest.TestCase):
     def test_a_page_canonicalised_elsewhere_is_not_listed(self):
         self.assertFalse(build_sitemap.is_own_canonical(
-            "audi-timing-belt-snellville-ga.html", f"{SITE}/audi-repair-snellville-ga"))
+            "audi-timing-belt-snellville-ga.html", f"{SITE}/audi-repair"))
         self.assertTrue(build_sitemap.is_own_canonical(
-            "audi-repair-snellville-ga.html", f"{SITE}/audi-repair-snellville-ga"))
+            "audi-repair.html", f"{SITE}/audi-repair"))
         self.assertFalse(build_sitemap.is_own_canonical(
-            "audi-repair-snellville-ga.html", f"{SITE}/audi-repair-snellville-ga.html"))
+            "audi-repair.html", f"{SITE}/audi-repair.html"))
         self.assertTrue(build_sitemap.is_own_canonical("index.html", f"{SITE}/"))
 
 

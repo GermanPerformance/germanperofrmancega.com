@@ -22,7 +22,7 @@ REPO_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 VERSION = "3"
 INCLUDE = f'<script defer src="assets/js/analytics.js?v={VERSION}"></script>'
 
-# The five brand hubs share the -repair-snellville-ga suffix with service
+# The five brand hubs share the -repair suffix with service
 # pages like bmw-transmission-repair-…, so they come from the catalog
 # rather than a pattern.
 HUBS = {slug for slug, _ in hubs()}

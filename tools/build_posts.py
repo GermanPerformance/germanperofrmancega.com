@@ -5,7 +5,9 @@ Each article renders on the blog skeleton: the nav, mobile menu, footer
 and scripts are scraped from the hand-written dealer-vs-independent page
 (the DONOR), the stylesheet link and critical block come from the tool
 that owns them, and the footer is neutralised the way About and Contact
-are, so it links the five brand hubs rather than one marque's services.
+are, so a general article links the five brand hubs; a make's guide takes
+the make footer instead (the homepage and the general services, never the
+other makes -- see page_chrome.make_blocks).
 The closing call-to-action block is the donor's, verbatim, plus one link
 to the money page the article supports.
 
@@ -27,7 +29,7 @@ from datetime import date
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from build_info_pages import neutral_footer  # noqa: E402
-from page_chrome import stylesheets  # noqa: E402
+from page_chrome import make_footer, stylesheets  # noqa: E402
 from posts import (  # noqa: E402
     AUTHOR_NOTE, DEALER, GUIDES, GUIDES_PAGE, HOME_PAGE, POST_DATES, POSTS, READING,
     SERVICES, SUMMARY,
@@ -201,7 +203,8 @@ def build(post, sk):
 {further_html(post['further'])}
 
 {cta_html(post, sk['cta_tail'])}"""
-    return page(sk, post["title"], post["description"], post["slug"], body)
+    footer = sk["footer"] if post["hub"] == HOME_PAGE else make_footer()
+    return page({**sk, "footer": footer}, post["title"], post["description"], post["slug"], body)
 
 
 def guides_group(heading, hub, slugs):

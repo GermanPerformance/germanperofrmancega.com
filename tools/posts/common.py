@@ -41,17 +41,17 @@ MB_CASES = "mercedes-repair-case-studies.html"
 
 # The money pages an article can support.
 HOME_PAGE = "index.html"
-BMW_HUB = "bmw-repair-snellville-ga.html"
-MERCEDES_HUB = "mercedes-repair-snellville-ga.html"
+BMW_HUB = "bmw-repair.html"
+MERCEDES_HUB = "mercedes-repair.html"
 
 # The general service pages the articles point at.
-BRAKES = "german-car-brake-repair-snellville-ga.html"
-TRANSMISSION = "german-car-transmission-repair-snellville-ga.html"
-OIL = "german-car-oil-change-snellville-ga.html"
-TUNE_UP = "german-car-tune-up-snellville-ga.html"
-AC = "german-car-ac-repair-snellville-ga.html"
-CEL = "german-car-check-engine-light-snellville.html"
-INSPECTION = "pre-purchase-inspection-german-car-ga.html"
+BRAKES = "german-car-brake-repair.html"
+TRANSMISSION = "german-car-transmission-repair.html"
+OIL = "german-car-oil-change.html"
+TUNE_UP = "german-car-tune-up.html"
+AC = "german-car-ac-repair.html"
+CEL = "german-car-check-engine-light.html"
+INSPECTION = "german-car-pre-purchase-inspection.html"
 
 HOME = href_for(HOME_PAGE)
 SERVICES = f"{HOME}#services"

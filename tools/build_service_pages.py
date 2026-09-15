@@ -20,6 +20,7 @@ import re
 import sys
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+from build_landing_pages import h1_markup  # noqa: E402
 from fix_breadcrumbs import breadcrumb  # noqa: E402
 from page_chrome import NAP_GRID, NAV, footer, scripts, stylesheets  # noqa: E402
 import place  # noqa: E402
@@ -81,7 +82,6 @@ def faq_html(items):
 
 
 def build(page):
-    line1, line2, line3 = page["h1"]
     ch1, ch2 = page["cards_head"]
     wh1, wh2 = page["why_head"]
     fh1, fh2 = page["faq_head"]
@@ -104,10 +104,10 @@ def build(page):
 {NAV}
 <main>
 {breadcrumb(page['slug'])}
-<section class="hero"><div class="hbg"></div><div class="hgrid"></div>
+<section class="hero hero-svc"><div class="hbg"></div><div class="hgrid"></div>
   <div class="hc">
     <div class="eyebrow fu">{page['brand']} Specialists &nbsp;·&nbsp; Snellville, GA &nbsp;·&nbsp;<span class="eyebrow-highlight">4.5★ Rated</span></div>
-    <h1 class="fu">{line1}<br><span class="outline">{line2}</span><br><span class="accent">{line3}</span></h1>
+    {h1_markup(page['service'])}
     <p class="sub fu">{page['sub']}</p>
     <div class="acts fu"><a href="tel:+16783957459" class="bp"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M6.6 2.5a1.6 1.6 0 0 1 1.5 1l1 2.4a1.6 1.6 0 0 1-.4 1.8L7.4 8.9a11.6 11.6 0 0 0 5.7 5.7l1.2-1.3a1.6 1.6 0 0 1 1.8-.4l2.4 1a1.6 1.6 0 0 1 1 1.5v2.3a2.3 2.3 0 0 1-2.5 2.3 A18.4 18.4 0 0 1 2.2 5a2.3 2.3 0 0 1 2.3-2.5z"/></svg><span>Service My Car</span></a><a href="/#services" class="bg">All Services {ARROW}</a></div>
 {checks_list(page.get('marque', page['brand']))}

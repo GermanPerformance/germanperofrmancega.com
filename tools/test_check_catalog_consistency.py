@@ -17,9 +17,9 @@ import fix_breadcrumbs as fb  # noqa: E402
 import service_catalog as cat  # noqa: E402
 from urls import href_for, page_url  # noqa: E402
 
-SLUG = "bmw-repair-snellville-ga.html"
-HUB = "mercedes-repair-snellville-ga.html"
-GENERIC = "german-car-tune-up-snellville-ga.html"
+SLUG = "bmw-repair.html"
+HUB = "mercedes-repair.html"
+GENERIC = "german-car-tune-up.html"
 
 
 def page(slug, title=None, h1=None, crumb=None, desc="A fine page.", canonical=None,
@@ -43,8 +43,8 @@ class NameTests(unittest.TestCase):
         self.assertEqual(ccc.expected_name(SLUG), "BMW Repair")
         self.assertEqual(ccc.expected_name(HUB), "Mercedes Repair")
         self.assertEqual(ccc.expected_name(GENERIC), "Tune-Up")
-        self.assertEqual(ccc.expected_name("german-car-ac-repair-snellville-ga.html"), "AC Repair")
-        self.assertEqual(ccc.expected_name("pre-purchase-inspection-german-car-ga.html"),
+        self.assertEqual(ccc.expected_name("german-car-ac-repair.html"), "AC Repair")
+        self.assertEqual(ccc.expected_name("german-car-pre-purchase-inspection.html"),
                          "Pre-Purchase Inspection")
 
     def test_h1_text_collapses_markup(self):
@@ -75,7 +75,7 @@ class RuleTests(unittest.TestCase):
             h1='Mercedes Repair in<br><span class="accent">Snellville,&nbsp;GA</span>'), [])
 
     def test_hub_title_may_carry_the_short_form_in_brackets(self):
-        slug = "volkswagen-repair-snellville-ga.html"
+        slug = "volkswagen-repair.html"
         self.assertEqual(self.problems(slug=slug, title="Volkswagen (VW) Repair",
                                        h1="VOLKSWAGEN<br>REPAIR"), [])
 
@@ -84,17 +84,17 @@ class RuleTests(unittest.TestCase):
 
     def test_h1_must_name_make_and_job(self):
         self.assertTrue(any("h1" in p for p in self.problems(h1="VW<br>REPAIR",
-                                                              slug="volkswagen-repair-snellville-ga.html")))
+                                                              slug="volkswagen-repair.html")))
         self.assertTrue(any("h1" in p for p in self.problems(h1="BMW<br>SERVICE")))
 
     def test_generic_h1_may_drop_the_auto_prefix(self):
-        slug = "german-car-ac-repair-snellville-ga.html"
+        slug = "german-car-ac-repair.html"
         self.assertEqual(self.problems(slug=slug, title="German Car AC Repair",
                                        h1="GERMAN CAR<br>AC REPAIR"), [])
 
     def test_hub_and_generic_page_stay_two_crumbs(self):
         three = ('<div class="breadcrumb"><a href="/">Home</a><span>/</span>'
-                 '<a href="/bmw-repair-snellville-ga">BMW Repair</a><span>/</span>'
+                 '<a href="/bmw-repair">BMW Repair</a><span>/</span>'
                  '<span class="crumb-here">BMW Oil Change — Snellville, GA</span></div>')
         self.assertTrue(any("breadcrumb" in p for p in self.problems(crumb=three)))
         self.assertTrue(any("breadcrumb" in p for p in self.problems(slug=GENERIC, crumb=three)))

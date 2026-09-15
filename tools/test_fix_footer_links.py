@@ -15,7 +15,7 @@ import fix_footer_links as ffl  # noqa: E402
 
 class RankingTests(unittest.TestCase):
     def test_generic_page_ranks_the_homepage_then_its_siblings(self):
-        picks = ffl.related("german-car-brake-repair-snellville-ga.html")
+        picks = ffl.related("german-car-brake-repair.html")
         self.assertEqual(picks[0], "index.html")
         generic = {"index.html"} | {p for p in ffl.SERVICES if ffl.brand_of(p) == "german-car"}
         self.assertTrue(all(p in generic for p in picks), picks)
@@ -38,7 +38,7 @@ class RankingTests(unittest.TestCase):
     def test_homepage_is_linked_as_the_general_repair_page(self):
         self.assertEqual(ffl.TARGETS["index.html"], "German Auto Repair")
         self.assertNotIn("index.html", ffl.SERVICES)
-        self.assertIn("index.html", ffl.related("german-car-brake-repair-snellville-ga.html"))
+        self.assertIn("index.html", ffl.related("german-car-brake-repair.html"))
 
 
 if __name__ == "__main__":

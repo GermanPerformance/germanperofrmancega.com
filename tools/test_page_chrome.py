@@ -18,7 +18,7 @@ import page_chrome as pc  # noqa: E402
 import service_catalog as cat  # noqa: E402
 from urls import href_for  # noqa: E402
 
-PAGE = "german-car-oil-change-snellville-ga.html"
+PAGE = "german-car-oil-change.html"
 
 
 class HeadTests(unittest.TestCase):
@@ -55,7 +55,7 @@ class FooterTests(unittest.TestCase):
     def test_service_page_footer_uses_its_related_links(self):
         html = pc.footer(PAGE)
         self.assertIn('<div class="fct">Services</div><a href="/#services">All Services</a>', html)
-        self.assertIn('href="/german-car-brake-repair-snellville-ga"', html)
+        self.assertIn('href="/german-car-brake-repair"', html)
         self.assertNotIn(".html", html)
         self.assertIn(str(datetime.date.today().year), html)
         self.assertIn("Get directions", html)
@@ -68,6 +68,21 @@ class FooterTests(unittest.TestCase):
         for hub, label in cat.hubs():
             self.assertIn(f'<a href="{href_for(hub)}">{label}</a>', flinks)
         self.assertNotIn("porsche", col)
+
+    def test_make_footer_lists_the_homepage_and_the_services_never_a_hub(self):
+        """A page that belongs to one make sends its reader up to the
+        homepage or across to a service, not to another make's hub."""
+        col, flinks = pc.make_blocks()
+        general = dict(cat.GROUPS)[cat.GENERIC_GROUP]
+        self.assertIn('<a href="/#services">All Services</a>', col)
+        for slug, label in general[:3]:
+            self.assertIn(f'<a href="{href_for(slug)}">{label}</a>', col)
+        self.assertTrue(flinks.startswith('<div class="flinks"><a href="/">German Auto Repair</a>'))
+        for slug, label in general[3:]:
+            self.assertIn(f'<a href="{href_for(slug)}">{label}</a>', flinks)
+        for hub, _ in cat.hubs():
+            self.assertNotIn(href_for(hub), col + flinks)
+        self.assertIn(flinks, pc.make_footer())
 
     def test_footer_is_stable_under_the_redesign_pass(self):
         html = pc.footer(PAGE)

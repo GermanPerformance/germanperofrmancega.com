@@ -12,7 +12,7 @@ wrapped on phones). The credential sentence in "closing" is the owner's.
 from posts.common import AC, BRAKES, CEL, OIL, TRANSMISSION
 
 HUB = {
- "slug": "mercedes-repair-snellville-ga.html",
+ "slug": "mercedes-repair.html",
  "make": "mercedes",
  "brand": "Mercedes-Benz",
  "possessive": "Mercedes",

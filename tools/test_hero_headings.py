@@ -136,6 +136,21 @@ class LivePageTests(unittest.TestCase):
             if "h1-br" in h1.group(0):
                 self.assertIn('<br class="h1-br"> ', h1.group(0), name)
 
+    def test_every_catalog_page_names_the_city_in_its_h1(self):
+        """The money-page framework, on all twelve catalog pages since
+        2026-09-15: "{service} in" over "Snellville, GA", on a .hero-svc
+        hero so the first line is sized to fit (owner: the city belongs in
+        the main header of every service page)."""
+        import service_catalog
+        for p in service_catalog.PAGES:
+            html = read(p.slug)
+            hero = HERO_RE.search(html)
+            self.assertIsNotNone(hero, p.slug)
+            self.assertIn("hero-svc", hero.group(0)[:80], p.slug)
+            h1 = H1_RE.search(hero.group(0)).group(0)
+            self.assertRegex(h1, r' in<br><span class="accent">Snellville,&nbsp;GA</span></h1>$', p.slug)
+            self.assertIn('style="--h1-em:', h1, p.slug)
+
     def test_no_two_column_still_holds_its_header(self):
         for name in pages():
             self.assertIsNone(apply_redesign.TWO_HEAD_RE.search(read(name)), name)

@@ -10,7 +10,7 @@ credential sentence in "closing" is the owner's (2026-09-15).
 from posts.common import CEL, OIL, TRANSMISSION, TUNE_UP
 
 HUB = {
- "slug": "bmw-repair-snellville-ga.html",
+ "slug": "bmw-repair.html",
  "make": "bmw",
  "brand": "BMW",
  "possessive": "BMW",

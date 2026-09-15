@@ -60,6 +60,19 @@ class DerivationTests(unittest.TestCase):
     def test_h1_reads_as_the_headline(self):
         self.assertEqual(text(blp.h1_markup("Brake Repair")), "Brake Repair in Snellville, GA")
 
+    def test_long_first_lines_lower_the_floor_only_as_far_as_they_must(self):
+        """The floor is 1.5rem unless the line cannot fit a 320px column
+        at that size; then it is the largest 0.05rem step that fits."""
+        self.assertNotIn("--h1-min", blp.h1_style("Brake Repair"))
+        self.assertTrue(blp.h1_style("Volkswagen Repair").endswith(";--h1-min:1.5rem"))
+        for service in ("Auto Air Conditioning", "Pre-Purchase Inspection", "Check Engine Light Service"):
+            em, floor = blp.h1_em(service), blp.h1_floor(blp.h1_em(service))
+            px = float(floor[:-3]) * blp.REM_PX
+            self.assertLessEqual(em * blp.PHONE_WIDTH_K * px, blp.PHONE_COLUMN_PX, service)
+            self.assertGreater(em * blp.PHONE_WIDTH_K * (px + 0.05 * blp.REM_PX), blp.PHONE_COLUMN_PX, service)
+            self.assertLess(px, blp.H1_MIN_MAX_PX, service)
+        self.assertEqual(blp.h1_floor(blp.h1_em("Check Engine Light Service")), "1.2rem")
+
     def test_h1_carries_its_measured_width(self):
         # Calibrated 2026-09-12 against Archivo 800 at width 100: 8.679em.
         em = blp.h1_em("Brake Repair")

@@ -22,8 +22,8 @@ import apply_redesign  # noqa: E402
 import fix_breadcrumbs as fb  # noqa: E402
 import service_catalog as cat  # noqa: E402
 
-GENERIC_PAGE = "german-car-oil-change-snellville-ga.html"
-HUB = "bmw-repair-snellville-ga.html"
+GENERIC_PAGE = "german-car-oil-change.html"
+HUB = "bmw-repair.html"
 
 
 def read(name):

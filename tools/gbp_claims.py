@@ -22,29 +22,29 @@ LEGACY = {
         "Auto repair shop", "Mechanic", "Car repair and maintenance service",
         "German auto repair", "German car mechanic", "German car speciaist"),
     # make-agnostic pages
-    "german-car-transmission-repair-snellville-ga.html": (
+    "german-car-transmission-repair.html": (
         "Transmission shop", "Transmission", "Transmission repair",
         "Transmission replacement"),
-    "german-car-oil-change-snellville-ga.html": ("Oil change service", "Oil change"),
-    "german-car-tune-up-snellville-ga.html": ("Auto tune up service",),
-    "german-car-ac-repair-snellville-ga.html": (
+    "german-car-oil-change.html": ("Oil change service", "Oil change"),
+    "german-car-tune-up.html": ("Auto tune up service",),
+    "german-car-ac-repair.html": (
         "Auto air conditioning service", "Air conditioning", "Car A/C Repair",
         "A/C Diagnostic", "A/C Recharge", "A/C Leak Repair",
         "A/C Compressor Repair"),
-    "german-car-check-engine-light-snellville.html": (
+    "german-car-check-engine-light.html": (
         "Auto engine diagnostic", "check engine light"),
-    "pre-purchase-inspection-german-car-ga.html": ("Vehicle Inspection",),
+    "german-car-pre-purchase-inspection.html": ("Vehicle Inspection",),
 
     # brand hubs: the hub's own services plus, since 2026-09-15, every
     # service the make's retired job pages answered for -- the hub's
     # "services we perform" cards carry that copy now
-    "bmw-repair-snellville-ga.html": (
+    "bmw-repair.html": (
         "BMW repair", "BMW Shop", "BMW mechanic", "Independent BMW mechanic",
         "BMW specialist", "BMW dealership alternative",
         "BMW Oil change", "Steering & suspension repair", "Transmission repair",
         "Coolant Leaks", "BMW Water Pump Replacement", "BMW Thermostat Replacement",
         "Battery", "Auto battery replacement", "Spark plug replacement"),
-    "mercedes-repair-snellville-ga.html": (
+    "mercedes-repair.html": (
         "Mercedes Repair", "Mercedes shop", "Mercedes mechanic",
         "Independent Mercedes mechanic", "Mercedes specialist",
         "Mercedes dealership alternative", "AMG repair",
@@ -52,15 +52,15 @@ LEGACY = {
         "Steering & suspension repair", "Transmission", "Air conditioning",
         "Auto engine diagnostic", "Coolant Leaks", "Mercedes Water Pump Replacement",
         "Mercedes Thermostat Replacement"),
-    "audi-repair-snellville-ga.html": (
+    "audi-repair.html": (
         "Audi repair", "Audi Shop", "Audi Mechanic", "Independent Audi mechanic",
         "Audi specialist", "Audi dealership alternative",
         "Audi oil change", "Brakes", "Steering & suspension repair"),
-    "porsche-repair-snellville-ga.html": (
+    "porsche-repair.html": (
         "Porsche repair", "Porsche mechanic", "Independent Porsche mechanic",
         "Porsche specialist", "Porsche dealership alternative",
         "Oil change", "Brakes", "Steering & suspension repair", "Vehicle Inspection"),
-    "volkswagen-repair-snellville-ga.html": (
+    "volkswagen-repair.html": (
         "Volkswagen repair", "VW mechanic", "VW specialist",
         "Oil change", "Brakes", "Engine repair"),
 }
@@ -77,23 +77,23 @@ _PERFORMANCE = ("BMW Performance", "Mercedes Performance", "Porsche Performance"
 # Pages agreed on 2026-09-12 but not yet built. A file that exists must
 # move out of here and into landing_pages.PAGES.
 PENDING = {
-    "german-car-electrical-repair-snellville-ga.html": (
+    "german-car-electrical-repair.html": (
         "Auto electrical service", "Electrical"),
-    "german-car-battery-replacement-snellville-ga.html": (
+    "german-car-battery-replacement.html": (
         "Battery", "Auto battery replacement"),
-    "german-car-suspension-repair-snellville-ga.html": ("Steering & suspension repair",),
-    "german-car-engine-repair-snellville-ga.html": ("Engine repair",),
-    "german-car-exhaust-repair-snellville-ga.html": ("Exhaust",),
-    "german-car-air-cabin-filter-replacement-snellville-ga.html": (
+    "german-car-suspension-repair.html": ("Steering & suspension repair",),
+    "german-car-engine-repair.html": ("Engine repair",),
+    "german-car-exhaust-repair.html": ("Exhaust",),
+    "german-car-air-cabin-filter-replacement.html": (
         "Air & cabin filter replacement",),
-    "german-car-spark-plug-replacement-snellville-ga.html": ("Spark plug replacement",),
-    "german-car-coolant-leak-repair-snellville-ga.html": ("Coolant Leaks",),
-    "german-car-water-pump-replacement-snellville-ga.html": _WATER_PUMP,
-    "german-car-thermostat-replacement-snellville-ga.html": _THERMOSTAT,
-    "german-car-cold-air-intake-snellville-ga.html": ("Cold Air Intakes",) + _PERFORMANCE,
-    "german-car-downpipe-installation-snellville-ga.html": (
+    "german-car-spark-plug-replacement.html": ("Spark plug replacement",),
+    "german-car-coolant-leak-repair.html": ("Coolant Leaks",),
+    "german-car-water-pump-replacement.html": _WATER_PUMP,
+    "german-car-thermostat-replacement.html": _THERMOSTAT,
+    "german-car-cold-air-intake.html": ("Cold Air Intakes",) + _PERFORMANCE,
+    "german-car-downpipe-installation.html": (
         "High-flow Downpipes",) + _PERFORMANCE,
-    "german-car-performance-exhaust-snellville-ga.html": (
+    "german-car-performance-exhaust.html": (
         "Performance Exhaust System Installation",) + _PERFORMANCE,
 }
 

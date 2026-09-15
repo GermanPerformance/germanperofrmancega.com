@@ -9,7 +9,7 @@ nothing about pricing, turnaround or certification is invented.
 from posts.common import BRAKES, INSPECTION, OIL
 
 HUB = {
- "slug": "porsche-repair-snellville-ga.html",
+ "slug": "porsche-repair.html",
  "make": "porsche",
  "brand": "Porsche",
  "possessive": "Porsche",

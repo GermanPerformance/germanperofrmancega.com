@@ -23,7 +23,7 @@ sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import apply_redesign as redesign  # noqa: E402
 import build_css  # noqa: E402
 from fix_footer_links import build_blocks  # noqa: E402
-from service_catalog import hubs  # noqa: E402
+from service_catalog import GENERIC_GROUP, GROUPS, HOME, HOME_LABEL, hubs  # noqa: E402
 from urls import href_for  # noqa: E402
 
 SITE = "https://germanperformancega.com"
@@ -77,8 +77,8 @@ def footer(slug):
 
 def neutral_blocks():
     """The Services column and link row for pages that belong to no make:
-    the hubs themselves, About, Contact. Three hubs in the column, all
-    five in the row."""
+    About, Contact, the guides index, the general articles. Three hubs in
+    the column, all five in the row."""
     links = [f'<a href="{href_for(h)}">{n}</a>' for h, n in hubs()]
     column = ('<div class="fc"><div class="fct">Services</div>'
               '<a href="/#services">All Services</a>'
@@ -88,3 +88,22 @@ def neutral_blocks():
 
 def neutral_footer():
     return footer_with(*neutral_blocks())
+
+
+def make_blocks():
+    """The Services column and link row for a page that belongs to one
+    make (a hub, a make's guide): the homepage and the seven general
+    services, never the other makes -- a BMW page has no reason to send
+    its reader to the Porsche page (owner, 2026-09-15). Three services in
+    the column, the homepage and the other four in the row."""
+    general = dict(GROUPS)[GENERIC_GROUP]
+    links = [f'<a href="{href_for(h)}">{n}</a>' for h, n in general]
+    column = ('<div class="fc"><div class="fct">Services</div>'
+              '<a href="/#services">All Services</a>'
+              + "".join(links[:3]) + "</div>")
+    home = f'<a href="{href_for(HOME)}">{HOME_LABEL}</a>'
+    return column, '<div class="flinks">' + home + "".join(links[3:]) + "</div>"
+
+
+def make_footer():
+    return footer_with(*make_blocks())

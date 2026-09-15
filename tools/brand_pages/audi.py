@@ -10,7 +10,7 @@ allows on an Audi page.
 from posts.common import BRAKES, CEL, OIL
 
 HUB = {
- "slug": "audi-repair-snellville-ga.html",
+ "slug": "audi-repair.html",
  "make": "audi",
  "brand": "Audi",
  "possessive": "Audi",

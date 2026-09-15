@@ -69,7 +69,7 @@ class DerivedShapeTests(unittest.TestCase):
         column = dict(cat.GROUPS)[cat.MAKES_GROUP]
         self.assertEqual(column, cat.hubs())
         self.assertEqual([h for h, _ in column][:2],
-                         ["bmw-repair-snellville-ga.html", "mercedes-repair-snellville-ga.html"])
+                         ["bmw-repair.html", "mercedes-repair.html"])
 
     def test_labels_are_unique_within_a_column(self):
         for name, entries in cat.GROUPS:
@@ -93,11 +93,11 @@ class NamingTests(unittest.TestCase):
                 self.assertIn("Cooling System Repair", label)
 
     def test_hubs_are_named_make_then_repair_everywhere(self):
-        self.assertEqual(cat.full_label("mercedes-repair-snellville-ga.html"),
+        self.assertEqual(cat.full_label("mercedes-repair.html"),
                          "Mercedes Repair")
-        self.assertEqual(cat.full_label("volkswagen-repair-snellville-ga.html"),
+        self.assertEqual(cat.full_label("volkswagen-repair.html"),
                          "Volkswagen Repair")
-        self.assertEqual(cat.nav_label("bmw-repair-snellville-ga.html"), "BMW Repair")
+        self.assertEqual(cat.nav_label("bmw-repair.html"), "BMW Repair")
 
     def test_no_make_has_job_pages_any_more(self):
         for page in cat.PAGES:
@@ -105,11 +105,11 @@ class NamingTests(unittest.TestCase):
                 self.assertEqual(page.service, "repair", page.slug)
 
     def test_generic_pages_keep_their_own_names(self):
-        self.assertEqual(cat.full_label("german-car-oil-change-snellville-ga.html"),
+        self.assertEqual(cat.full_label("german-car-oil-change.html"),
                          "German Car Oil Change")
-        self.assertEqual(cat.nav_label("german-car-ac-repair-snellville-ga.html"),
+        self.assertEqual(cat.nav_label("german-car-ac-repair.html"),
                          "Auto Air Conditioning")
-        self.assertEqual(cat.nav_label("pre-purchase-inspection-german-car-ga.html"),
+        self.assertEqual(cat.nav_label("german-car-pre-purchase-inspection.html"),
                          "Pre-Purchase Inspection")
 
 

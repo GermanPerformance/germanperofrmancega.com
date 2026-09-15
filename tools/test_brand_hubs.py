@@ -33,6 +33,10 @@ FAQ_RE = re.compile(r'<summary class="fq">(.*?)<span', re.S)
 ANSWER_RE = re.compile(r'<div class="fa"><p>(.*?)</p></div>', re.S)
 
 
+def footer_of(html):
+    return re.search(r"<footer>.*?</footer>", html, re.S).group(0)
+
+
 def main_of(html):
     return html[html.index("<main>"):html.index("</main>")]
 
@@ -97,17 +101,26 @@ class RenderedTests(unittest.TestCase):
             floor = "--h1-min:" in self.pages[h["slug"]].split("</h1>")[0]
             self.assertEqual(floor, em > blp.H1_EM_PHONE_MAX, h["slug"])
 
-    def test_body_links_the_general_pages_the_other_hubs_and_the_guides(self):
+    def test_body_links_the_general_pages_the_homepage_and_the_guides_never_other_makes(self):
+        """A reader on the BMW page is sent to BMW, the services or the
+        shop itself -- never to the Porsche page (owner, 2026-09-15). The
+        nav's Makes column is the one place the other hubs appear."""
         generic = [slug for slug, _ in dict(GROUPS)[GENERIC_GROUP]]
         for h in HUBS:
-            body = main_of(self.pages[h["slug"]])
+            page = self.pages[h["slug"]]
+            body = main_of(page)
             for slug in generic:
                 self.assertIn(f'href="{href_for(slug)}"', body, (h["slug"], slug))
             for m in MAKES:
                 if m.hub != h["slug"]:
-                    self.assertIn(f'href="{href_for(m.hub)}"', body, (h["slug"], m.hub))
+                    self.assertNotIn(f'href="{href_for(m.hub)}"', body, (h["slug"], m.hub))
+                    self.assertNotIn(f'href="{href_for(m.hub)}"', footer_of(page), (h["slug"], m.hub))
             self.assertIn('href="/">German auto repair shop in Snellville, GA</a>', body)
-            self.assertIn(f'href="{href_for(posts.GUIDES_PAGE)}"', body)
+            self.assertIn('<a href="/">German Auto Repair</a>', footer_of(page))
+            # the guides index is linked from the guides grid; a hub with no
+            # guides reaches it through the nav alone
+            self.assertEqual(f'href="{href_for(posts.GUIDES_PAGE)}"' in body,
+                             bool(posts.guides_for(h["slug"])), h["slug"])
             for slug in posts.guides_for(h["slug"]):
                 self.assertIn(f'href="{href_for(slug)}" class="card"', body, (h["slug"], slug))
             for _, _, general in h["services"]:

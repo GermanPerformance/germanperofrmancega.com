@@ -32,6 +32,7 @@ Run from the repo root:  python3 tools/build_landing_pages.py
 Then tools/build_schema.py and tools/build_sitemap.py.
 """
 
+import math
 import os
 import re
 import sys
@@ -102,14 +103,27 @@ def h1_em(service):
 
 
 # The widest first line that still fits a 320px phone at the --step-3
-# floor (280px column / (0.833 x 32px)); a longer line lowers the floor.
+# floor (280px column / (0.833 x 32px)); a longer line lowers the floor to
+# the largest size that still fits the column, never below the point where
+# the headline stops reading as one. "Volkswagen Repair in" lands at
+# 1.5rem; "Check Engine Light Service in" at 1.2rem.
 H1_EM_PHONE_MAX = 10.5
-H1_MIN_LONG = "1.5rem"
+PHONE_COLUMN_PX = 280
+PHONE_WIDTH_K = 0.833
+H1_MIN_MAX_PX = 24
+REM_PX = 16
+
+
+def h1_floor(em):
+    """The --h1-min for a first line of `em` ems: 1.5rem unless the line
+    would not fit a 320px column at that size, in 0.05rem steps."""
+    px = min(H1_MIN_MAX_PX, PHONE_COLUMN_PX / (PHONE_WIDTH_K * em))
+    return f"{math.floor(px / REM_PX * 20) / 20:g}rem"
 
 
 def h1_style(service):
     em = h1_em(service)
-    floor = f";--h1-min:{H1_MIN_LONG}" if em > H1_EM_PHONE_MAX else ""
+    floor = f";--h1-min:{h1_floor(em)}" if em > H1_EM_PHONE_MAX else ""
     return f"--h1-em:{em:.2f}{floor}"
 
 

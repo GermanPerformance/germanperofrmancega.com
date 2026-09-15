@@ -46,9 +46,9 @@ MARQUE_RE = re.compile(r"BMW|Mercedes|Audi|Porsche|Volkswagen|\bVW\b")
 
 PAGES = [
 {
- "slug": "german-car-transmission-repair-snellville-ga.html",
+ "slug": "german-car-transmission-repair.html",
  "brand": BRAND, "marque": None,
- "h1": ("GERMAN CAR", "TRANSMISSION", "REPAIR"),
+ "service": "Transmission Repair",
  "title": "German Car Transmission Repair Snellville | German Performance",
  "desc": ("German car transmission repair in Snellville, GA: fluid and filter "
           "service, mechatronic and valve body faults, DSG and PDK work. "
@@ -148,9 +148,9 @@ PAGES = [
  "cta_sub": "Call and tell us the make, model and what the car is doing. We will tell you what the diagnosis involves.",
 },
 {
- "slug": "german-car-oil-change-snellville-ga.html",
+ "slug": "german-car-oil-change.html",
  "brand": BRAND, "marque": None,
- "h1": ("GERMAN CAR", "OIL", "CHANGE"),
+ "service": "Oil Change",
  "title": "German Car Oil Change Snellville GA | German Performance",
  "desc": ("German car oil change in Snellville, GA: approved oil, OEM filter "
           "and a service reset for BMW, Mercedes, Audi, Porsche and VW. "

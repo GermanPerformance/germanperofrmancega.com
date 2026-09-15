@@ -15,21 +15,21 @@ import posts  # noqa: E402
 
 URL = f"{bs.SITE}/bmw-oil-change-snellville-ga"
 THREE = ('<div class="breadcrumb"><a href="/">Home</a><span>/</span>'
-         '<a href="/bmw-repair-snellville-ga">BMW Repair</a><span>/</span>'
+         '<a href="/bmw-repair">BMW Repair</a><span>/</span>'
          '<span class="crumb-here">BMW Oil Change — Snellville, GA</span></div>')
 TWO = ('<div class="breadcrumb"><a href="/">Home</a><span>/</span>'
        '<span class="crumb-here">Brake Repair — Snellville, GA</span></div>')
 # The crumb as the hand-written pages carried it before the addresses were
 # cleaned; the trail must resolve it to the same URLs.
 THREE_OLD = THREE.replace('href="/"', 'href="index.html"').replace(
-    'href="/bmw-repair-snellville-ga"', 'href="bmw-repair-snellville-ga.html"')
+    'href="/bmw-repair"', 'href="bmw-repair.html"')
 
 
 class TrailTests(unittest.TestCase):
     def test_three_level_trail_is_read_back(self):
         self.assertEqual(bs.visible_trail(THREE), (
             ("Home", "/"),
-            ("BMW Repair", "/bmw-repair-snellville-ga"),
+            ("BMW Repair", "/bmw-repair"),
             ("BMW Oil Change — Snellville, GA", None)))
         self.assertEqual(bs.visible_crumb(THREE), "BMW Oil Change — Snellville, GA")
 
@@ -41,7 +41,7 @@ class TrailTests(unittest.TestCase):
         for crumb in (THREE, THREE_OLD):
             items = bs.trail_items(crumb, URL)
             self.assertEqual([u for _, u in items], [
-                f"{bs.SITE}/", f"{bs.SITE}/bmw-repair-snellville-ga", URL])
+                f"{bs.SITE}/", f"{bs.SITE}/bmw-repair", URL])
         schema = bs.breadcrumbs(items)
         self.assertEqual(schema["@id"], f"{URL}#breadcrumb")
         self.assertEqual([e["position"] for e in schema["itemListElement"]], [1, 2, 3])

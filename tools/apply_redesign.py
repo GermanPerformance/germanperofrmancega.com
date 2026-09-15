@@ -528,7 +528,7 @@ def footer_chrome(html, home=False):
 FOOTER_COLUMNS = f'''  <div class="ft">
     <div><div class="fb">{LOGO_FOOT}</div><div class="ftag">German auto specialists<br>BMW · Mercedes · Audi · Porsche · VW</div></div>
     {FOOTER_CONTACT}
-    <div class="fc"><div class="fct">Services</div><a href="/bmw-repair-snellville-ga">BMW Repair</a><a href="/mercedes-repair-snellville-ga">Mercedes-Benz Repair</a><a href="/audi-repair-snellville-ga">Audi Repair</a><a href="/porsche-repair-snellville-ga">Porsche Repair</a><a href="/volkswagen-repair-snellville-ga">Volkswagen Repair</a></div>
+    <div class="fc"><div class="fct">Services</div><a href="/bmw-repair">BMW Repair</a><a href="/mercedes-repair">Mercedes-Benz Repair</a><a href="/audi-repair">Audi Repair</a><a href="/porsche-repair">Porsche Repair</a><a href="/volkswagen-repair">Volkswagen Repair</a></div>
     {FOOTER_NAVIGATE}
   </div>'''
 
