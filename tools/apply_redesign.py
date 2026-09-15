@@ -58,7 +58,7 @@ import urls  # noqa: E402
 import build_css  # noqa: E402
 
 REPO_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-VERSION = "33"
+VERSION = "34"
 
 # The typefaces are served from assets/fonts/ (see tools/build_fonts.py):
 # the @font-face rules travel inline in every page's <style id="critical">
@@ -461,6 +461,7 @@ def nav_markup(home=False):
         </ul>
       </div>
     </li>
+    <li><a href="{h('guides.html')}">Guides</a></li>
     <li><a href="{h('about.html')}">About</a></li>
     <li><a href="{h('index.html#faq')}">FAQ</a></li>
     <li><a href="{h('contact.html')}">Contact</a></li>
@@ -478,6 +479,7 @@ def nav_markup(home=False):
 {service_columns(home, "      ")}
     </ul>
   </details>
+  <a href="{h('guides.html')}" onclick="closeMenu()">Guides</a>
   <a href="{h('about.html')}" onclick="closeMenu()">About</a>
   <a href="{h('index.html#faq')}" onclick="closeMenu()">FAQ</a>
   <a href="{h('contact.html')}" onclick="closeMenu()">Contact</a>
@@ -504,7 +506,7 @@ FOOTER_NAVIGATE = ('<div class="fc"><div class="fct">Navigate</div>'
                    '<a href="/">Home</a><a href="/about">About</a>'
                    '<a href="/#reviews">Reviews</a><a href="/#faq">FAQ</a>'
                    '<a href="/contact">Contact</a>'
-                   '<a href="/dealer-vs-independent-german-car-repair">Dealership vs. Independent</a><a href="/what-affects-german-car-repair-costs">Repair Costs</a><a href="/why-german-cars-need-specialist-diagnostics">Specialist Diagnostics</a></div>')
+                   '<a href="/guides">Repair Guides</a></div>')
 FOOTER_CONTACT_RE = re.compile(r'<div class="fc"><div class="fct">Contact</div>.*?</div>', re.S)
 FOOTER_NAVIGATE_RE = re.compile(r'<div class="fc"><div class="fct">Navigate</div>.*?</div>', re.S)
 FOOTER_YEAR_RE = re.compile(r'(<div class="fcopy">© )\d{4}( German Performance)')

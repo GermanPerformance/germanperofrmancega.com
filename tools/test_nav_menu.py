@@ -93,6 +93,15 @@ class NavMarkupTests(unittest.TestCase):
             self.assertNotIn(".html", markup)
         self.assertIn('<a href="/" class="nav-logo">', self.page)
 
+    def test_guides_sit_between_services_and_about_in_both_menus(self):
+        for markup in (self.home, self.page):
+            self.assertEqual(markup.count('href="/guides"'), 2)
+            nav, menu = markup.split('<div id="mobile-menu">')
+            self.assertLess(nav.index("nav-panel"), nav.index('href="/guides">Guides'))
+            self.assertLess(nav.index('href="/guides">Guides'), nav.index(">About<"))
+            self.assertLess(menu.index("</details>"), menu.index('href="/guides"'))
+            self.assertLess(menu.index('href="/guides"'), menu.index(">About<"))
+
     def test_tuning_is_gone(self):
         for markup in (self.home, self.page):
             self.assertNotIn("#performance", markup)

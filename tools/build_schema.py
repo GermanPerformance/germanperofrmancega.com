@@ -41,7 +41,7 @@ import sys
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import place  # noqa: E402
 from redirects import site_pages  # noqa: E402
-from posts import POST_DATES  # noqa: E402
+from posts import CLUSTER_OF, GUIDES_PAGE, HUB_OF, POST_DATES  # noqa: E402
 from urls import SITE, page_url, url_for_href  # noqa: E402
 
 REPO_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -245,7 +245,19 @@ def headline(title):
     return re.sub(r"\s*\|\s*" + re.escape(NAME) + r"\s*$", "", title)
 
 
-def blog_entity(url, title, description, published, modified):
+SECTIONS = {"general": "German auto repair", "bmw": "BMW repair", "mercedes": "Mercedes repair"}
+
+
+def article_about(slug):
+    """What the article is about: the hub's Service entity, or the shop
+    itself for the general pieces that support the homepage."""
+    hub = HUB_OF.get(slug, HOME)
+    if hub == HOME:
+        return {"@id": BUSINESS_ID}
+    return {"@id": f"{page_url(hub)}#service"}
+
+
+def blog_entity(url, title, description, published, modified, slug=None):
     return {
         "@type": "BlogPosting",
         "@id": f"{url}#article",
@@ -258,6 +270,8 @@ def blog_entity(url, title, description, published, modified):
         "author": {"@id": BUSINESS_ID},
         "datePublished": published,
         "dateModified": modified,
+        **({"about": article_about(slug),
+            "articleSection": SECTIONS[CLUSTER_OF[slug]]} if slug in CLUSTER_OF else {}),
     }
 
 
@@ -305,7 +319,7 @@ LD_RE = re.compile(r'\s*<script type="application/ld\+json">.*?</script>', re.S)
 # Pages that describe the business rather than a job it performs. They get
 # the matching WebPage subtype instead of a Service entity.
 INFO_PAGES = {"about.html": "AboutPage", "contact.html": "ContactPage",
-              "privacy-policy.html": "WebPage"}
+              "privacy-policy.html": "WebPage", GUIDES_PAGE: "CollectionPage"}
 
 
 def main():
@@ -331,7 +345,7 @@ def main():
             counts["home"] += 1
         elif name in POST_DATES:
             crumb = title.split("|")[0].strip()
-            graph.append(blog_entity(url, title, description, *POST_DATES[name]))
+            graph.append(blog_entity(url, title, description, *POST_DATES[name], slug=name))
             graph.append(breadcrumbs([("Home", f"{SITE}/"), (crumb, url)]))
             counts["post"] += 1
         elif name in INFO_PAGES:

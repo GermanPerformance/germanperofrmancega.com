@@ -4,7 +4,8 @@
 Google ignores the file, but Perplexity, Claude and OpenAI's crawlers (all
 allowed in robots.txt) read it as a hint about which pages matter and what
 each one is for. It is built from tools/service_catalog.py so it lists
-exactly the pages the nav does, plus About, Contact and the articles;
+exactly the pages the nav does, plus the guides (tools/posts/), About
+and Contact;
 regenerate it whenever the catalogue changes.
 
 Run from the repo root:  python3 tools/build_llms_txt.py
@@ -14,7 +15,8 @@ import os
 import sys
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
-from service_catalog import GENERIC_GROUP, GROUPS, HUBS  # noqa: E402
+from posts import GUIDES_PAGE, HOME_PAGE, READING, SUMMARY, guides_for  # noqa: E402
+from service_catalog import GENERIC_GROUP, GENERIC_HUB, GROUPS, MAKES  # noqa: E402
 from urls import SITE, page_url  # noqa: E402
 
 REPO_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -36,34 +38,34 @@ on CARFAX, 180+ Google reviews.
 INFO = [
     ("about.html", "About", "Who runs the shop, the factory software it runs for each marque, and how a job proceeds"),
     ("contact.html", "Contact", "Address, hours, map, and what to have ready before calling"),
-    ("dealer-vs-independent-german-car-repair.html", "German auto repair: dealership vs. independent shop", "What changes when you leave the dealer for an independent German specialist"),
-    ("what-affects-german-car-repair-costs.html", "What affects German car repair costs?", "Diagnosis, parts tier, labor access, engine family, deferred maintenance and coding: what moves the bill, with no prices quoted"),
-    ("why-german-cars-need-specialist-diagnostics.html", "Why do German cars need specialist diagnostics?", "What a generic scanner misses on a car with dozens of control modules, and what the factory software does differently"),
 ]
+
+HUB_NOTE = "Brand hub: what the shop sees on that marque, every service it performs on it, and its guides"
 
 
 def link(slug, label, note=""):
-    url = f"{SITE}/" if slug == "index.html#services" else page_url(slug)
+    url = f"{SITE}/" if slug == GENERIC_HUB else page_url(slug)
     return f"- [{label}]({url})" + (f": {note}" if note else "")
 
 
-def brand_note(brand):
-    return "Brand hub: every service the shop performs on that marque" if brand != GENERIC_GROUP \
-        else "Services for every German marque"
+def guide_lines(hub, indent="  "):
+    return [f"{indent}{link(slug, READING[slug], SUMMARY[slug])}" for slug in guides_for(hub)]
 
 
 def body():
-    lines = [INTRO, "## Services by marque", ""]
-    for brand, pages in GROUPS:
-        hub = HUBS.get(brand)
-        if hub and hub != "index.html#services":
-            lines.append(link(hub, f"{brand} repair and service", brand_note(brand)))
-        else:
-            lines.append(f"- {brand}")
-        for slug, label in pages:
-            lines.append(f"  {link(slug, label)}")
-        lines.append("")
-    lines += ["## About the shop", ""]
+    columns = dict(GROUPS)
+    lines = [INTRO, "## Services", "", "Services for every German marque:", ""]
+    lines += [link(slug, label) for slug, label in columns[GENERIC_GROUP]]
+    lines += ["", "## Makes", ""]
+    for m in MAKES:
+        lines.append(link(m.hub, f"{m.heading} repair", HUB_NOTE))
+        lines += [f"  {link(slug, label)}" for slug, label in columns.get(m.heading, ())]
+        lines += guide_lines(m.hub)
+    lines += ["", "## Guides", "",
+              link(GUIDES_PAGE, "German car repair guides",
+                   "Every guide, grouped by the repair page it supports"),
+              *guide_lines(HOME_PAGE, indent="")]
+    lines += ["", "## About the shop", ""]
     lines += [link(*row) for row in INFO]
     lines += ["", "## Policies", "", link("privacy-policy.html", "Privacy policy"), ""]
     return "\n".join(lines)
@@ -73,7 +75,8 @@ def main():
     path = os.path.join(REPO_ROOT, "llms.txt")
     with open(path, "w", encoding="utf-8") as fh:
         fh.write(body())
-    print(f"llms.txt: {sum(len(p) for _, p in GROUPS)} service pages listed")
+    print(f"llms.txt: {sum(len(p) for _, p in GROUPS)} service pages, "
+          f"{len(READING)} guides listed")
     return 0
 
 

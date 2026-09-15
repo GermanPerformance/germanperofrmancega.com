@@ -66,6 +66,19 @@ class PostTests(unittest.TestCase):
             self.assertEqual(entity["dateModified"], modified)
             self.assertEqual(entity["author"], {"@id": bs.BUSINESS_ID})
 
+    def test_every_article_says_what_it_is_about(self):
+        for slug in posts.POST_DATES:
+            entity = bs.blog_entity(bs.page_url(slug), "A | German Performance", "d",
+                                    "2026-01-01", "2026-01-01", slug=slug)
+            hub = posts.HUB_OF[slug]
+            expected = {"@id": bs.BUSINESS_ID} if hub == posts.HOME_PAGE \
+                else {"@id": f"{bs.page_url(hub)}#service"}
+            self.assertEqual(entity["about"], expected, slug)
+            self.assertIn(entity["articleSection"], bs.SECTIONS.values(), slug)
+
+    def test_the_guides_index_is_a_collection_page(self):
+        self.assertEqual(bs.INFO_PAGES[posts.GUIDES_PAGE], "CollectionPage")
+
     def test_the_live_pages_carry_one_blog_posting_each(self):
         for slug in posts.POST_DATES:
             with open(os.path.join(bs.REPO_ROOT, slug), encoding="utf-8") as fh:

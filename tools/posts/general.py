@@ -1,32 +1,21 @@
-"""The supporting articles: what each one says, and when it was written.
+"""The three general articles that support the homepage.
 
-Two articles support the homepage's broad German-repair offering, the way
-the dealer-vs-independent piece supports it from the other side. They are
-kept as data so the wording can be read and edited without touching
-markup; tools/build_posts.py renders them on the blog skeleton.
+Two are rendered from this data by tools/build_posts.py; the third, the
+dealer-vs-independent piece, is hand-written and registered here only for
+its dates, title and summary. See posts/common.py for the facts every
+article may state and posts/__init__.py for the whole registry.
 
 Every fact here is already on the site or was supplied by the owner on
-2026-09-15: the technicians are ASE-certified and Mercedes-Benz factory-
-trained, one is an ASE Master Technician with the advanced engine
-diagnostics certification who specialises in electrical faults and engine
-repairs and trains the junior technicians; German cars only since 2010,
-more than 10,000 of them; factory software per marque (ISTA, XENTRY, ODIS,
-PIWIS); written estimate with photographs before any work; 12-month /
-12,000-mile parts-and-labor warranty. No prices are quoted, on purpose:
-the article explains what moves a bill, and the estimate does the rest.
-
-The technicians are not named. The owner asked that credentials be
-attributed to the shop's technicians collectively.
-
-POST_DATES covers every article on disk, the hand-written one included,
-so tools/build_schema.py has one place to read a BlogPosting's dates.
+2026-09-15 (see common.AUTHOR_NOTE). No prices are quoted, on purpose:
+the articles explain what moves a bill, and the estimate does the rest.
 """
 
-from urls import href_for
+from posts.common import (  # noqa: F401
+    AUTHOR_NOTE, COSTS, DEALER, DIAGNOSTICS, HOME, HOME_PAGE, PROCESS, REPAIRS,
+    SERVICES, STORY, link,
+)
 
-DEALER = "dealer-vs-independent-german-car-repair.html"
-COSTS = "what-affects-german-car-repair-costs.html"
-DIAGNOSTICS = "why-german-cars-need-specialist-diagnostics.html"
+CLUSTER = "general"
 
 # (datePublished, dateModified). The dealer article was retitled on
 # 2026-09-15 to support the homepage directly.
@@ -36,39 +25,28 @@ POST_DATES = {
     DIAGNOSTICS: ("2026-09-15", "2026-09-15"),
 }
 
-HOME = href_for("index.html")
-SERVICES = f"{HOME}#services"
-REPAIRS = f"{HOME}#repairs"
-PROCESS = f"{HOME}#process"
-STORY = f"{HOME}#story"
-
-
-def link(slug, text):
-    return f'<a href="{href_for(slug)}">{text}</a>'
-
-
-# The note that closes each article: who wrote it and what they bring.
-AUTHOR_NOTE = (
-    "<strong>About the people who wrote this.</strong> Written by the "
-    "technicians at German Performance in Snellville, Georgia. They are "
-    "ASE-certified and Mercedes-Benz factory-trained, and one is an ASE "
-    "Master Technician who holds the advanced engine diagnostics "
-    "certification, specialises in "
-    "electrical faults and engine repairs, and trains the shop's junior "
-    "technicians. They have worked only on German cars since 2010 &mdash; "
-    "more than 10,000 of them through this shop &mdash; and every repair "
-    "leaves with a written 12-month, 12,000-mile parts-and-labor warranty."
-)
-
 READING = {
     DEALER: "German Auto Repair: Dealership vs. Independent Shop",
     COSTS: "What Affects German Car Repair Costs?",
     DIAGNOSTICS: "Why Do German Cars Need Specialist Diagnostics?",
 }
 
+# One line each, for the guides index and llms.txt.
+SUMMARY = {
+    DEALER: "What changes when you leave the dealer for an independent German specialist, and what the dealer is still better at.",
+    COSTS: "Diagnosis, parts tier, labor access, engine family, deferred maintenance and coding: what moves the bill, with no prices quoted.",
+    DIAGNOSTICS: "What a generic scanner misses on a car with dozens of control modules, and what the factory software does differently.",
+}
+
+# The hand-written article supports the homepage like the other two.
+HAND_WRITTEN = {DEALER: {"hub": HOME_PAGE, "cluster": CLUSTER}}
+
 POSTS = [
     {
         "slug": COSTS,
+        "hub": HOME_PAGE,
+        "cluster": CLUSTER,
+        "sources": [],
         "title": "What Affects German Car Repair Costs? | German Performance",
         "description": (
             "The things that actually move the bill on a BMW, Mercedes, Audi, "
@@ -242,6 +220,9 @@ POSTS = [
     },
     {
         "slug": DIAGNOSTICS,
+        "hub": HOME_PAGE,
+        "cluster": CLUSTER,
+        "sources": [],
         "title": "Why Do German Cars Need Specialist Diagnostics? | German Performance",
         "description": (
             "A German car has dozens of networked control modules and a generic "

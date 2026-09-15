@@ -12,7 +12,11 @@ Plain Python 3, no dependencies. Run everything from the repo root.
 - `gbp_claims.py` — which Google Business Profile services each page answers for.
 - `place.py` — the shop's Google listing (place ID, CID, pin) and every Maps URL: embed, directions, `hasMap`, `sameAs`, write-a-review.
 - `redirects.py` — retired URLs and their successors (stubs, never in the sitemap).
-- `posts.py` — the supporting articles' copy and every article's dates (`build_posts.py`, `build_schema.py`).
+- `posts/` — the supporting articles as data, one module per money page they support
+  (`general.py` for the homepage, `bmw.py`, `mercedes.py` for the hubs; `common.py` holds the
+  facts every article may state); the package joins them into `POSTS`, `POST_DATES`, `READING`,
+  `SUMMARY`, `HUB_OF` and `GUIDES` for `build_posts.py` (articles + `guides.html`),
+  `build_schema.py`, `build_llms_txt.py` and the brand hubs.
 - `urls.py` — the one address each page is served at: `/` for `index.html`,
   `/about` for `about.html`, never `.html`. Generators write links with
   `href_for()` / `page_url()`; `apply_redesign.py` runs `clean_links()` over
@@ -37,7 +41,7 @@ python3 tools/build_brand_hubs.py             # five make hubs
 python3 tools/build_info_pages.py             # about, contact
 python3 tools/build_landing_pages.py          # landing_pages.py -> category landing pages
 python3 tools/build_privacy_page.py
-python3 tools/build_posts.py                  # posts.py -> the supporting articles
+python3 tools/build_posts.py                  # posts/ -> the supporting articles + guides.html
 python3 tools/apply_redesign.py               # nav, chrome, footer columns, version stamps
 python3 tools/fix_footer_links.py             # footer Services column + link row
 python3 tools/add_related_services.py         # in-body related block + hub link row
