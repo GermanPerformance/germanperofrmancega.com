@@ -138,7 +138,7 @@ def guides_section(hub):
         for i, s in enumerate(slugs, 1))
     return f'''<section>
   <div class="sh fu"><div class="sl">{hub["brand"]} guides</div>{blp.two_line("FROM THE", "TECHNICIANS")}<p class="sd">What we have learned on the {hub["possessive"]}s that come through the shop, written down: what to maintain, how we diagnose a symptom, what moves a bill, and jobs from our own bays. <a href="{href_for(GUIDES_PAGE)}">All repair guides &rarr;</a></p></div>
-  <div class="g3 fu">
+  <div class="{grid_class(len(slugs))} fu">
 {items}
   </div>
 </section>

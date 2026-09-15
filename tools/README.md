@@ -14,10 +14,12 @@ Plain Python 3, no dependencies. Run everything from the repo root.
 - `place.py` — the shop's Google listing (place ID, CID, pin) and every Maps URL: embed, directions, `hasMap`, `sameAs`, write-a-review.
 - `redirects.py` — retired URLs and their successors (stubs, never in the sitemap).
 - `posts/` — the supporting articles as data, one module per money page they support
-  (`general.py` for the homepage, `bmw.py`, `mercedes.py` for the hubs; `common.py` holds the
-  facts every article may state); the package joins them into `POSTS`, `POST_DATES`, `READING`,
-  `SUMMARY`, `HUB_OF` and `GUIDES` for `build_posts.py` (articles + `guides.html`),
-  `build_schema.py`, `build_llms_txt.py` and the brand hubs.
+  (`general.py` for the homepage; `bmw.py` and `mercedes.py` for the hubs, each with its case
+  studies in `<make>_cases.py`; `common.py` holds the slugs and the facts every article may
+  state; `sources.py` the external references, each fetched live when added); the package
+  joins them into `POSTS`, `POST_DATES`, `READING`, `SUMMARY`, `HUB_OF` and `GUIDES` for
+  `build_posts.py` (articles + `guides.html`), `build_schema.py`, `build_llms_txt.py` and the
+  brand hubs.
 - `urls.py` — the one address each page is served at: `/` for `index.html`,
   `/about` for `about.html`, never `.html`. Generators write links with
   `href_for()` / `page_url()`; `apply_redesign.py` runs `clean_links()` over

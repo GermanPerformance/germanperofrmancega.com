@@ -114,6 +114,16 @@ class RenderedTests(unittest.TestCase):
                 if general:
                     self.assertIn(f'href="{href_for(general)}">{full_label(general)} for every German make', body)
 
+    def test_guides_grid_fills_its_rows(self):
+        """Four guides sit two across, six three across: never an orphan card."""
+        for h in HUBS:
+            slugs = posts.guides_for(h["slug"])
+            section = hubs.guides_section(h)
+            self.assertEqual(bool(section), bool(slugs), h["slug"])
+            if slugs:
+                self.assertIn(f'<div class="{hubs.grid_class(len(slugs))} fu">', section)
+                self.assertEqual(section.count('class="card"'), len(slugs))
+
     def test_faq_schema_source_matches_the_module(self):
         for h in HUBS:
             body = main_of(self.pages[h["slug"]])

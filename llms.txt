@@ -26,7 +26,15 @@ Services for every German marque:
 ## Makes
 
 - [BMW repair](https://germanperformancega.com/bmw-repair-snellville-ga): Brand hub: what the shop sees on that marque, every service it performs on it, and its guides
+  - [BMW Maintenance Schedule Explained](https://germanperformancega.com/bmw-maintenance-schedule-explained): How Condition Based Service counts, which oil approval your engine needs, and where we shorten BMW's own intervals and why.
+  - [BMW Drivetrain Malfunction Explained](https://germanperformancega.com/bmw-drivetrain-malfunction-explained): What the message means, the causes we see by engine family, and the order we test in before anything is replaced.
+  - [Why BMW Repair Costs What It Does](https://germanperformancega.com/why-bmw-repair-costs-what-it-does): Parts tiers, labor that is really about access, the coding that finishes the job, and why BMW jobs cluster. No prices.
+  - [BMW Repair Case Studies](https://germanperformancega.com/bmw-repair-case-studies): Three representative jobs from our bays: an N20 cold-start rattle, an N55 burning smell, and an X5 that sat low overnight.
 - [Mercedes-Benz repair](https://germanperformancega.com/mercedes-repair-snellville-ga): Brand hub: what the shop sees on that marque, every service it performs on it, and its guides
+  - [Mercedes Service A vs Service B](https://germanperformancega.com/mercedes-service-a-vs-service-b): What ASSYST Plus counts, what each service actually includes, the oil sheet your engine needs, and what we inspect that the sheet does not list.
+  - [Mercedes AIRMATIC Problems Explained](https://germanperformancega.com/mercedes-airmatic-problems-symptoms-diagnosis): Why a Mercedes sits low on one corner, which component is at fault, and how XENTRY and a fill test tell a strut from a compressor.
+  - [Why Mercedes Repair Costs What It Does](https://germanperformancega.com/why-mercedes-repair-costs-what-it-does): Genuine vs OE-supplier parts, sealed assemblies, access labor, the XENTRY factor and whole-assembly quotes for repairable faults. No prices.
+  - [Mercedes Repair Case Studies](https://germanperformancega.com/mercedes-repair-case-studies): Three representative jobs: an M272 oil smell with coolant loss, a GL450 low on one corner, and a 722.9 in limp mode that did not need a transmission.
 - [Audi repair](https://germanperformancega.com/audi-repair-snellville-ga): Brand hub: what the shop sees on that marque, every service it performs on it, and its guides
 - [Porsche repair](https://germanperformancega.com/porsche-repair-snellville-ga): Brand hub: what the shop sees on that marque, every service it performs on it, and its guides
 - [Volkswagen repair](https://germanperformancega.com/volkswagen-repair-snellville-ga): Brand hub: what the shop sees on that marque, every service it performs on it, and its guides

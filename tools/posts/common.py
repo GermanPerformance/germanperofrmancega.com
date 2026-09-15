@@ -29,6 +29,16 @@ DEALER = "dealer-vs-independent-german-car-repair.html"
 COSTS = "what-affects-german-car-repair-costs.html"
 DIAGNOSTICS = "why-german-cars-need-specialist-diagnostics.html"
 
+# The BMW and Mercedes-Benz guides (posts/bmw*.py, posts/mercedes*.py).
+BMW_MAINTENANCE = "bmw-maintenance-schedule-explained.html"
+BMW_DRIVETRAIN = "bmw-drivetrain-malfunction-explained.html"
+BMW_COSTS = "why-bmw-repair-costs-what-it-does.html"
+BMW_CASES = "bmw-repair-case-studies.html"
+MB_SERVICE_AB = "mercedes-service-a-vs-service-b.html"
+MB_AIRMATIC = "mercedes-airmatic-problems-symptoms-diagnosis.html"
+MB_COSTS = "why-mercedes-repair-costs-what-it-does.html"
+MB_CASES = "mercedes-repair-case-studies.html"
+
 # The money pages an article can support.
 HOME_PAGE = "index.html"
 BMW_HUB = "bmw-repair-snellville-ga.html"
